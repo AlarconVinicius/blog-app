@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6B6063A6-3266-4B66-B7E4-8775CAF3C7EC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1-ApiAuth", "1-ApiAuth", "{67B56AA5-02A4-45D6-B6D9-6C64FD7A706B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiAuth", "src\1-ApiAuth\ApiAuth\ApiAuth.csproj", "{46736EEE-A5C4-47B3-9741-BC4498DFE7BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2-ApiBlog", "2-ApiBlog", "{391C2EED-3B72-49AA-9D67-B75DB0419A2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiBlog", "src\2-ApiBlog\ApiBlog\ApiBlog.csproj", "{58D60730-E85B-4650-9E42-071E25F7B008}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{46736EEE-A5C4-47B3-9741-BC4498DFE7BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46736EEE-A5C4-47B3-9741-BC4498DFE7BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46736EEE-A5C4-47B3-9741-BC4498DFE7BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46736EEE-A5C4-47B3-9741-BC4498DFE7BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58D60730-E85B-4650-9E42-071E25F7B008}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58D60730-E85B-4650-9E42-071E25F7B008}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58D60730-E85B-4650-9E42-071E25F7B008}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58D60730-E85B-4650-9E42-071E25F7B008}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{67B56AA5-02A4-45D6-B6D9-6C64FD7A706B} = {6B6063A6-3266-4B66-B7E4-8775CAF3C7EC}
+		{46736EEE-A5C4-47B3-9741-BC4498DFE7BE} = {67B56AA5-02A4-45D6-B6D9-6C64FD7A706B}
+		{391C2EED-3B72-49AA-9D67-B75DB0419A2F} = {6B6063A6-3266-4B66-B7E4-8775CAF3C7EC}
+		{58D60730-E85B-4650-9E42-071E25F7B008} = {391C2EED-3B72-49AA-9D67-B75DB0419A2F}
+	EndGlobalSection
+EndGlobal
