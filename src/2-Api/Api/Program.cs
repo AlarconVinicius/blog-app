@@ -1,15 +1,20 @@
+using Auth.Data;
+using Auth.Data.Seed;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Auth.Configuration.IoC;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.ConfigureIdentityDbContextJwtServices(builder.Configuration);
+builder.Services.ConfigureCustomAuthServices();
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -18,8 +23,19 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 
+using var scope = app.Services.CreateScope();
+var dbContextIdentity = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+if (dbContextIdentity.Database.GetPendingMigrations().Any())
+{
+    dbContextIdentity.Database.Migrate();
+}
+var userManager = scope.ServiceProvider.GetService<UserManager<IdentityUser>>();
+
+new ConfigureInitialSeed(dbContextIdentity, userManager!).StartConfig();
+        
 app.Run();
