@@ -72,4 +72,14 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+using var scope = app.Services.CreateScope();
+var dbContextIdentity = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+if (dbContextIdentity.Database.GetPendingMigrations().Any())
+{
+    dbContextIdentity.Database.Migrate();
+}
+var userManager = scope.ServiceProvider.GetService<UserManager<IdentityUser>>();
+
+new ConfigureInitialSeed(dbContextIdentity, userManager!).StartConfig();
+        
 app.Run();
