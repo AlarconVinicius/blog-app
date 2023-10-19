@@ -42,6 +42,7 @@ public class AuthController : ControllerBase
 
         var userIdentity = await _userManager.FindByEmailAsync(registerUser.Email);
         await _userManager.AddToRoleAsync(userIdentity!, RoleEnum.User.ToString());    
+        await _userManager.AddClaimAsync(userIdentity!, new Claim("Permission", PermissionEnum.Reader.ToString()));
         await _signInManager.SignInAsync(user, false);
         
         return Ok(await GenerateJwt(registerUser.Email)); 
