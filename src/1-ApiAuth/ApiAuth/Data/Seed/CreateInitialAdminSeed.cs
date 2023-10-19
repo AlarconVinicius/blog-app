@@ -40,9 +40,10 @@ public class CreateInitialAdminSeed
 
         if (userExists is null)
         {
+            string permissions = PermissionEnum.Reader.ToString() + "," + PermissionEnum.Writer.ToString();
             _userManager.CreateAsync(user, password).GetAwaiter().GetResult();
             _userManager.AddToRoleAsync(user, RoleEnum.Admin.ToString()).GetAwaiter().GetResult();
-            _userManager.AddClaimAsync(user, new Claim("Permission", "Reader,Writer")).GetAwaiter().GetResult();
+            _userManager.AddClaimAsync(user, new Claim("Permission", permissions)).GetAwaiter().GetResult();
         }
         else
         {
