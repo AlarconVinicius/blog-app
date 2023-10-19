@@ -1,5 +1,7 @@
 using System.Text;
 using ApiAuth;
+using ApiAuth.Business.Interfaces;
+using ApiAuth.Business.Services;
 using ApiAuth.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -57,6 +59,7 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
+builder.Services.AddScoped<IAuthService, AuthService>();
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
