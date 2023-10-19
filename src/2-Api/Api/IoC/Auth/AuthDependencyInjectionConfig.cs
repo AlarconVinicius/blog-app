@@ -1,22 +1,21 @@
+using Auth;
 using Auth.Business.Interfaces;
 using Auth.Business.Services;
 using Auth.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace Auth.Configuration.IoC;
+namespace Api.IoC.Auth;
 
 public static class AuthDependencyInjectionConfig
 {
     public static void ConfigureIdentityDbContextJwtServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("API")));
 
         services.AddDefaultIdentity<IdentityUser>()
            .AddRoles<IdentityRole>()

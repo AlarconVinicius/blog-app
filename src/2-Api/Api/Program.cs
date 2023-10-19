@@ -1,8 +1,8 @@
+using Api.IoC.Auth;
 using Auth.Data;
 using Auth.Data.Seed;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Auth.Configuration.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
 
