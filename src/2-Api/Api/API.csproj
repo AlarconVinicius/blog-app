@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\3-Auth\Auth\Auth.csproj" />
+    <ProjectReference Include="..\..\4-Blog\Blog\Blog.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,11 +1,14 @@
 using Api.IoC.Auth;
+using Api.IoC.Blog;
 using Auth.Data;
 using Auth.Data.Seed;
+using Blog.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.ConfigureBlogDbContextServices(  builder.Configuration);
 builder.Services.ConfigureIdentityDbContextJwtServices(builder.Configuration);
 builder.Services.ConfigureCustomAuthServices();
 
@@ -30,9 +33,14 @@ app.MapControllers();
 
 using var scope = app.Services.CreateScope();
 var dbContextIdentity = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+var dbContextBlog = scope.ServiceProvider.GetRequiredService<BlogDbContext>();
 if (dbContextIdentity.Database.GetPendingMigrations().Any())
 {
     dbContextIdentity.Database.Migrate();
+}
+if (dbContextBlog.Database.GetPendingMigrations().Any())
+{
+    dbContextBlog.Database.Migrate();
 }
 var userManager = scope.ServiceProvider.GetService<UserManager<IdentityUser>>();
 
