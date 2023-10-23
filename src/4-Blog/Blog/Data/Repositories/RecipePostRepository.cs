@@ -4,21 +4,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Data.Repositories;
 
-public class RecipeBlogRepository : IRecipeBlogRepository
+public class RecipePostRepository : IRecipePostRepository
 {
     private readonly BlogDbContext _context;
 
-    public RecipeBlogRepository(BlogDbContext context)
+    public RecipePostRepository(BlogDbContext context)
     {
         _context = context;
     }
-    public async Task AddRecipeAsync(RecipeBlog objeto)
+    public async Task AddRecipeAsync(RecipePost objeto)
     {
         await _context.Recipes.AddAsync(objeto);
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateRecipeAsync(RecipeBlog objeto)
+    public async Task UpdateRecipeAsync(RecipePost objeto)
     {
         _context.Recipes.Update(objeto);
         await _context.SaveChangesAsync();
@@ -31,15 +31,15 @@ public class RecipeBlogRepository : IRecipeBlogRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task<List<RecipeBlog>> ListRecipesAsync()
+    public async Task<List<RecipePost>> ListRecipesAsync()
     {
         return await _context.Recipes.AsNoTracking().ToListAsync();
     }
 
-    public async Task<RecipeBlog> GetRecipeByIdAsync(Guid id)
+    public async Task<RecipePost> GetRecipeByIdAsync(Guid id)
     {
-        var recipeBlogDb = await _context.Recipes.FindAsync(id);
-        if (recipeBlogDb == null) return null!;
-        return recipeBlogDb;
+        var recipePostDb = await _context.Recipes.FindAsync(id);
+        if (recipePostDb == null) return null!;
+        return recipePostDb;
     }
 }

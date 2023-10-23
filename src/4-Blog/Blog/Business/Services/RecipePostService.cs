@@ -5,15 +5,15 @@ using Utils.Configuration.Business;
 
 namespace Blog.Business.Services;
 
-public class RecipeBlogService : MainService, IRecipeBlogService
+public class RecipePostService : MainService, IRecipePostService
 {
-    private readonly IRecipeBlogRepository _repository;
-    public RecipeBlogService(IRecipeBlogRepository repository)
+    private readonly IRecipePostRepository _repository;
+    public RecipePostService(IRecipePostRepository repository)
     {
         _repository = repository;
     }
 
-    public async Task AddRecipe(RecipeBlog objeto)
+    public async Task AddRecipe(RecipePost objeto)
     {
         try
         {
@@ -42,7 +42,7 @@ public class RecipeBlogService : MainService, IRecipeBlogService
         }
     }
 
-    public async Task<RecipeBlog> GetRecipeById(Guid id)
+    public async Task<RecipePost> GetRecipeById(Guid id)
     {
         try
         {
@@ -55,7 +55,7 @@ public class RecipeBlogService : MainService, IRecipeBlogService
         }
     }
 
-    public async Task<List<RecipeBlog>> GetRecipes()
+    public async Task<List<RecipePost>> GetRecipes()
     {
         try
         {
@@ -68,7 +68,7 @@ public class RecipeBlogService : MainService, IRecipeBlogService
         }
     }
 
-    public async Task UpdateRecipe(RecipeBlog objeto)
+    public async Task UpdateRecipe(RecipePost objeto)
     {
         try
         {

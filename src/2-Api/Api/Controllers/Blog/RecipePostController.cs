@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Controllers.Blog;
 
 [Route("api/recipe-blog")]
-public class RecipeBlogController : MainController
+public class RecipePostController : MainController
 {
-    private readonly IRecipeBlogService _service;
-    public RecipeBlogController(IRecipeBlogService service)
+    private readonly IRecipePostService _service;
+    public RecipePostController(IRecipePostService service)
     {
         _service = service;
     }
@@ -29,7 +29,7 @@ public class RecipeBlogController : MainController
     }
 
     [HttpPost]
-    public async Task<IActionResult> PostRecipe(RecipeBlog recipe)
+    public async Task<IActionResult> PostRecipe(RecipePost recipe)
     {
         await _service.AddRecipe(recipe);
         return _service.IsOperationValid() ? CustomResponse() : CustomResponse(_service.GetErrors());
