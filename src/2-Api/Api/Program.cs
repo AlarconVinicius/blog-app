@@ -8,9 +8,10 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.ConfigureBlogDbContextServices(  builder.Configuration);
 builder.Services.ConfigureIdentityDbContextJwtServices(builder.Configuration);
 builder.Services.ConfigureCustomAuthServices();
+builder.Services.ConfigureBlogDbContextServices(builder.Configuration);
+builder.Services.ConfigureCustomBlogServices();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

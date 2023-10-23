@@ -1,4 +1,6 @@
 ﻿using Blog.Business.Interfaces.Repositories;
+using Blog.Business.Interfaces.Services;
+using Blog.Business.Services;
 using Blog.Data;
 using Blog.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +17,7 @@ public static class BlogDependencyInjectionConfig
     public static void ConfigureCustomBlogServices(this IServiceCollection services)
     {
         services.AddScoped<IRecipeBlogRepository, RecipeBlogRepository>();
+        services.AddScoped<IRecipeBlogService, RecipeBlogService>();
     }
 
 }
