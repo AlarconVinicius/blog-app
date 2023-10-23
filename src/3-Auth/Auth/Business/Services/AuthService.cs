@@ -12,11 +12,11 @@ namespace Auth.Business.Services;
 
 public class AuthService : MainService, IAuthService
 {
-    private readonly SignInManager<IdentityUser> _signInManager;
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly SignInManager<ApplicationUserEntity> _signInManager;
+    private readonly UserManager<ApplicationUserEntity> _userManager;
     private readonly AppSettings _appSettings;
 
-    public AuthService(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, IOptions<AppSettings> appSettings)
+    public AuthService(SignInManager<ApplicationUserEntity> signInManager, UserManager<ApplicationUserEntity> userManager, IOptions<AppSettings> appSettings)
     {
         _signInManager = signInManager;
         _userManager = userManager;
@@ -25,12 +25,15 @@ public class AuthService : MainService, IAuthService
 
     public async Task<string> RegisterUserAsync(RegisterUserRequest registerUser)
     {
-        var user = new IdentityUser
+        var user = new ApplicationUserEntity
         {
+            Name = registerUser.Name,
+            LastName = registerUser.LastName,
             UserName = registerUser.Email,
             Email = registerUser.Email,
             EmailConfirmed = true,
         };
+        user.JoinName();
 
         var result = await _userManager.CreateAsync(user, registerUser.Password);
 

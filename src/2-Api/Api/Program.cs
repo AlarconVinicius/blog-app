@@ -2,6 +2,7 @@ using Api.IoC.Auth;
 using Api.IoC.Blog;
 using Auth.Data;
 using Auth.Data.Seed;
+using Auth.Models;
 using Blog.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -43,7 +44,7 @@ if (dbContextBlog.Database.GetPendingMigrations().Any())
 {
     dbContextBlog.Database.Migrate();
 }
-var userManager = scope.ServiceProvider.GetService<UserManager<IdentityUser>>();
+var userManager = scope.ServiceProvider.GetService<UserManager<ApplicationUserEntity>>();
 
 new ConfigureInitialSeed(dbContextIdentity, userManager!).StartConfig();
         

@@ -7,9 +7,9 @@ namespace Auth.Data.Seed;
 public class CreateInitialAdminSeed
 {
     private readonly ApplicationDbContext _contextIdentity;
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<ApplicationUserEntity> _userManager;
 
-    public CreateInitialAdminSeed(ApplicationDbContext contextIdentity, UserManager<IdentityUser> userManager)
+    public CreateInitialAdminSeed(ApplicationDbContext contextIdentity, UserManager<ApplicationUserEntity> userManager)
     {
         _contextIdentity = contextIdentity;
         _userManager = userManager;
@@ -19,20 +19,25 @@ public class CreateInitialAdminSeed
     {
         Guid id = Guid.Parse("BBDC94BA-D192-409B-A9BF-BF5977B30425");
         var phoneNumber = "(99) 99999-9999";
+        var name = "Admin";
+        var lastName = "User";
         var email = "blog@admin.com";
         var password = "Admin@123";
 
-        var user = new IdentityUser
+        var user = new ApplicationUserEntity
         {
             Id = id.ToString(),
             UserName = email,
             Email = email,
+            Name = name,
+            LastName = lastName,
             EmailConfirmed = true,
             PhoneNumber = phoneNumber,
             PhoneNumberConfirmed = true,
             NormalizedEmail = email.ToUpper(),
             NormalizedUserName = email.ToUpper()
         };
+        user.JoinName();
         
 
         var userExists = _userManager.FindByEmailAsync(user.Email).Result;
