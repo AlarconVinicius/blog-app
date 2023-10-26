@@ -3,7 +3,7 @@ using Data.Configuration;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
-namespace Data.Auth.Seed;
+namespace Data.Seed.Auth;
 
 public class CreateInitialAdminSeed
 {

@@ -2,7 +2,7 @@
 using Data.Configuration;
 using Microsoft.AspNetCore.Identity;
 
-namespace Data.Auth.Seed;
+namespace Data.Seed.Auth;
 
 public class CreateInitialRolesSeed
 {
