@@ -1,5 +1,5 @@
 using Api.IoC;
-using Business.Auth.Models;
+using Business.Models.Auth;
 using Data.Auth.Seed;
 using Data.Configuration;
 using Microsoft.AspNetCore.Identity;

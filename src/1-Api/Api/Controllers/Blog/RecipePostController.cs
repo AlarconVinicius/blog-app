@@ -1,6 +1,6 @@
 ﻿using Api.Controllers.Configuration.Response;
-using Business.Blog.Interfaces.Services;
-using Business.Blog.Models.Recipe;
+using Business.Interfaces.Services.Blog;
+using Business.Models.Blog.Recipe;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.Blog;

@@ -1,5 +1,5 @@
-﻿using Business.Blog.Interfaces.Repositories;
-using Business.Blog.Models.Recipe;
+﻿using Business.Interfaces.Repositories.Blog;
+using Business.Models.Blog.Recipe;
 using Data.Configuration;
 using Data.Repositories;
 using Microsoft.EntityFrameworkCore;

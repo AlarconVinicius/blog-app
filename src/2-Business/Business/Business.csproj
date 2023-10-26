@@ -12,4 +12,8 @@
 	  <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.12" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Interfaces\Repositories\Auth\" />
+  </ItemGroup>
+
 </Project>

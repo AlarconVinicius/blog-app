@@ -1,6 +1,6 @@
 ﻿using Api.Controllers.Configuration.Response;
-using Business.Auth.Interfaces;
-using Business.Auth.Models;
+using Business.Interfaces.Services.Auth;
+using Business.Models.Auth.Dto;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.Auth;

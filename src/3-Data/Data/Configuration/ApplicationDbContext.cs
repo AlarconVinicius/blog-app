@@ -1,6 +1,6 @@
-﻿using Business.Auth.Models;
-using Business.Blog.Models;
-using Business.Blog.Models.Recipe;
+﻿using Business.Models.Auth;
+using Business.Models.Blog;
+using Business.Models.Blog.Recipe;
 using Data.Mappings.Blog;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

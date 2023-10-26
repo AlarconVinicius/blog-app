@@ -1,4 +1,4 @@
-﻿using Business.Auth.Models;
+﻿using Business.Models.Auth;
 using Data.Configuration;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;

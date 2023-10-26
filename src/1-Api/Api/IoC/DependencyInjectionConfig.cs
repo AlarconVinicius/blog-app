@@ -1,10 +1,11 @@
 ﻿using Business;
-using Business.Auth.Interfaces;
-using Business.Auth.Models;
-using Business.Auth.Services;
-using Business.Blog.Interfaces.Repositories;
-using Business.Blog.Interfaces.Services;
-using Business.Blog.Services;
+using Business.Interfaces.Repositories;
+using Business.Interfaces.Repositories.Blog;
+using Business.Interfaces.Services.Auth;
+using Business.Interfaces.Services.Blog;
+using Business.Models.Auth;
+using Business.Services.Auth;
+using Business.Services.Blog;
 using Data.Blog.Repositories;
 using Data.Configuration;
 using Data.Repositories;
