@@ -1,5 +1,6 @@
 ﻿using Business.Models.Auth;
 using Data.Configuration;
+using Data.Seed.Auth;
 using Microsoft.AspNetCore.Identity;
 
 namespace Data.Auth.Seed;
