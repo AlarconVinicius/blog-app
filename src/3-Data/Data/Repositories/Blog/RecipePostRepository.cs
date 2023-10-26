@@ -1,6 +1,7 @@
 ﻿using Business.Interfaces.Repositories.Blog;
 using Business.Models.Blog.Recipe;
 using Data.Configuration;
+using Data.Repositories;
 
 namespace Data.Blog.Repositories;
 
