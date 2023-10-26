@@ -17,7 +17,7 @@ public class RecipePostService : MainService, IRecipePostService
     {
         try
         {
-            await _repository.AddRecipeAsync(objeto);
+            await _repository.AddAsync(objeto);
             return;
         }
         catch (Exception ex)
@@ -31,7 +31,7 @@ public class RecipePostService : MainService, IRecipePostService
     {
         try
         {
-            await _repository.DeleteRecipeAsync(id);
+            await _repository.DeleteAsync(id);
             return;
 
         }
@@ -46,7 +46,7 @@ public class RecipePostService : MainService, IRecipePostService
     {
         try
         {
-            return await _repository.GetRecipeByIdAsync(id);
+            return await _repository.GetByIdAsync(id);
         }
         catch (Exception ex)
         {
@@ -59,7 +59,7 @@ public class RecipePostService : MainService, IRecipePostService
     {
         try
         {
-            return await _repository.ListRecipesAsync();
+            return await _repository.GetAllAsync();
         }
         catch (Exception ex)
         {
@@ -72,7 +72,7 @@ public class RecipePostService : MainService, IRecipePostService
     {
         try
         {
-            await _repository.UpdateRecipeAsync(objeto);
+            await _repository.UpdateAsync(objeto);
             return;
 
         }

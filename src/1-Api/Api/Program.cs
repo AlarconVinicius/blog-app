@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.ConfigureDbContextJwtServices(builder.Configuration);
+builder.Services.ConfigureCustomServices();
 builder.Services.ConfigureCustomAuthServices();
 builder.Services.ConfigureCustomBlogServices();
 

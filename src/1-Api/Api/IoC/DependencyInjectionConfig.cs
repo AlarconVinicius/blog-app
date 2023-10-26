@@ -7,6 +7,7 @@ using Business.Blog.Interfaces.Services;
 using Business.Blog.Services;
 using Data.Blog.Repositories;
 using Data.Configuration;
+using Data.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -63,6 +64,12 @@ public static class DependencyInjectionConfig
             };
         });
     }
+
+    public static void ConfigureCustomServices(this IServiceCollection services)
+    {
+        services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+    }
+
     public static void ConfigureCustomAuthServices(this IServiceCollection services)
     {
         services.AddScoped<IAuthService, AuthService>();
