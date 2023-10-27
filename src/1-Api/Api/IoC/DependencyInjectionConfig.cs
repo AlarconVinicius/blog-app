@@ -81,6 +81,9 @@ public static class DependencyInjectionConfig
         services.AddScoped<IBlogRepository, BlogRepository>();
         services.AddScoped<IBlogService, BlogService>();
         
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<ICategoryService, CategoryService>();
+
         services.AddScoped<IRecipePostRepository, RecipePostRepository>();
         services.AddScoped<IRecipePostService, RecipePostService>();
     }
