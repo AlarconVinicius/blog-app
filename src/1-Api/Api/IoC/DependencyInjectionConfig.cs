@@ -78,6 +78,9 @@ public static class DependencyInjectionConfig
 
     public static void ConfigureCustomBlogServices(this IServiceCollection services)
     {
+        services.AddScoped<IBlogRepository, BlogRepository>();
+        services.AddScoped<IBlogService, BlogService>();
+        
         services.AddScoped<IRecipePostRepository, RecipePostRepository>();
         services.AddScoped<IRecipePostService, RecipePostService>();
     }
