@@ -12,11 +12,12 @@ public class RecipePostService : MainService, IRecipePostService
         _repository = repository;
     }
 
-    public async Task AddRecipe(RecipePost objeto)
+    public async Task AddRecipe(RecipePost recipe)
     {
         try
         {
-            await _repository.AddAsync(objeto);
+            recipe.GenerateURL();
+            await _repository.AddAsync(recipe);
             return;
         }
         catch (Exception ex)
@@ -67,11 +68,12 @@ public class RecipePostService : MainService, IRecipePostService
         }
     }
 
-    public async Task UpdateRecipe(RecipePost objeto)
+    public async Task UpdateRecipe(RecipePost recipe)
     {
         try
         {
-            await _repository.UpdateAsync(objeto);
+            recipe.GenerateURL();
+            await _repository.UpdateAsync(recipe);
             return;
 
         }
