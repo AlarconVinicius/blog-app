@@ -7,7 +7,7 @@ public class BlogEntity : Entity
 {
     public string Name { get; set; } = string.Empty;
     public string NormalizedName { get; private set; } = string.Empty;
-    public ICollection<ApplicationUser>? Users { get; set; }
+    public ICollection<UserBlog>? Users { get; set; }
     public ICollection<RecipePost>? RecipePosts { get; set; }
     public ICollection<Category>? Categories { get; set; }
 

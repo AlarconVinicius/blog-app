@@ -12,6 +12,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
     public DbSet<BlogEntity> Blogs { get; set; }
+    public DbSet<UserBlog> UserBlogs { get; set; }
     public DbSet<RecipePost> Recipes { get; set; }
     public DbSet<Category> Categories { get; set; }
 
@@ -19,6 +20,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         modelBuilder.Entity<ApplicationUser>().ToTable("AspNetUsers");
         modelBuilder.ApplyConfiguration(new BlogConfiguration());
+        modelBuilder.ApplyConfiguration(new UserBlogConfiguration());
         modelBuilder.ApplyConfiguration(new CategoryConfiguration());
         modelBuilder.ApplyConfiguration(new RecipePostConfiguration());
 

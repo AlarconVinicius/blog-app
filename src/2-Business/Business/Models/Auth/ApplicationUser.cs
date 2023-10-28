@@ -20,7 +20,7 @@ public class ApplicationUser : IdentityUser
     [StringLength(150)]
     public string FullName { get; private set; } = string.Empty;
 
-    public ICollection<BlogEntity>? Blogs { get; set; }
+    public ICollection<UserBlog>? Blogs { get; set; }
 
     public ICollection<RecipePost>? RecipePosts { get; set; }
 

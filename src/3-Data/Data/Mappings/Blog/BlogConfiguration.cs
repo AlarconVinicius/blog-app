@@ -25,9 +25,6 @@ public class BlogConfiguration : IEntityTypeConfiguration<BlogEntity>
         builder.HasIndex(rb => rb.Name).IsUnique();
         builder.HasIndex(rb => rb.NormalizedName).IsUnique();
 
-        builder.HasMany(be => be.Users)
-                .WithMany(ub => ub.Blogs);
-
         builder.HasMany(be => be.RecipePosts)
             .WithOne(mp => mp.Blog)
             .HasForeignKey(mp => mp.BlogId);
@@ -35,6 +32,5 @@ public class BlogConfiguration : IEntityTypeConfiguration<BlogEntity>
         builder.HasMany(be => be.Categories)
             .WithOne(c => c.Blog)
             .HasForeignKey(c => c.BlogId);
-        //.OnDelete(DeleteBehavior.NoAction);
     }
 }
