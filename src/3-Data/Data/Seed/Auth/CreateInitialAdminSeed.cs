@@ -18,7 +18,7 @@ public class CreateInitialAdminSeed
 
     public void Create()
     {
-        Guid id = Guid.Parse("BBDC94BA-D192-409B-A9BF-BF5977B30425");
+        Guid id = Guid.Parse("bdad85a9-f6c4-46df-bbf4-618718f5a3cb");
         var phoneNumber = "(99) 99999-9999";
         var name = "Admin";
         var lastName = "User";
