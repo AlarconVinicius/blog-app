@@ -40,5 +40,6 @@ if (dbContext.Database.GetPendingMigrations().Any())
 var userManager = scope.ServiceProvider.GetService<UserManager<ApplicationUser>>();
 
 new ConfigureInitialAuthSeed(dbContext, userManager!).StartConfig();
+new ConfigureInitialBlogSeed(dbContext).StartConfig();
 
 app.Run();

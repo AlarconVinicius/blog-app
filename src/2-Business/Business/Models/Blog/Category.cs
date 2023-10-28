@@ -13,4 +13,10 @@ public class Category : Entity
     {
 
     }
+
+    public Category(string name, Guid blogId)
+    {
+        Name = name;
+        BlogId = blogId;
+    }
 }
