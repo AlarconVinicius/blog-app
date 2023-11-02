@@ -1,4 +1,5 @@
 ﻿using Business.Interfaces.Services;
+using FluentValidation.Results;
 
 namespace Business.Services;
 
@@ -16,6 +17,14 @@ public class MainService : IMainService
         Errors.Add(error);
     }
 
+    public void AddProcessingError(ValidationResult validation)
+    {
+        var errors = validation.Errors;
+        foreach (var error in errors)
+        {
+            Errors.Add(error.ErrorMessage);
+        }
+    }
     public void AddProcessingError(List<string> errors)
     {
         foreach (var error in errors)

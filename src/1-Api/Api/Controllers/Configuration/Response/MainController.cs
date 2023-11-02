@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FluentValidation.Results;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Api.Controllers.Configuration.Response;
@@ -10,7 +11,7 @@ public abstract class MainController : ControllerBase
 
     protected ActionResult CustomResponse(object result = null!)
     {
-        if (OperacaoValida())
+        if (IsOperationValid())
         {
             var response = new ApiSuccessResponse<object>
             {
@@ -37,7 +38,18 @@ public abstract class MainController : ControllerBase
         var erros = modelState.Values.SelectMany(e => e.Errors);
         foreach (var erro in erros)
         {
-            AdicionarErroProcessamento(erro.ErrorMessage);
+            AddProcessingError(erro.ErrorMessage);
+        }
+
+        return CustomResponse();
+    }
+
+    protected ActionResult CustomResponse(ValidationResult validation)
+    {
+        var erros = validation.Errors;
+        foreach (var erro in erros)
+        {
+            AddProcessingError(erro.ErrorMessage);
         }
 
         return CustomResponse();
@@ -47,18 +59,18 @@ public abstract class MainController : ControllerBase
     {
         foreach (var erro in mensagens)
         {
-            AdicionarErroProcessamento(erro);
+            AddProcessingError(erro);
         }
 
         return CustomResponse();
     }
 
-    protected bool OperacaoValida()
+    protected bool IsOperationValid()
     {
         return !Erros.Any();
     }
 
-    protected void AdicionarErroProcessamento(string erro)
+    protected void AddProcessingError(string erro)
     {
         Erros.Add(erro);
     }
