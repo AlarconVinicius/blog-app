@@ -1,12 +1,11 @@
-﻿using Business.Models.Blog;
-
-namespace Business.Models.Blog.Recipe;
+﻿namespace Business.Models.Blog.Recipe;
 
 public class RecipePost : MainPost
 {
     public Difficulty Difficulty { get; set; }
     public string PreparationTime { get; set; } = string.Empty;
     public int Servings { get; set; }
+    public string Ingredients { get; set; } = string.Empty;
 
     public RecipePost(
         string title,
@@ -16,12 +15,14 @@ public class RecipePost : MainPost
         Guid categoryId,
         Difficulty difficulty,
         string preparationTime,
-        int servings)
+        int servings,
+        string ingredients)
         : base(title, content, blogId, userId, categoryId)
     {
         Difficulty = difficulty;
         PreparationTime = preparationTime;
         Servings = servings;
+        Ingredients = ingredients;
     }
 
     public RecipePost()
@@ -34,11 +35,13 @@ public class RecipePost : MainPost
         Guid categoryId,
         Difficulty difficulty,
         string preparationTime,
-        int servings)
+        int servings,
+        string ingredients)
     {
         UpdateBlog(title, content, categoryId);
         Difficulty = difficulty;
         PreparationTime = preparationTime;
         Servings = servings;
+        Ingredients = ingredients;
     }
 }
