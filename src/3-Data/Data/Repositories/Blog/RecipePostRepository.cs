@@ -20,4 +20,23 @@ public class RecipePostRepository : BaseRepository<RecipePost>, IRecipePostRepos
         if (recipeDb == null) return null!;
         return recipeDb;
     }
+
+    public async Task<List<RecipePost>> GetAllRecipes()
+    {
+        return await _context.Recipes
+                             .Include(rp =>  rp.User)
+                             .Include(rp => rp.Category)
+                             .AsNoTracking()
+                             .ToListAsync();
+    }
+
+    public async Task<RecipePost> GetRecipeById(Guid id)
+    {
+        var entityDb = await _context.Recipes
+                                     .Include(rp => rp.User)
+                                     .Include(rp => rp.Category)
+                                     .FirstOrDefaultAsync(rp => rp.Id == id);
+        if (entityDb == null) return null!;
+        return entityDb;
+    }
 }
