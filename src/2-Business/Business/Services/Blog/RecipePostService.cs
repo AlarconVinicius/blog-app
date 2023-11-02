@@ -10,7 +10,7 @@ namespace Business.Services.Blog;
 
 public class RecipePostService : MainService, IRecipePostService
 {
-    private Guid blogId = Guid.Parse("2a2ff613-6f3b-4dd8-9fd6-a2f824b67b62");
+    private readonly Guid blogId = Guid.Parse("2a2ff613-6f3b-4dd8-9fd6-a2f824b67b62");
     private readonly IRecipePostRepository _repository;
     private readonly IHttpContextAccessor _httpAccessor;
     public RecipePostService(IRecipePostRepository repository, IHttpContextAccessor httpAccessor)
@@ -23,7 +23,7 @@ public class RecipePostService : MainService, IRecipePostService
     {
         try
         {
-            var recipeDb = await _repository.GetRecipeByTitle(recipe.title);
+            var recipeDb = await _repository.GetRecipeByTitle(recipe.Title);
             if(recipeDb != null)
             {
                 AddProcessingError($"Erro ao adicionar receita: Título já existe");

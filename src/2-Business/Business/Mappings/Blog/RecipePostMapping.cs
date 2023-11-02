@@ -15,6 +15,6 @@ public static class RecipePostMapping
     public static RecipePost ToDomain(this RecipePostAddDto recipePost)
     {
 
-        return new RecipePost(recipePost.title, recipePost.content, recipePost.blogId, recipePost.userId, recipePost.categoryId, recipePost.difficulty, recipePost.preparationTime, recipePost.servings, recipePost.ingredients.ToString());
+        return new RecipePost(recipePost.Title, recipePost.Content, recipePost.BlogId, recipePost.UserId, recipePost.CategoryId, recipePost.Difficulty, recipePost.PreparationTime, recipePost.Servings, recipePost.Ingredients.ToString());
     }
 }

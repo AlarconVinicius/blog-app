@@ -1,3 +1,3 @@
 ﻿namespace Business.Models.Blog.Dtos;
 
-public record CategoryViewDto(Guid id, string name);
+public record CategoryViewDto(Guid Id, string Name);

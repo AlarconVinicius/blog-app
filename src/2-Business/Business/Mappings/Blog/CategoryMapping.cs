@@ -12,6 +12,6 @@ public static class CategoryMapping
 
     public static Category ToDomain(this CategoryAddDto category)
     {
-        return new Category(category.name, category.blogId);
+        return new Category(category.Name, category.BlogId);
     }
 }

@@ -2,4 +2,4 @@
 
 namespace Business.Models.Blog.Dtos;
 
-public record RecipePostAddDto(string title, string content, Guid blogId, Guid userId, Guid categoryId, Difficulty difficulty, string preparationTime, int servings, RecipeIngredientsDto ingredients);
+public record RecipePostAddDto(string Title, string Content, Guid BlogId, Guid UserId, Guid CategoryId, Difficulty Difficulty, string PreparationTime, int Servings, RecipeIngredientsDto Ingredients);
