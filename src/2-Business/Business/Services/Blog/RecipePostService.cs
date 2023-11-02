@@ -1,11 +1,14 @@
 ﻿using Business.Interfaces.Repositories.Blog;
 using Business.Interfaces.Services.Blog;
+using Business.Mappings.Blog;
+using Business.Models.Blog.Dtos;
 using Business.Models.Blog.Recipe;
 
 namespace Business.Services.Blog;
 
 public class RecipePostService : MainService, IRecipePostService
 {
+    private Guid blogId = Guid.Parse("2a2ff613-6f3b-4dd8-9fd6-a2f824b67b62");
     private readonly IRecipePostRepository _repository;
     public RecipePostService(IRecipePostRepository repository)
     {
@@ -16,6 +19,13 @@ public class RecipePostService : MainService, IRecipePostService
     {
         try
         {
+            var recipeDb = await _repository.GetRecipeByTitle(recipe.Title);
+            if(recipeDb != null)
+            {
+                AddProcessingError($"Erro ao adicionar receita: Título já existe");
+                return;
+            }
+            recipe.BlogId = blogId;
             recipe.GenerateURL();
             await _repository.AddAsync(recipe);
             return;
