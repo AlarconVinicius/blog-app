@@ -4,6 +4,7 @@ using Business.Interfaces.Services.Blog;
 using Business.Mappings.Blog;
 using Business.Models.Blog.Dtos;
 using Business.Models.Blog.Recipe;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
 
 namespace Business.Services.Blog;
@@ -13,16 +14,24 @@ public class RecipePostService : MainService, IRecipePostService
     private readonly Guid blogId = Guid.Parse("2a2ff613-6f3b-4dd8-9fd6-a2f824b67b62");
     private readonly IRecipePostRepository _repository;
     private readonly IHttpContextAccessor _httpAccessor;
-    public RecipePostService(IRecipePostRepository repository, IHttpContextAccessor httpAccessor)
+    private readonly IValidator<RecipePostAddDto> _addValidator;
+    public RecipePostService(IRecipePostRepository repository, IHttpContextAccessor httpAccessor, IValidator<RecipePostAddDto> addValidator)
     {
         _repository = repository;
         _httpAccessor = httpAccessor;
+        _addValidator = addValidator;
     }
 
     public async Task AddRecipe(RecipePostAddDto recipe)
     {
         try
         {
+            var validationResult = await _addValidator.ValidateAsync(recipe);
+            if (!validationResult.IsValid)
+            {
+                AddProcessingError(validationResult);
+                return;
+            }
             var recipeDb = await _repository.GetRecipeByTitle(recipe.Title);
             if(recipeDb != null)
             {

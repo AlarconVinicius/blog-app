@@ -4,11 +4,14 @@ using Business.Interfaces.Repositories.Blog;
 using Business.Interfaces.Services.Auth;
 using Business.Interfaces.Services.Blog;
 using Business.Models.Auth;
+using Business.Models.Blog.Dtos;
 using Business.Services.Auth;
 using Business.Services.Blog;
+using Business.Validators;
 using Data.Blog.Repositories;
 using Data.Configuration;
 using Data.Repositories;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -69,6 +72,8 @@ public static class DependencyInjectionConfig
     public static void ConfigureCustomServices(this IServiceCollection services)
     {
         services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
     }
 
     public static void ConfigureCustomAuthServices(this IServiceCollection services)
@@ -86,5 +91,7 @@ public static class DependencyInjectionConfig
 
         services.AddScoped<IRecipePostRepository, RecipePostRepository>();
         services.AddScoped<IRecipePostService, RecipePostService>();
+
+        services.AddScoped<IValidator<RecipePostAddDto>, RecipePostAddValidator>();
     }
 }
