@@ -1,16 +1,17 @@
-﻿using Business.Models.Blog.Recipe;
+﻿using Business.Models.Blog.Dtos;
+using Business.Models.Blog.Recipe;
 
 namespace Business.Interfaces.Services.Blog;
 
 public interface IRecipePostService : IMainService
 {
-    public Task AddRecipe(RecipePost objeto);
+    public Task AddRecipe(RecipePostAddDto recipe);
 
-    public Task UpdateRecipe(RecipePost objeto);
+    public Task UpdateRecipe(RecipePost recipe);
 
     public Task DeleteRecipe(Guid id);
 
-    public Task<List<RecipePost>> GetRecipes();
+    public Task<IEnumerable<RecipePostViewDto>> GetRecipes();
 
-    public Task<RecipePost> GetRecipeById(Guid id);
+    public Task<RecipePostViewDto> GetRecipeById(Guid id);
 }

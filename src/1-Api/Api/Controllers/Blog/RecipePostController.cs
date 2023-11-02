@@ -1,6 +1,6 @@
 ﻿using Api.Controllers.Configuration.Response;
 using Business.Interfaces.Services.Blog;
-using Business.Models.Blog.Recipe;
+using Business.Models.Blog.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.Blog;
@@ -29,7 +29,7 @@ public class RecipePostController : MainController
     }
 
     [HttpPost]
-    public async Task<IActionResult> PostRecipe(RecipePost recipe)
+    public async Task<IActionResult> PostRecipe(RecipePostAddDto recipe)
     {
         await _service.AddRecipe(recipe);
         return _service.IsOperationValid() ? CustomResponse() : CustomResponse(_service.GetErrors());

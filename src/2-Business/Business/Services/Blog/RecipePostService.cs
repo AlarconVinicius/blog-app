@@ -15,19 +15,20 @@ public class RecipePostService : MainService, IRecipePostService
         _repository = repository;
     }
 
-    public async Task AddRecipe(RecipePost recipe)
+    public async Task AddRecipe(RecipePostAddDto recipe)
     {
         try
         {
-            var recipeDb = await _repository.GetRecipeByTitle(recipe.Title);
+            var recipeDb = await _repository.GetRecipeByTitle(recipe.title);
             if(recipeDb != null)
             {
                 AddProcessingError($"Erro ao adicionar receita: Título já existe");
                 return;
             }
-            recipe.BlogId = blogId;
-            recipe.GenerateURL();
-            await _repository.AddAsync(recipe);
+            var recipeMapped = recipe.ToDomain();
+            recipeMapped.BlogId = blogId;
+            recipeMapped.GenerateURL();
+            await _repository.AddAsync(recipeMapped);
             return;
         }
         catch (Exception ex)
@@ -52,11 +53,12 @@ public class RecipePostService : MainService, IRecipePostService
         }
     }
 
-    public async Task<RecipePost> GetRecipeById(Guid id)
+    public async Task<RecipePostViewDto> GetRecipeById(Guid id)
     {
         try
         {
-            return await _repository.GetByIdAsync(id);
+            var recipeDb = await _repository.GetRecipeById(id);
+            return recipeDb.ToDto();
         }
         catch (Exception ex)
         {
@@ -65,11 +67,12 @@ public class RecipePostService : MainService, IRecipePostService
         }
     }
 
-    public async Task<List<RecipePost>> GetRecipes()
+    public async Task<IEnumerable<RecipePostViewDto>> GetRecipes()
     {
         try
         {
-            return await _repository.GetAllAsync();
+            var recipeDb = await _repository.GetAllRecipes();
+            return recipeDb.Select(x => x.ToDto());
         }
         catch (Exception ex)
         {
