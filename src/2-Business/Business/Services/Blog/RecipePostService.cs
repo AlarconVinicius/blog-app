@@ -1,8 +1,10 @@
-﻿using Business.Interfaces.Repositories.Blog;
+﻿using Business.Helpers.Auth;
+using Business.Interfaces.Repositories.Blog;
 using Business.Interfaces.Services.Blog;
 using Business.Mappings.Blog;
 using Business.Models.Blog.Dtos;
 using Business.Models.Blog.Recipe;
+using Microsoft.AspNetCore.Http;
 
 namespace Business.Services.Blog;
 
@@ -10,9 +12,11 @@ public class RecipePostService : MainService, IRecipePostService
 {
     private Guid blogId = Guid.Parse("2a2ff613-6f3b-4dd8-9fd6-a2f824b67b62");
     private readonly IRecipePostRepository _repository;
-    public RecipePostService(IRecipePostRepository repository)
+    private readonly IHttpContextAccessor _httpAccessor;
+    public RecipePostService(IRecipePostRepository repository, IHttpContextAccessor httpAccessor)
     {
         _repository = repository;
+        _httpAccessor = httpAccessor;
     }
 
     public async Task AddRecipe(RecipePostAddDto recipe)
@@ -27,6 +31,7 @@ public class RecipePostService : MainService, IRecipePostService
             }
             var recipeMapped = recipe.ToDomain();
             recipeMapped.BlogId = blogId;
+            recipeMapped.UserId = AuthHelper.GetUserId(_httpAccessor).ToString();
             recipeMapped.GenerateURL();
             await _repository.AddAsync(recipeMapped);
             return;
