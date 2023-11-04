@@ -5,6 +5,6 @@ namespace Business.Interfaces.Services.Auth;
 
 public interface IAuthService : IMainService
 {
-    Task<string> RegisterUserAsync(RegisterUserRequest registerUser);
-    Task<string> LoginAsync(LoginUserRequest loginUser);
+    Task<LoginUserResponse> RegisterUserAsync(RegisterUserRequest registerUser);
+    Task<LoginUserResponse> LoginAsync(LoginUserRequest loginUser);
 }

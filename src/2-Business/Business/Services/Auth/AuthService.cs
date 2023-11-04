@@ -23,7 +23,7 @@ public class AuthService : MainService, IAuthService
         _appSettings = appSettings.Value;
     }
 
-    public async Task<string> RegisterUserAsync(RegisterUserRequest registerUser)
+    public async Task<LoginUserResponse> RegisterUserAsync(RegisterUserRequest registerUser)
     {
         var user = new ApplicationUser
         {
@@ -54,7 +54,7 @@ public class AuthService : MainService, IAuthService
         return await GenerateJwt(registerUser.Email);
     }
 
-    public async Task<string> LoginAsync(LoginUserRequest loginUser)
+    public async Task<LoginUserResponse> LoginAsync(LoginUserRequest loginUser)
     {
         var result = await _signInManager.PasswordSignInAsync(loginUser.Email, loginUser.Password, false, true);
 
@@ -65,32 +65,75 @@ public class AuthService : MainService, IAuthService
         return null!;
     }
 
-    private async Task<string> GenerateJwt(string email)
+    private async Task<LoginUserResponse> GenerateJwt(string email)
     {
-        var user = await _userManager.FindByEmailAsync(email);
-        if (user == null)
+        var userDb = await _userManager.FindByEmailAsync(email);
+        if (userDb == null)
         {
             return null!;
         }
-        var identityClaims = new ClaimsIdentity();
-        identityClaims.AddClaims(await _userManager.GetClaimsAsync(user!));
-        var userRoles = await _userManager.GetRolesAsync(user!);
-        foreach (var role in userRoles)
+        var claims = (await _userManager.GetClaimsAsync(userDb)).ToList();
+        var userRoles = await _userManager.GetRolesAsync(userDb);
+        AddStandardClaims(claims, userDb);
+        AddUserRolesClaims(claims, userRoles);
+
+        var token = GenerateToken(claims);
+
+        var response = CreateResponse(token, userDb, claims);
+
+        return response;
+    }
+
+    private void AddStandardClaims(List<Claim> claims, IdentityUser user)
+    {
+        claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Id));
+        claims.Add(new Claim(JwtRegisteredClaimNames.Email, user.Email!));
+        claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
+        claims.Add(new Claim(JwtRegisteredClaimNames.Nbf, ToUnixEpochDate(DateTime.UtcNow).ToString()));
+        claims.Add(new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(DateTime.UtcNow).ToString(), ClaimValueTypes.Integer64));
+    }
+    private void AddUserRolesClaims(List<Claim> claims, IList<string> userRoles)
+    {
+        foreach (var userRole in userRoles)
         {
-            identityClaims.AddClaim(new Claim(ClaimTypes.Role, role));
+            claims.Add(new Claim("role", userRole));
         }
-        var tokenHandler = new JwtSecurityTokenHandler();
+    }
+    private SecurityToken GenerateToken(List<Claim> claims)
+    {
+        var identityClaims = new ClaimsIdentity();
+        identityClaims.AddClaims(claims);
+
         var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
 
-        var tokenDescription = new SecurityTokenDescriptor
+        var tokenHandler = new JwtSecurityTokenHandler();
+
+        return tokenHandler.CreateToken(new SecurityTokenDescriptor
         {
             Subject = identityClaims,
             Issuer = _appSettings.Issuer,
             Audience = _appSettings.Audience,
             Expires = DateTime.UtcNow.AddHours(_appSettings.ExpirationHours),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-        };
+        });
 
-        return tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescription));
     }
+    private LoginUserResponse CreateResponse(SecurityToken token, IdentityUser user, List<Claim> claims)
+    {
+        var encodedToken = new JwtSecurityTokenHandler().WriteToken(token);
+
+        return new LoginUserResponse
+        {
+            AccessToken = encodedToken,
+            ExpiresIn = TimeSpan.FromHours(_appSettings.ExpirationHours).TotalSeconds,
+            UserToken = new UserToken
+            {
+                Id = user.Id,
+                Email = user.Email!,
+                Claims = claims.Select(c => new UserClaim { Type = c.Type, Value = c.Value })
+            }
+        };
+    }
+    private static long ToUnixEpochDate(DateTime date)
+        => (long)Math.Round((date.ToUniversalTime() - DateTimeOffset.UnixEpoch).TotalSeconds);
 }

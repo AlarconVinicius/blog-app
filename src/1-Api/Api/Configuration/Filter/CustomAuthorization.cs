@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace Api.Configuration.Filter;
+﻿namespace Api.Configuration.Filter;
 
 public class CustomAuthorization
 {
