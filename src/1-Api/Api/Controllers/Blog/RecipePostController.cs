@@ -34,6 +34,22 @@ public class RecipePostController : MainController
 
     #region Authenticated Methods
     [Authorize]
+    [HttpGet("admin-panel/{id}")]
+    public async Task<IActionResult> GetRecipeByIdForCurrentUser(Guid id)
+    {
+        var result = await _service.GetRecipeByIdForCurrentUser(id);
+        return _service.IsOperationValid() ? CustomResponse(result) : CustomResponse(_service.GetErrors());
+    }
+
+    [Authorize]
+    [HttpGet("admin-panel")]
+    public async Task<IActionResult> GetRecipesForCurrentUser()
+    {
+        var result = await _service.GetRecipesForCurrentUser();
+        return _service.IsOperationValid() ? CustomResponse(result) : CustomResponse(_service.GetErrors());
+    }
+
+    [Authorize]
     [ClaimsAuthorize("Permission", "Writer")]
     [HttpPost]
     public async Task<IActionResult> PostRecipe(RecipePostAddDto recipe)
