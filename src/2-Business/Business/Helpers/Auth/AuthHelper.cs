@@ -56,4 +56,29 @@ public class AuthHelper
 
         return userRoles.Contains("Admin");
     }
+
+    public static List<Claim> GetUserClaims(IHttpContextAccessor accessor)
+    {
+        if (!IsAuthenticated(accessor)) return null!;
+
+        ClaimsPrincipal claims = accessor.HttpContext!.User;
+        if (claims == null)
+        {
+            return new List<Claim>();
+        }
+        return claims.Claims.ToList();
+    }
+    public static bool UserHasClaim(IHttpContextAccessor accessor, string claimType, string claimValue)
+    {
+        if (!IsAuthenticated(accessor)) return false;
+
+        ClaimsPrincipal claims = accessor.HttpContext!.User;
+        if (claims == null)
+        {
+            return false;
+        }
+        var claimList = claims.Claims.ToList();
+        return claimList.Any(claim =>
+            claim.Type == claimType && claim.Value.Contains(claimValue));
+    }
 }
