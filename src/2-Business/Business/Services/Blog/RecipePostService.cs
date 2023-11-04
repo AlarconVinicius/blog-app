@@ -22,9 +22,41 @@ public class RecipePostService : MainService, IRecipePostService
         _addValidator = addValidator;
     }
 
+    #region Public Methods
+    public async Task<RecipePostViewDto> GetRecipeById(Guid id)
+    {
+        try
+        {
+            var recipeDb = await _repository.GetRecipeById(id);
+            return recipeDb.ToDto();
+        }
+        catch (Exception ex)
+        {
+            AddProcessingError($"Falha ao buscar receita: {ex.Message}");
+            return null!;
+        }
+    }
+
+    public async Task<IEnumerable<RecipePostViewDto>> GetRecipes()
+    {
+        try
+        {
+            var recipeDb = await _repository.GetAllRecipes();
+            return recipeDb.Select(x => x.ToDto());
+        }
+        catch (Exception ex)
+        {
+            AddProcessingError($"Falha ao buscar receita: {ex.Message}");
+            return null!;
+        }
+    }
+    #endregion
+
+    #region Authenticated Methods
     public async Task AddRecipe(RecipePostAddDto recipe)
     {
         try
+        
         {
             var validationResult = await _addValidator.ValidateAsync(recipe);
             if (!validationResult.IsValid)
@@ -33,7 +65,7 @@ public class RecipePostService : MainService, IRecipePostService
                 return;
             }
             var recipeDb = await _repository.GetRecipeByTitle(recipe.Title);
-            if(recipeDb != null)
+            if (recipeDb != null)
             {
                 AddProcessingError($"Erro ao adicionar receita: Título já existe");
                 return;
@@ -67,34 +99,6 @@ public class RecipePostService : MainService, IRecipePostService
         }
     }
 
-    public async Task<RecipePostViewDto> GetRecipeById(Guid id)
-    {
-        try
-        {
-            var recipeDb = await _repository.GetRecipeById(id);
-            return recipeDb.ToDto();
-        }
-        catch (Exception ex)
-        {
-            AddProcessingError($"Falha ao buscar receita: {ex.Message}");
-            return null!;
-        }
-    }
-
-    public async Task<IEnumerable<RecipePostViewDto>> GetRecipes()
-    {
-        try
-        {
-            var recipeDb = await _repository.GetAllRecipes();
-            return recipeDb.Select(x => x.ToDto());
-        }
-        catch (Exception ex)
-        {
-            AddProcessingError($"Falha ao buscar receita: {ex.Message}");
-            return null!;
-        }
-    }
-
     public async Task UpdateRecipe(RecipePost recipe)
     {
         try
@@ -110,4 +114,8 @@ public class RecipePostService : MainService, IRecipePostService
             return;
         }
     }
+    #endregion
+
+    #region Admin Methods
+    #endregion
 }

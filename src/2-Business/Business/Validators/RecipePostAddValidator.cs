@@ -17,9 +17,6 @@ public class RecipePostAddValidator : AbstractValidator<RecipePostAddDto>
         RuleFor(dto => dto.BlogId)
             .NotEmpty().WithMessage("O ID do blog é obrigatório.");
 
-        RuleFor(dto => dto.UserId)
-            .NotEmpty().WithMessage("O ID do usuário é obrigatório.");
-
         RuleFor(dto => dto.CategoryId)
             .NotEmpty().WithMessage("O ID da categoria é obrigatório.");
 
