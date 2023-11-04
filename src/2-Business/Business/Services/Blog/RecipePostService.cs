@@ -13,11 +13,13 @@ public class RecipePostService : MainService, IRecipePostService
 {
     private readonly Guid blogId = Guid.Parse("2a2ff613-6f3b-4dd8-9fd6-a2f824b67b62");
     private readonly IRecipePostRepository _repository;
+    private readonly ICategoryRepository _categoryRepository;
     private readonly IHttpContextAccessor _httpAccessor;
     private readonly IValidator<RecipePostAddDto> _addValidator;
-    public RecipePostService(IRecipePostRepository repository, IHttpContextAccessor httpAccessor, IValidator<RecipePostAddDto> addValidator)
+    public RecipePostService(IRecipePostRepository repository, ICategoryRepository categoryRepository, IHttpContextAccessor httpAccessor, IValidator<RecipePostAddDto> addValidator)
     {
         _repository = repository;
+        _categoryRepository = categoryRepository;
         _httpAccessor = httpAccessor;
         _addValidator = addValidator;
     }
@@ -58,16 +60,25 @@ public class RecipePostService : MainService, IRecipePostService
         try
         
         {
+            if (!IsWriter())
+            {
+                AddProcessingError("Erro ao adicionar receita: Usuário não possui permissão de escritor.");
+                return;
+            }
             var validationResult = await _addValidator.ValidateAsync(recipe);
             if (!validationResult.IsValid)
             {
                 AddProcessingError(validationResult);
                 return;
             }
-            var recipeDb = await _repository.GetRecipeByTitle(recipe.Title);
-            if (recipeDb != null)
+            if (!await CategoryExists(recipe.CategoryId))
             {
-                AddProcessingError($"Erro ao adicionar receita: Título já existe");
+                AddProcessingError("Erro ao adicionar receita: Categoria não encontrada.");
+                return;
+            }
+            if (await TitleExists(recipe.Title))
+            {
+                AddProcessingError("Erro ao adicionar receita: Título já existe");
                 return;
             }
             var recipeMapped = recipe.ToDomain();
@@ -88,6 +99,18 @@ public class RecipePostService : MainService, IRecipePostService
     {
         try
         {
+            if (!IsWriter())
+            {
+                AddProcessingError("Erro ao deletar receita: Usuário não possui permissão de escritor.");
+                return;
+            }
+            var userAuthenticated = AuthHelper.GetUserId(_httpAccessor).ToString();
+            var recipeDb = await _repository.GetRecipeById(id);
+            if (recipeDb == null || recipeDb.UserId != userAuthenticated)
+            {
+                AddProcessingError("Falha ao deletar receita: Receita não encontrada.");
+                return;
+            };
             await _repository.DeleteAsync(id);
             return;
 
@@ -103,6 +126,31 @@ public class RecipePostService : MainService, IRecipePostService
     {
         try
         {
+            if (!IsWriter())
+            {
+                AddProcessingError("Erro ao atualizar receita: Usuário não possui permissão de escritor.");
+                return;
+            }
+            if (!await CategoryExists(recipe.CategoryId))
+            {
+                AddProcessingError("Erro ao atualizar receita: Categoria não encontrada.");
+                return;
+            }
+            var userAuthenticated = AuthHelper.GetUserId(_httpAccessor).ToString();
+            var recipeDb = await _repository.GetRecipeById(recipe.Id);
+            if (recipeDb == null || recipeDb.UserId != userAuthenticated)
+            {
+                AddProcessingError("Falha ao atualizar receita: Receita não encontrada.");
+                return;
+            };
+            if (!recipeDb.Title.Equals(recipe.Title))
+            {
+                if (await TitleExists(recipe.Title))
+                {
+                    AddProcessingError("Erro ao atualizar receita: Título já existe");
+                    return;
+                }
+            }
             recipe.GenerateURL();
             await _repository.UpdateAsync(recipe);
             return;
@@ -116,6 +164,18 @@ public class RecipePostService : MainService, IRecipePostService
     }
     #endregion
 
-    #region Admin Methods
+    #region Verification Methods
+    private bool IsWriter()
+    {
+        return AuthHelper.UserHasClaim(_httpAccessor, "Permission", "Writer");
+    }
+    private async Task<bool> CategoryExists(Guid categoryId)
+    {
+        return await _categoryRepository.GetByIdAsync(categoryId) != null ? true : false;
+    }
+    private async Task<bool> TitleExists(string title)
+    {
+        return await _repository.GetRecipeByTitle(title) != null ? true : false;
+    }
     #endregion
 }
