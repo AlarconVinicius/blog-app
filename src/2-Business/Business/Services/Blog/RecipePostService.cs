@@ -60,6 +60,11 @@ public class RecipePostService : MainService, IRecipePostService
         {
             var userAuthenticated = AuthHelper.GetUserId(_httpAccessor).ToString();
             var recipeDb = await _repository.GetRecipeByIdAndUser(id, userAuthenticated);
+            if (recipeDb == null || recipeDb.UserId != userAuthenticated)
+            {
+                AddProcessingError("Falha ao buscar receita: Receita não encontrada.");
+                return null!;
+            };
             return recipeDb.ToDto();
         }
         catch (Exception ex)
@@ -74,8 +79,13 @@ public class RecipePostService : MainService, IRecipePostService
         try
         {
             var userAuthenticated = AuthHelper.GetUserId(_httpAccessor).ToString();
-            var recipeDb = await _repository.GetAllRecipesByUser(userAuthenticated);
-            return recipeDb.Select(x => x.ToDto());
+            var recipesDb = await _repository.GetAllRecipesByUser(userAuthenticated);
+            if (recipesDb == null || recipesDb.All(r => r.UserId != userAuthenticated))
+            {
+                AddProcessingError("Falha ao buscar receitas: Receitas não encontradas.");
+                return null!;
+            };
+            return recipesDb.Select(x => x.ToDto());
         }
         catch (Exception ex)
         {
