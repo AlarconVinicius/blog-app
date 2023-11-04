@@ -54,6 +54,35 @@ public class RecipePostService : MainService, IRecipePostService
     #endregion
 
     #region Authenticated Methods
+    public async Task<RecipePostViewDto> GetRecipeByIdForCurrentUser(Guid id)
+    {
+        try
+        {
+            var userAuthenticated = AuthHelper.GetUserId(_httpAccessor).ToString();
+            var recipeDb = await _repository.GetRecipeByIdAndUser(id, userAuthenticated);
+            return recipeDb.ToDto();
+        }
+        catch (Exception ex)
+        {
+            AddProcessingError($"Falha ao buscar receita: {ex.Message}");
+            return null!;
+        }
+    }
+
+    public async Task<IEnumerable<RecipePostViewDto>> GetRecipesForCurrentUser()
+    {
+        try
+        {
+            var userAuthenticated = AuthHelper.GetUserId(_httpAccessor).ToString();
+            var recipeDb = await _repository.GetAllRecipesByUser(userAuthenticated);
+            return recipeDb.Select(x => x.ToDto());
+        }
+        catch (Exception ex)
+        {
+            AddProcessingError($"Falha ao buscar receita: {ex.Message}");
+            return null!;
+        }
+    }
     public async Task AddRecipe(RecipePostAddDto recipe)
     {
         try
