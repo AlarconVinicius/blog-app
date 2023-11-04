@@ -39,4 +39,24 @@ public class RecipePostRepository : BaseRepository<RecipePost>, IRecipePostRepos
         if (entityDb == null) return null!;
         return entityDb;
     }
+
+    public async Task<RecipePost> GetRecipeByIdAndUser(Guid id, string userId)
+    {
+        var entityDb = await _context.Recipes
+                                     .Include(rp => rp.User)
+                                     .Include(rp => rp.Category)
+                                     .FirstOrDefaultAsync(rp => rp.Id == id && rp.UserId == userId);
+        if (entityDb == null) return null!;
+        return entityDb;
+    }
+
+    public async Task<List<RecipePost>> GetAllRecipesByUser(string userId)
+    {
+        return await _context.Recipes
+                             .Where(rp => rp.UserId == userId)
+                             .Include(rp => rp.User)
+                             .Include(rp => rp.Category)
+                             .AsNoTracking()
+                             .ToListAsync();
+    }
 }

@@ -7,4 +7,7 @@ public interface IRecipePostRepository : IBaseRepository<RecipePost>
     Task<RecipePost> GetRecipeByTitle(string title);
     Task<RecipePost> GetRecipeById(Guid id);
     Task<List<RecipePost>> GetAllRecipes();
+    Task<RecipePost> GetRecipeByIdAndUser(Guid id, string userId);
+    Task<List<RecipePost>> GetAllRecipesByUser(string userId);
+
 }
