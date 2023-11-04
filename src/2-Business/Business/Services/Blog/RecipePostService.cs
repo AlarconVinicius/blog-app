@@ -3,7 +3,6 @@ using Business.Interfaces.Repositories.Blog;
 using Business.Interfaces.Services.Blog;
 using Business.Mappings.Blog;
 using Business.Models.Blog.Dtos;
-using Business.Models.Blog.Recipe;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 
@@ -122,10 +121,17 @@ public class RecipePostService : MainService, IRecipePostService
         }
     }
 
-    public async Task UpdateRecipe(RecipePost recipe)
+    public async Task UpdateRecipe(Guid recipeId, RecipePostAddDto recipe)
     {
         try
         {
+            var userAuthenticated = AuthHelper.GetUserId(_httpAccessor).ToString();
+            var recipeDb = await _repository.GetRecipeById(recipeId);
+            if (recipeDb == null || recipeDb.UserId != userAuthenticated || !await RecipeExists(recipeId))
+            {
+                AddProcessingError("Falha ao atualizar receita: Receita não encontrada.");
+                return;
+            };
             if (!IsWriter())
             {
                 AddProcessingError("Erro ao atualizar receita: Usuário não possui permissão de escritor.");
@@ -136,13 +142,6 @@ public class RecipePostService : MainService, IRecipePostService
                 AddProcessingError("Erro ao atualizar receita: Categoria não encontrada.");
                 return;
             }
-            var userAuthenticated = AuthHelper.GetUserId(_httpAccessor).ToString();
-            var recipeDb = await _repository.GetRecipeById(recipe.Id);
-            if (recipeDb == null || recipeDb.UserId != userAuthenticated)
-            {
-                AddProcessingError("Falha ao atualizar receita: Receita não encontrada.");
-                return;
-            };
             if (!recipeDb.Title.Equals(recipe.Title))
             {
                 if (await TitleExists(recipe.Title))
@@ -151,8 +150,15 @@ public class RecipePostService : MainService, IRecipePostService
                     return;
                 }
             }
-            recipe.GenerateURL();
-            await _repository.UpdateAsync(recipe);
+            recipeDb.Title = recipe.Title;
+            recipeDb.Content = recipe.Content;
+            recipeDb.PreparationTime = recipe.PreparationTime;
+            recipeDb.Difficulty = recipe.Difficulty;
+            recipeDb.Servings = recipe.Servings;
+            recipeDb.Ingredients = recipe.Ingredients.ToString();
+            recipeDb.CategoryId = recipe.CategoryId;
+            recipeDb.GenerateURL();
+            await _repository.UpdateAsync(recipeDb);
             return;
 
         }
@@ -176,6 +182,10 @@ public class RecipePostService : MainService, IRecipePostService
     private async Task<bool> TitleExists(string title)
     {
         return await _repository.GetRecipeByTitle(title) != null ? true : false;
+    }
+    private async Task<bool> RecipeExists(Guid recipeId)
+    {
+        return await _repository.GetRecipeById(recipeId) != null ? true : false;
     }
     #endregion
 }
