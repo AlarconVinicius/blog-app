@@ -1,4 +1,5 @@
-﻿using Api.Controllers.Configuration.Response;
+﻿using Api.Configuration.Filter;
+using Api.Controllers.Configuration.Response;
 using Business.Interfaces.Services.Blog;
 using Business.Models.Blog.Dtos;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +29,7 @@ public class RecipePostController : MainController
         return _service.IsOperationValid() ? CustomResponse(result) : CustomResponse(_service.GetErrors());
     }
 
+    [ClaimsAuthorize("Permission", "Writer")]
     [HttpPost]
     public async Task<IActionResult> PostRecipe(RecipePostAddDto recipe)
     {
