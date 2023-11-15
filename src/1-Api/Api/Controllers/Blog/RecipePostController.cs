@@ -24,6 +24,13 @@ public class RecipePostController : MainController
         return _service.IsOperationValid() ? CustomResponse(result) : CustomResponse(_service.GetErrors());
     }
 
+    [HttpPost("search")]
+    public async Task<IActionResult> GetRecipeBySearch([FromBody] string searchQuery)
+    {
+        var result = await _service.GetRecipeBySearch(searchQuery);
+        return _service.IsOperationValid() ? CustomResponse(result) : CustomResponse(_service.GetErrors());
+    }
+
     [HttpGet()]
     public async Task<IActionResult> GetRecipes()
     {

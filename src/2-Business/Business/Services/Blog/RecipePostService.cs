@@ -51,6 +51,20 @@ public class RecipePostService : MainService, IRecipePostService
             return null!;
         }
     }
+
+    public async Task<IEnumerable<RecipePostViewDto>> GetRecipeBySearch(string searchQuery)
+    {
+        try
+        {
+            var recipeDb = await _repository.GetRecipeBySearch(searchQuery);
+            return recipeDb.Select(x => x.ToDto());
+        }
+        catch (Exception ex)
+        {
+            AddProcessingError($"Falha ao buscar receita: {ex.Message}");
+            return null!;
+        }
+    }
     #endregion
 
     #region Authenticated Methods

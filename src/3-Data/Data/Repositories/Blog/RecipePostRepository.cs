@@ -20,6 +20,15 @@ public class RecipePostRepository : BaseRepository<RecipePost>, IRecipePostRepos
         if (recipeDb == null) return null!;
         return recipeDb;
     }
+    public async Task<List<RecipePost>> GetRecipeBySearch(string searchQuery)
+    {
+        return await _context.Recipes
+                             .Where(rp => rp.Title.Contains(searchQuery) || rp.Ingredients.Contains(searchQuery))
+                             .Include(rp => rp.User)
+                             .Include(rp => rp.Category)
+                             .AsNoTracking()
+                             .ToListAsync();
+    }
 
     public async Task<List<RecipePost>> GetAllRecipes()
     {
