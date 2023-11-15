@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.Blog;
 
-[Route("api/blog")]
+[Route("api/blogs")]
 public class BlogController : MainController
 {
     private readonly IBlogService _service;
@@ -28,21 +28,21 @@ public class BlogController : MainController
         return _service.IsOperationValid() ? CustomResponse(result) : CustomResponse(_service.GetErrors());
     }
 
-    [HttpPost]
+    [HttpPost("/api/admin/blogs")]
     public async Task<IActionResult> PostBlog(BlogEntity blog)
     {
         await _service.AddBlog(blog);
         return _service.IsOperationValid() ? CustomResponse() : CustomResponse(_service.GetErrors());
     }
 
-    [HttpPut("{id}")]
+    [HttpPut("/api/admin/blogs/{id}")]
     public async Task<IActionResult> PutBlog(Guid id, BlogEntity blog)
     {
         await _service.UpdateBlog(id, blog);
         return _service.IsOperationValid() ? CustomResponse() : CustomResponse(_service.GetErrors());
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("/api/admin/blogs/{id}")]
     public async Task<IActionResult> DeleteBlog(Guid id)
     {
         await _service.DeleteBlog(id);
