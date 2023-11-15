@@ -7,11 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.Blog;
 
-[Route("api/recipe-blog")]
-public class RecipePostController : MainController
+[Route("api/recipes")]
+public class RecipeController : MainController
 {
     private readonly IRecipePostService _service;
-    public RecipePostController(IRecipePostService service)
+    public RecipeController(IRecipePostService service)
     {
         _service = service;
     }
@@ -41,7 +41,7 @@ public class RecipePostController : MainController
 
     #region Authenticated Methods
     [Authorize]
-    [HttpGet("admin-panel/{id}")]
+    [HttpGet("/api/admin/recipes/{id}")]
     public async Task<IActionResult> GetRecipeByIdForCurrentUser(Guid id)
     {
         var result = await _service.GetRecipeByIdForCurrentUser(id);
@@ -49,7 +49,7 @@ public class RecipePostController : MainController
     }
 
     [Authorize]
-    [HttpGet("admin-panel")]
+    [HttpGet("/api/admin/recipes")]
     public async Task<IActionResult> GetRecipesForCurrentUser()
     {
         var result = await _service.GetRecipesForCurrentUser();
@@ -58,7 +58,7 @@ public class RecipePostController : MainController
 
     [Authorize]
     [ClaimsAuthorize("Permission", "Writer")]
-    [HttpPost]
+    [HttpPost("/api/admin/recipes")]
     public async Task<IActionResult> PostRecipe(RecipePostAddDto recipe)
     {
         await _service.AddRecipe(recipe);
@@ -67,7 +67,7 @@ public class RecipePostController : MainController
 
     [Authorize]
     [ClaimsAuthorize("Permission", "Writer")]
-    [HttpPut("{id}")]
+    [HttpPut("/api/admin/recipes/{id}")]
     public async Task<IActionResult> PutRecipe(Guid id, RecipePostAddDto recipe)
     {
         await _service.UpdateRecipe(id, recipe);
@@ -76,7 +76,7 @@ public class RecipePostController : MainController
 
     [Authorize]
     [ClaimsAuthorize("Permission", "Writer")]
-    [HttpDelete("{id}")]
+    [HttpDelete("/api/admin/recipes/{id}")]
     public async Task<IActionResult> DeleteRecipe(Guid id)
     {
         await _service.DeleteRecipe(id);
