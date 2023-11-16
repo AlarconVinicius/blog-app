@@ -1,0 +1,121 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>{{title}} Receita</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a routerLink="/">Dashboard</a></li>
+          <li class="breadcrumb-item"><a routerLink="/receitas">Receitas</a></li>
+          <li class="breadcrumb-item active">Adicionar/Atualizar</li>
+        </ol>
+      </ol>
+    </nav>
+  </div>
+  <section class="section dashboard">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card recent-sales overflow-auto">
+                        <div class="modal-body container-sm">
+                            <form class="row g-3 w-100">
+                                <input type="hidden" [(ngModel)]="recipeId">
+                                <div class="col-md-12">
+                                    <label for="Title" class="form-label">Título*</label>
+                                    <input
+                                    type="text"
+                                    class="form-control"
+                                    name="Title"
+                                    id="Title"
+                                    [(ngModel)]="recipe.title" 
+                                    />
+                                </div>
+                                <div class="col-3">
+                                    <label for="Category" class="form-label">Categoria*</label>
+                                    <select name="Category" id="Category" class="form-select" [(ngModel)]="recipe.categoryId">
+                                      <option selected disabled>Selecione uma Categoria</option>
+                                      <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="Difficulty" class="form-label">Dificuldade*</label>
+                                    <select name="Difficulty" id="Difficulty" class="form-select" [(ngModel)]="recipe.difficulty">
+                                        <option selected disabled>Selecione uma Dificuldade</option>
+                                        <option *ngFor="let difficulty of difficulties" [value]="difficulty.id">{{ difficulty.nome }}</option>
+                                      </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="PrepTime" class="form-label">Tempo de Preparo*</label>
+                                    <input
+                                    type="text"
+                                    class="form-control"
+                                    name="PrepTime"
+                                    id="PrepTime"
+                                    [(ngModel)]="recipe.preparationTime"
+                                    />
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="Servings" class="form-label">Porções*</label>
+                                    <input
+                                    type="text"
+                                    class="form-control"
+                                    name="Servings"
+                                    id="Servings"
+                                    [(ngModel)]="recipe.servings"
+                                    />
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="NewGroup" class="form-label">Novo Grupo</label>
+                                    <input type="text" class="form-control" [(ngModel)]="newGroup" name="NewGroup" id="NewGroup" />
+                                    <button type="button" class="btn btn-primary mt-2" (click)="addIngredientGroup()">
+                                      <i class="bi bi-plus-circle"></i> Adicionar Grupo
+                                    </button>
+                                </div>
+                                  
+                                <div *ngFor="let group of groups; let i = index" class="row col-md-4">
+                                    <div class="col-md-12">
+                                        <h4 class="mt-3">{{ group }}</h4>
+                                        <label [for]="'NewIngredient' + i" class="form-label">Novo Ingrediente</label>
+                                        <input type="text" class="form-control" [(ngModel)]="newIngredients[i]" [name]="'NewIngredient' + i" [id]="'NewIngredient' + i"/>
+                                        <button type="button" class="btn btn-primary my-2" (click)="addIngredient(group, newIngredients[i], i)">
+                                        <i class="bi bi-plus-circle"></i> Adicionar Ingrediente
+                                        </button>
+                                        <ul>
+                                            <li *ngFor="let ingredient of recipeIngredients.ingredients[group]">{{ ingredient }}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                   
+                                <div class="col-md-12">
+                                    <label for="Content" class="form-label"
+                                    >Modo de Preparo</label
+                                    >
+                                    <textarea
+                                    style="resize: none;"
+                                    class="form-control"
+                                    name="Content"
+                                    id="Content"
+                                    rows="10"
+                                    [(ngModel)]="recipe.content"></textarea>
+                                </div>
+                                <div class="col-md-12">
+                                    <button
+                                    type="button"
+                                    class="btn btn-secondary me-2"
+                                    data-bs-dismiss="modal"
+                                    >
+                                    Fechar
+                                    </button>
+                                    <button type="button" class="btn btn-success" (click)="saveRecipe()">
+                                    Salvar
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+</main>

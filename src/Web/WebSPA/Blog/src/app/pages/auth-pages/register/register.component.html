@@ -1,0 +1,53 @@
+<main>
+    <div class="container">
+       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+          <div class="container">
+             <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+                   <div class="d-flex justify-content-center py-4"> <a routerLink="/" class="logo d-flex align-items-center w-auto"> <img src="assets/img/logo.png" alt=""> <span class="d-none d-lg-block">Blog Admin </span> </a></div>
+                   <div class="card mb-3">
+                      <div class="card-body">
+                         <div class="pt-4 pb-2">
+                            <h5 class="card-title text-center pb-0 fs-4">Criar Conta</h5>
+                            <p class="text-center small">Preencha os campos para criar uma conta.</p>
+                         </div>
+                         <form class="row g-3 needs-validation" novalidate>
+                            <div class="col-12">
+                               <label for="Name" class="form-label">Seu Nome</label> <input type="text" name="Name" class="form-control" id="Name" required>
+                               <div class="invalid-feedback">Insira seu nome.</div>
+                            </div>
+                            <div class="col-12">
+                                <label for="LastName" class="form-label">Seu Sobrenome</label> <input type="text" name="LastName" class="form-control" id="LastName" required>
+                                <div class="invalid-feedback">Insira seu sobrenome.</div>
+                             </div>
+                            <div class="col-12">
+                               <label for="Email" class="form-label">Seu Email</label> <input type="email" name="Email" class="form-control" id="Email" required>
+                               <div class="invalid-feedback">Insira seu email.</div>
+                            </div>
+                            <div class="col-12">
+                               <label for="Password" class="form-label">Senha</label> <input type="password" name="Password" class="form-control" id="Password" required>
+                               <div class="invalid-feedback">Insira sua senha.</div>
+                            </div>
+                            <div class="col-12">
+                                <label for="ConfirmPassword" class="form-label">Confirme sua Senha</label> <input type="password" name="ConfirmPassword" class="form-control" id="ConfirmPassword" required>
+                                <div class="invalid-feedback">As senhas devem ser iguais.</div>
+                             </div>
+                            <div class="col-12">
+                               <div class="form-check">
+                                  <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" required> <label class="form-check-label" for="acceptTerms">Eu concordo e aceito os <a href="#">termos e condições</a></label>
+                                  <div class="invalid-feedback">You must agree before submitting.</div>
+                               </div>
+                            </div>
+                            <div class="col-12"> <button class="btn btn-primary w-100" type="submit">Criar Conta</button></div>
+                            <div class="col-12">
+                               <p class="small mb-0">Já possui uma conta? <a routerLink="/login">Entrar</a></p>
+                            </div>
+                         </form>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </section>
+    </div>
+ </main>
