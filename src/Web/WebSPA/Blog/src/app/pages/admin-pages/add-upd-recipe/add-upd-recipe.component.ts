@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Difficulty } from 'src/app/models/blog/difficulty/difficulty';
-import { Ingredients } from 'src/app/models/blog/ingredient/ingredients';
+import { Component, OnInit } from '@angular/core'
+import { EDifficulty } from 'src/app/models/blog/difficulty/difficulty.enum';
+import { Ingredient } from 'src/app/models/blog/ingredient/ingredient.model';
 import { RecipeAdd } from 'src/app/models/blog/recipe/recipe-add';
 
 @Component({
@@ -17,18 +17,18 @@ export class AddUpdRecipeComponent implements OnInit {
     content: '',
     blogId: "2a2ff613-6f3b-4dd8-9fd6-a2f824b67b62",
     categoryId: "6d66cbf6-8356-4a3b-bf2e-79b6cdd151ad",
-    difficulty: Difficulty.Easy,
+    difficulty: EDifficulty.Easy,
     preparationTime: '',
     servings: 1,
     ingredients: { ingredients: {} }
   };
   categories: string[] = ['Sobremesa', 'Almoço', 'Janta'];
   difficulties: { id: number; nome: string }[] = [
-    { id: Number(Difficulty.Easy), nome: 'Fácil' },
-    { id: Number(Difficulty.Medium), nome: 'Médio' },
-    { id: Number(Difficulty.Hard), nome: 'Difícil' }
+    { id: Number(EDifficulty.Easy), nome: 'Fácil' },
+    { id: Number(EDifficulty.Medium), nome: 'Médio' },
+    { id: Number(EDifficulty.Hard), nome: 'Difícil' }
   ];
-  recipeIngredients: Ingredients = { ingredients: {} };
+  recipeIngredients: Ingredient = { ingredients: {} };
   newGroup: string = '';
   newIngredient: string = '';
   newIngredients: string[] = [];
@@ -86,7 +86,7 @@ export class AddUpdRecipeComponent implements OnInit {
     }
   }
   formatIngredients(): string {
-    const formattedIngredients: Ingredients = { ingredients: {} };
+    const formattedIngredients: Ingredient = { ingredients: {} };
     for (const group of this.groups) {
       const groupIngredients = this.recipeIngredients.ingredients[group].map(ingredient => ingredient.trim());
       formattedIngredients.ingredients[group] = groupIngredients;

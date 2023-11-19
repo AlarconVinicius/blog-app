@@ -1,3 +1,3 @@
-export interface Ingredients {
+export interface Ingredient {
     ingredients: { [key: string]: string[] };
 }

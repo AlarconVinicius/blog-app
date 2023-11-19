@@ -1,13 +1,14 @@
-import { Difficulty } from "../difficulty/difficulty";
-import { Ingredients } from "../ingredient/ingredients";
+import { EDifficulty } from "../difficulty/difficulty.enum";
+import { Ingredient } from "../ingredient/ingredient.model";
+
 
 export interface RecipeAdd {
     title: string;
     content: string;
     blogId: string;
     categoryId: string;
-    difficulty: Difficulty;
+    difficulty: EDifficulty;
     preparationTime: string;
     servings: number;
-    ingredients: Ingredients;
+    ingredients: Ingredient;
 }
