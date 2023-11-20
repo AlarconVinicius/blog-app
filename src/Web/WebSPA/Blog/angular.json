@@ -26,7 +26,7 @@
               "src/styles.css"
             ],
             "scripts": [
-              "src/assets/js/main.js"
+              "src/assets/admin-template/js/main.js"
             ]
           },
           "configurations": {

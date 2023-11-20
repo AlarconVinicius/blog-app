@@ -1,0 +1,77 @@
+/* navbar.css */
+#site-navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-family: system-ui, -apple-system, Helvetica, Arial, sans-serif;
+    background: #111112;
+    height: 8vh;
+    width: 100%;
+}
+
+#site-navbar a {
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+#site-navbar a:hover {
+    opacity: 0.7;
+}
+
+#site-navbar .site-logo {
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+#site-navbar .site-nav-list {
+    list-style: none;
+    display: flex;
+}
+
+#site-navbar .site-nav-list li {
+    letter-spacing: 3px;
+    margin-left: 32px;
+}
+
+#site-navbar .site-mobile-menu {
+    display: none;
+    cursor: pointer;
+}
+
+#site-navbar .site-mobile-menu div {
+    width: 32px;
+    height: 2px;
+    background: #fff;
+    margin: 8px;
+    transition: 0.3s;
+}
+
+#site-navbar .site-nav-list.active {
+    transform: translateX(0);
+}
+
+@keyframes navLinkFade {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+#site-navbar .site-mobile-menu.active .site-line1 {
+    transform: rotate(-45deg) translate(-8px, 8px);
+}
+
+#site-navbar .site-mobile-menu.active .site-line2 {
+    opacity: 0;
+}
+
+#site-navbar .site-mobile-menu.active .site-line3 {
+    transform: rotate(45deg) translate(-5px, -7px);
+}
