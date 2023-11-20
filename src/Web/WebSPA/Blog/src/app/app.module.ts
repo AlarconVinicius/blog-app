@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -8,19 +9,21 @@ import { HeaderComponent } from './layouts/header/header.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { SidebarComponent } from './layouts/sidebar/sidebar.component';
 import { AlertsComponent } from './components/alerts/alerts.component';
-import { UsersProfileComponent } from './pages/users-profile/users-profile.component';
-import { PagesFaqComponent } from './pages/pages-faq/pages-faq.component';
-import { PagesContactComponent } from './pages/pages-contact/pages-contact.component';
-import { PagesError404Component } from './pages/pages-error404/pages-error404.component';
 
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { RecipeComponent } from './pages/admin-pages/recipe/recipe.component';
-import { AddUpdRecipeComponent } from './pages/admin-pages/add-upd-recipe/add-upd-recipe.component';
-import { FormsModule } from '@angular/forms';
-import { LoginComponent } from './pages/auth-pages/login/login.component';
-import { CategoryComponent } from './pages/admin-pages/category/category.component';
-import { RegisterComponent } from './pages/auth-pages/register/register.component';
-import { HomeComponent } from './pages/site-pages/home/home.component';
+import { HomeComponent } from './pages/site/home/home.component';
+
+import { LoginComponent } from './pages/auth/login/login.component';
+import { RegisterComponent } from './pages/auth/register/register.component';
+
+import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
+import { RecipeComponent } from './pages/admin/recipe/recipe.component';
+import { AddUpdRecipeComponent } from './pages/admin/add-upd-recipe/add-upd-recipe.component';
+import { CategoryComponent } from './pages/admin/category/category.component';
+import { UsersProfileComponent } from './pages/admin/users-profile/users-profile.component';
+import { ContactComponent } from './pages/admin/contact/contact.component';
+import { FaqComponent } from './pages/admin/faq/faq.component';
+
+import { Error404Component } from './pages/error/error404/error404.component';
 
 @NgModule({
   declarations: [
@@ -30,9 +33,6 @@ import { HomeComponent } from './pages/site-pages/home/home.component';
     SidebarComponent,
     AlertsComponent,
     UsersProfileComponent,
-    PagesFaqComponent,
-    PagesContactComponent,
-    PagesError404Component,
     
     DashboardComponent,
     RecipeComponent,
@@ -40,7 +40,10 @@ import { HomeComponent } from './pages/site-pages/home/home.component';
     LoginComponent,
     CategoryComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    ContactComponent,
+    FaqComponent,
+    Error404Component
   ],
   imports: [
     BrowserModule,
