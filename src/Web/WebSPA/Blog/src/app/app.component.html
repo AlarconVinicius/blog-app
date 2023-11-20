@@ -1,5 +1,5 @@
-<app-header *ngIf="!(_router.url === '/registrar' || _router.url === '/login' || _router.url === '/pages-error404' || _router.url === '/home')" ></app-header>
-<app-sidebar *ngIf="!(_router.url === '/registrar' || _router.url === '/login' || _router.url === '/pages-error404' || _router.url === '/home')" ></app-sidebar>
+<app-header *ngIf="_router.url.startsWith('/admin')" ></app-header>
+<app-sidebar *ngIf="_router.url.startsWith('/admin')" ></app-sidebar>
 <router-outlet></router-outlet>
-<app-footer *ngIf="!(_router.url === '/registrar' || _router.url === '/login' || _router.url === '/pages-error404' || _router.url === '/home')" ></app-footer>
+<app-footer *ngIf="_router.url.startsWith('/admin')" ></app-footer>
 
