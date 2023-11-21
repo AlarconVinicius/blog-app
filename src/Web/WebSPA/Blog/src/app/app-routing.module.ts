@@ -15,9 +15,11 @@ import { CategoryComponent } from './pages/admin/category/category.component';
 import { UsersProfileComponent } from './pages/admin/users-profile/users-profile.component';
 import { FaqComponent } from './pages/admin/faq/faq.component';
 import { Error404Component } from './pages/error/error404/error404.component';
+import { RecipeDetailsComponent } from './pages/site/recipe-details/recipe-details.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'receita/:site-url', component: RecipeDetailsComponent },
   { path: 'auth/login', component: LoginComponent },
   { path: 'auth/registrar', component: RegisterComponent },
   { path: 'admin',component: DashboardComponent},
@@ -30,7 +32,8 @@ const routes: Routes = [
   { path: 'admin/contato', component: ContactComponent },
   { path: 'admin/faq', component: FaqComponent },
   { path: 'erro/404', component: Error404Component },
-  { path: 'alerts', component: AlertsComponent }
+  { path: 'alerts', component: AlertsComponent },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 
 @NgModule({

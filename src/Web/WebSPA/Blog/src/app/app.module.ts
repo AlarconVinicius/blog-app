@@ -24,6 +24,7 @@ import { ContactComponent } from './pages/admin/contact/contact.component';
 import { FaqComponent } from './pages/admin/faq/faq.component';
 
 import { Error404Component } from './pages/error/error404/error404.component';
+import { RecipeDetailsComponent } from './pages/site/recipe-details/recipe-details.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { Error404Component } from './pages/error/error404/error404.component';
     HomeComponent,
     ContactComponent,
     FaqComponent,
-    Error404Component
+    Error404Component,
+    RecipeDetailsComponent
   ],
   imports: [
     BrowserModule,
