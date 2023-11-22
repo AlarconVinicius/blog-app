@@ -4,10 +4,10 @@ import { Ingredient } from "../ingredient/ingredient.model";
 
 export interface RecipeAdd {
     title: string;
-    content: string;
+    preparationSteps: string[];
     blogId: string;
     categoryId: string;
-    difficulty: EDifficulty;
+    difficulty: number;
     preparationTime: string;
     servings: number;
     ingredients: Ingredient;

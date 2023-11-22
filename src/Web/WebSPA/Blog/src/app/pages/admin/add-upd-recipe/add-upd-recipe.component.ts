@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { EDifficulty } from 'src/app/models/blog/difficulty/difficulty.enum';
 import { Ingredient } from 'src/app/models/blog/ingredient/ingredient.model';
 import { RecipeAdd } from 'src/app/models/blog/recipe/recipe-add';
+import { RecipeService } from 'src/app/services/blog/recipe/recipe.service';
 
 @Component({
   selector: 'app-add-upd-recipe',
@@ -14,14 +15,15 @@ export class AddUpdRecipeComponent implements OnInit {
   recipeId: string = '';
   recipe: RecipeAdd = {
     title: '',
-    content: '',
+    preparationSteps: [],
     blogId: "2a2ff613-6f3b-4dd8-9fd6-a2f824b67b62",
     categoryId: "6d66cbf6-8356-4a3b-bf2e-79b6cdd151ad",
-    difficulty: EDifficulty.Fácil,
+    difficulty: Number(EDifficulty.Fácil),
     preparationTime: '',
     servings: 1,
     ingredients: { ingredients: {} }
   };
+  prepStepInput: string = '';
   categories: string[] = ['Sobremesa', 'Almoço', 'Janta'];
   difficulties: { id: number; nome: string }[] = [
     { id: Number(EDifficulty.Fácil), nome: 'Fácil' },
@@ -34,7 +36,7 @@ export class AddUpdRecipeComponent implements OnInit {
   newIngredients: string[] = [];
   groups: string[] = [];
 
-  constructor() { }
+  constructor(private recipeService: RecipeService) { }
 
   ngOnInit(): void {
     this.getPageTitle();
@@ -50,15 +52,16 @@ export class AddUpdRecipeComponent implements OnInit {
   saveRecipe() {
     const recipe: RecipeAdd = {
       title: this.recipe.title,
-      content: this.recipe.content,
+      preparationSteps: this.spitPreparationStep(this.prepStepInput),
       blogId: "2a2ff613-6f3b-4dd8-9fd6-a2f824b67b62",
-      categoryId: "6d66cbf6-8356-4a3b-bf2e-79b6cdd151ad",
-      difficulty: this.recipe.difficulty,
+      categoryId: "50a325fd-19e0-4feb-bead-a7c60c0581aa",
+      difficulty: Number(this.recipe.difficulty),
       preparationTime: this.recipe.preparationTime,
       servings: this.recipe.servings,
       ingredients: this.recipeIngredients
     };
     var recipeJson = JSON.stringify(recipe);
+    this.recipeService.postRecipe(recipe).subscribe(_ => this.recipeService.getPublicRecipes());
     console.log(recipeJson);
   }
 
@@ -92,6 +95,11 @@ export class AddUpdRecipeComponent implements OnInit {
       formattedIngredients.ingredients[group] = groupIngredients;
     }
     return JSON.stringify(formattedIngredients);
+  }
+  //#endregion
+  //#region Recipe Field Methods
+  spitPreparationStep(prepSteps: string): string[] {
+    return prepSteps.split("\n");
   }
   //#endregion
 }
