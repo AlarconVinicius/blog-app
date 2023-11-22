@@ -134,7 +134,13 @@
     border-radius: 4px;
     margin: 0 auto;
     color: #fff;
-}
+    border: none;
+    cursor: pointer;
+    outline: none;
+  }
+  #site-recipes .site-card-content .site-card-btn:hover {
+    background-color: #444;
+  }
 
 /* Post-Details */
 .site-recipe-headline span {
@@ -184,35 +190,46 @@
     color: #fff;
     margin-bottom: 30px;
 }
-.site-ingredients .site-form-check .site-form-check-label::before{
+.site-ingredients h5 {
+    margin-left: 15px;
+    margin-bottom: 20px;
+}
+/* .site-ingredients .site-form-check .site-form-check-label::before{
     width: 30px;
     height: 30px;
     background-color: #f3f5f8;
     border-radius: 0;
-}
-.site-ingredients .site-form-check-label {
+} */
+.site-ingredients .form-check-label {
     margin-bottom: 0;
-    padding-top: 3px;
+    margin-left: 10px;
+    /* padding-top: 3px; */
     font-size: 16px;
     font-weight: 600;
     color: #fff;
+    cursor: pointer;
 }
-.site-ingredients .site-form-check {
+.site-ingredients .form-check-label:hover {
+    color: #40ba37;
+}
+.site-ingredients .form-check {
     padding-left: 2.5rem;
     margin-bottom: 30px;
     min-height: 35px;
 }
-.site-ingredients .site-form-check .site-form-check-input {
-    padding: 10px;
-    margin-right: 10px;
+.site-ingredients .form-check .form-check-input {
+    width: 20px;
+    height: 20px;
+    background-color: #f3f5f8 !important;
     border-radius: 0;
+    cursor: pointer;
 }
-.site-ingredients .site-form-check .site-form-check-input:focus,
-.site-ingredients .site-form-check .site-form-check-input:active {
+.site-ingredients .form-check .form-check-input:focus,
+.site-ingredients .form-check .form-check-input:active {
     outline: none !important;
     box-shadow: none !important;
 }
-.site-ingredients .site-form-check .site-form-check-input:checked {
+.site-ingredients .form-check .form-check-input:checked {
     background-color: #40ba37 !important;
     border: none;
 }

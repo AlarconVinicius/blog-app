@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { Recipe } from 'src/app/models/blog/recipe/recipe.model';
+import { RecipeHelperService } from 'src/app/services/blog/recipe/recipe-helper.service';
+import { RecipeService } from 'src/app/services/blog/recipe/recipe.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +12,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  recipes$ = new Observable<Recipe[]>();
+  // recipes: Recipe[] =[]
+  recipe = {} as Recipe;
+  constructor(private recipeService: RecipeService, private recipeStateService: RecipeHelperService, private router: Router) { }
 
   ngOnInit(): void {
+    this.getRecipes();
   }
 
+  getRecipes(){
+    this.recipes$ = this.recipeService.getPublicRecipes();
+  }
+  getRecipe(recipe: Recipe){
+    this.recipeStateService.setRecipeId(recipe.id);
+    this.router.navigate([`receita/${recipe.id}`]);
+  }
+  // getRecipesById(id:string){
+  //   this.recipe$ = this.recipeService.getPublicRecipesById(id);
+    
+  //     console.log(this.recipe$);
+  //   // this.router.navigate([`receita/${this.recipe.title}`]);
+  // }
 }

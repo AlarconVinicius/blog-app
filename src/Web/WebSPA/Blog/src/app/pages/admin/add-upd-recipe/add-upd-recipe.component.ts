@@ -17,16 +17,16 @@ export class AddUpdRecipeComponent implements OnInit {
     content: '',
     blogId: "2a2ff613-6f3b-4dd8-9fd6-a2f824b67b62",
     categoryId: "6d66cbf6-8356-4a3b-bf2e-79b6cdd151ad",
-    difficulty: EDifficulty.Easy,
+    difficulty: EDifficulty.Fácil,
     preparationTime: '',
     servings: 1,
     ingredients: { ingredients: {} }
   };
   categories: string[] = ['Sobremesa', 'Almoço', 'Janta'];
   difficulties: { id: number; nome: string }[] = [
-    { id: Number(EDifficulty.Easy), nome: 'Fácil' },
-    { id: Number(EDifficulty.Medium), nome: 'Médio' },
-    { id: Number(EDifficulty.Hard), nome: 'Difícil' }
+    { id: Number(EDifficulty.Fácil), nome: 'Fácil' },
+    { id: Number(EDifficulty.Médio), nome: 'Médio' },
+    { id: Number(EDifficulty.Difícil), nome: 'Difícil' }
   ];
   recipeIngredients: Ingredient = { ingredients: {} };
   newGroup: string = '';

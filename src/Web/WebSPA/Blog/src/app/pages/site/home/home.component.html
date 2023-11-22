@@ -26,53 +26,11 @@
   <section id="site-recipes" class="site-container site-section">
     <h2>Últimas Receitas</h2>
     <div id="site-recipe-container" class="site-card-container">
-      <div class="site-card">
+      <div class="site-card" *ngFor="let recipe of recipes$ | async">
         <img src="../../../../assets/site-template/img/1.jpg" alt="" />
         <div class="site-card-content">
-          <h3>Receita 001</h3>
-          <a href="post-details.html" class="site-card-btn">Ver mais</a>
-        </div>
-      </div>
-      <div class="site-card">
-        <img src="" alt="" />
-        <div class="site-card-content">
-          <h3>Receita 002</h3>
-          <a href="#ver mais" class="site-card-btn">Ver mais</a>
-        </div>
-      </div>
-      <div class="site-card">
-        <img src="img/bg.jpg" alt="" />
-        <div class="site-card-content">
-          <h3>Receita 003</h3>
-          <a href="#ver mais" class="site-card-btn">Ver mais</a>
-        </div>
-      </div>
-      <div class="site-card">
-        <img src="img/bg.jpg" alt="" />
-        <div class="site-card-content">
-          <h3>Receita 003</h3>
-          <a href="#ver mais" class="site-card-btn">Ver mais</a>
-        </div>
-      </div>
-      <div class="site-card">
-        <img src="img/bg.jpg" alt="" />
-        <div class="site-card-content">
-          <h3>Receita 003</h3>
-          <a href="#ver mais" class="site-card-btn">Ver mais</a>
-        </div>
-      </div>
-      <div class="site-card">
-        <img src="img/bg.jpg" alt="" />
-        <div class="site-card-content">
-          <h3>Receita 003</h3>
-          <a href="#ver mais" class="site-card-btn">Ver mais</a>
-        </div>
-      </div>
-      <div class="site-card">
-        <img src="img/bg.jpg" alt="" />
-        <div class="site-card-content">
-          <h3>Receita 003</h3>
-          <a href="#ver mais" class="site-card-btn">Ver mais</a>
+          <h3>{{ recipe.title }}</h3>
+          <button  class="site-card-btn" (click)="getRecipe(recipe)">Ver mais</button>
         </div>
       </div>
     </div>
