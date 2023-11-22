@@ -13,7 +13,7 @@ export class AppComponent {
 
     var s = document.createElement("script");
     s.type = "text/javascript";
-    s.src = "../assets/js/main.js";
+    s.src = "../assets/admin-template/js/main.js";
     this.elementRef.nativeElement.appendChild(s);
   }
 }
