@@ -8,7 +8,7 @@ public class RecipePostConfiguration : IEntityTypeConfiguration<RecipePost>
 {
     public void Configure(EntityTypeBuilder<RecipePost> builder)
     {
-        builder.ToTable("recipe_posts");
+        builder.ToTable("recipes");
 
         builder.HasKey(e => e.Id);
 
@@ -17,9 +17,12 @@ public class RecipePostConfiguration : IEntityTypeConfiguration<RecipePost>
             .IsRequired()
             .HasMaxLength(100);
 
-        builder.Property(rb => rb.Content)
-            .HasColumnName("content")
-            .HasColumnType("text")
+        builder.Property(rb => rb.PreparationSteps)
+            .HasColumnName("preparation_steps")
+            .IsRequired();
+
+        builder.Property(rb => rb.Ingredients)
+            .HasColumnName("ingredients")
             .IsRequired();
 
         builder.Property(rb => rb.BlogId)
