@@ -4,14 +4,17 @@ import { Difficulty } from "../difficulty/difficulty.model";
 import { Ingredient } from "../ingredient/ingredient.model";
 
 
-export interface RecipePost {
+export interface Recipe {
   id: string;
   title: string;
-  content: string;
+  preparationSteps: string[];
   author: Author;
   category: Category;
   difficulty: Difficulty;
   preparationTime: string;
   servings: number;
   ingredients: Ingredient;
+  url: string;
+  createdAt: string;
+  updatedAt: string;
 }
