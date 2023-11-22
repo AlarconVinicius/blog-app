@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Recipe } from 'src/app/models/blog/recipe/recipe.model';
-import { RecipeHelperService } from 'src/app/services/blog/recipe/recipe-helper.service';
 import { RecipeService } from 'src/app/services/blog/recipe/recipe.service';
 
 @Component({
@@ -15,7 +14,7 @@ export class HomeComponent implements OnInit {
   recipes$ = new Observable<Recipe[]>();
   // recipes: Recipe[] =[]
   recipe = {} as Recipe;
-  constructor(private recipeService: RecipeService, private recipeStateService: RecipeHelperService, private router: Router) { }
+  constructor(private recipeService: RecipeService, private router: Router) { }
 
   ngOnInit(): void {
     this.getRecipes();
@@ -25,7 +24,6 @@ export class HomeComponent implements OnInit {
     this.recipes$ = this.recipeService.getPublicRecipes();
   }
   getRecipe(recipe: Recipe){
-    this.recipeStateService.setRecipeId(recipe.id);
     this.router.navigate([`receita/${recipe.id}`]);
   }
   // getRecipesById(id:string){
