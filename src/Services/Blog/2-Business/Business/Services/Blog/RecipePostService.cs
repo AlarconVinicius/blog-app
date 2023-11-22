@@ -204,7 +204,7 @@ public class RecipePostService : MainService, IRecipePostService
                 }
             }
             recipeDb.Title = recipe.Title;
-            recipeDb.Content = recipe.Content;
+            recipeDb.PreparationSteps = RecipePostAddDto.PrepStepsToString(recipe.PreparationSteps);
             recipeDb.PreparationTime = recipe.PreparationTime;
             recipeDb.Difficulty = recipe.Difficulty;
             recipeDb.Servings = recipe.Servings;

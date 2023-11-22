@@ -11,8 +11,8 @@ public class RecipePostAddValidator : AbstractValidator<RecipePostAddDto>
             .NotEmpty().WithMessage("O título é obrigatório.")
             .MaximumLength(100).WithMessage("O título deve ter no máximo 100 caracteres.");
 
-        RuleFor(dto => dto.Content)
-            .NotEmpty().WithMessage("O conteúdo é obrigatório.");
+        RuleFor(dto => dto.PreparationSteps)
+            .NotEmpty().WithMessage("O modo de preparo é obrigatório.");
 
         RuleFor(dto => dto.BlogId)
             .NotEmpty().WithMessage("O ID do blog é obrigatório.");

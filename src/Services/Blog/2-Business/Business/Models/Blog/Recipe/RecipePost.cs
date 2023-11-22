@@ -2,6 +2,7 @@
 
 public class RecipePost : MainPost
 {
+    public string PreparationSteps { get; set; } = string.Empty;
     public Difficulty Difficulty { get; set; }
     public string PreparationTime { get; set; } = string.Empty;
     public int Servings { get; set; }
@@ -9,16 +10,17 @@ public class RecipePost : MainPost
 
     public RecipePost(
         string title,
-        string content,
         Guid blogId,
         Guid userId,
         Guid categoryId,
+        string preparationSteps,
         Difficulty difficulty,
         string preparationTime,
         int servings,
         string ingredients)
-        : base(title, content, blogId, userId, categoryId)
+        : base(title, blogId, userId, categoryId)
     {
+        PreparationSteps = preparationSteps;
         Difficulty = difficulty;
         PreparationTime = preparationTime;
         Servings = servings;
@@ -31,14 +33,15 @@ public class RecipePost : MainPost
 
     public void UpdateRecipe(
         string title,
-        string content,
         Guid categoryId,
+        string preparationSteps,
         Difficulty difficulty,
         string preparationTime,
         int servings,
         string ingredients)
     {
-        UpdateBlog(title, content, categoryId);
+        UpdateBlog(title, categoryId);
+        PreparationSteps = preparationSteps;
         Difficulty = difficulty;
         PreparationTime = preparationTime;
         Servings = servings;
