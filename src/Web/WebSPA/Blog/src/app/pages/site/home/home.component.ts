@@ -12,7 +12,6 @@ import { RecipeService } from 'src/app/services/blog/recipe/recipe.service';
 export class HomeComponent implements OnInit {
 
   recipes$ = new Observable<Recipe[]>();
-  // recipes: Recipe[] =[]
   recipe = {} as Recipe;
   constructor(private recipeService: RecipeService, private router: Router) { }
 
@@ -26,10 +25,4 @@ export class HomeComponent implements OnInit {
   getRecipe(recipe: Recipe){
     this.router.navigate([`receita/${recipe.id}`]);
   }
-  // getRecipesById(id:string){
-  //   this.recipe$ = this.recipeService.getPublicRecipesById(id);
-    
-  //     console.log(this.recipe$);
-  //   // this.router.navigate([`receita/${this.recipe.title}`]);
-  // }
 }
