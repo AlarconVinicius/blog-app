@@ -16,21 +16,22 @@ import { UsersProfileComponent } from './pages/admin/users-profile/users-profile
 import { FaqComponent } from './pages/admin/faq/faq.component';
 import { Error404Component } from './pages/error/error404/error404.component';
 import { RecipeDetailsComponent } from './pages/site/recipe-details/recipe-details.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'receita/:site-url', component: RecipeDetailsComponent },
+  { path: 'receita/:id', component: RecipeDetailsComponent },
   { path: 'auth/login', component: LoginComponent },
   { path: 'auth/registrar', component: RegisterComponent },
-  { path: 'admin',component: DashboardComponent},
-  { path: 'admin/dashboard', component: DashboardComponent },
-  { path: 'admin/receitas', component: RecipeComponent },
-  { path: 'admin/receitas/adicionar', component: AddUpdRecipeComponent },
-  { path: 'admin/receitas/editar/:id', component: AddUpdRecipeComponent },
-  { path: 'admin/categorias', component: CategoryComponent },
-  { path: 'admin/perfil', component: UsersProfileComponent },
-  { path: 'admin/contato', component: ContactComponent },
-  { path: 'admin/faq', component: FaqComponent },
+  { path: 'admin',component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'admin/dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'admin/receitas', component: RecipeComponent, canActivate: [AuthGuard] },
+  { path: 'admin/receitas/adicionar', component: AddUpdRecipeComponent, canActivate: [AuthGuard] },
+  { path: 'admin/receitas/editar/:id', component: AddUpdRecipeComponent, canActivate: [AuthGuard] },
+  { path: 'admin/categorias', component: CategoryComponent, canActivate: [AuthGuard] },
+  { path: 'admin/perfil', component: UsersProfileComponent, canActivate: [AuthGuard] },
+  { path: 'admin/contato', component: ContactComponent, canActivate: [AuthGuard] },
+  { path: 'admin/faq', component: FaqComponent, canActivate: [AuthGuard] },
   { path: 'erro/404', component: Error404Component },
   { path: 'alerts', component: AlertsComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' },
