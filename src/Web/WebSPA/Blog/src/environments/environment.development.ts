@@ -1,4 +1,5 @@
 export const environment = {
   production: false,
-  api: 'https://localhost:7251/api'
+  publicApi: 'https://localhost:7251/api',
+  adminApi: 'https://localhost:7251/api/admin'
 };
