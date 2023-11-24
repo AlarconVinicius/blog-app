@@ -28,21 +28,21 @@ public class CategoryController : MainController
         return _service.IsOperationValid() ? CustomResponse(result) : CustomResponse(_service.GetErrors());
     }
 
-    [HttpPost("/api/admin/categoires")]
+    [HttpPost("/api/admin/categories")]
     public async Task<IActionResult> PostCategory(Category category)
     {
         await _service.AddCategory(category);
         return _service.IsOperationValid() ? CustomResponse() : CustomResponse(_service.GetErrors());
     }
 
-    [HttpPut("/api/admin/categoires/{id}")]
+    [HttpPut("/api/admin/categories/{id}")]
     public async Task<IActionResult> PutCategory(Guid id, Category category)
     {
         await _service.UpdateCategory(id, category);
         return _service.IsOperationValid() ? CustomResponse() : CustomResponse(_service.GetErrors());
     }
 
-    [HttpDelete("/api/admin/categoires/{id}")]
+    [HttpDelete("/api/admin/categories/{id}")]
     public async Task<IActionResult> DeleteCategory(Guid id)
     {
         await _service.DeleteCategory(id);
