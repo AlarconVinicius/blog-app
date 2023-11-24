@@ -16,8 +16,8 @@ export class AddUpdRecipeComponent implements OnInit {
   recipe: RecipeAdd = {
     title: '',
     preparationSteps: [],
-    blogId: "2a2ff613-6f3b-4dd8-9fd6-a2f824b67b62",
-    categoryId: "6d66cbf6-8356-4a3b-bf2e-79b6cdd151ad",
+    blogId: '',
+    categoryId: '',
     difficulty: Number(EDifficulty.Fácil),
     preparationTime: '',
     servings: 1,
@@ -61,7 +61,7 @@ export class AddUpdRecipeComponent implements OnInit {
       ingredients: this.recipeIngredients
     };
     var recipeJson = JSON.stringify(recipe);
-    this.recipeService.postRecipe(recipe).subscribe(_ => this.recipeService.getPublicRecipes());
+    this.recipeService.postAuthRecipe(recipe).subscribe(_ => this.recipeService.getPublicRecipes());
     console.log(recipeJson);
   }
 
