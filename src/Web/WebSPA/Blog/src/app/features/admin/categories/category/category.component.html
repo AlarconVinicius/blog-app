@@ -12,7 +12,7 @@
             <div class="card recent-sales overflow-auto">
                 <div class="card-header d-flex justify-content-between mx-1">
                     <input type="select" class="w-25 form-control my-3" placeholder="Pesquisar...">
-                    <button type="button" class="btn btn-success my-3" data-bs-toggle="modal" data-bs-target="#ModalAddCategoria">Adicionar Categoria</button>
+                    <button type="button" class="btn btn-success my-3" (click)="onCategory()" data-bs-toggle="modal" data-bs-target="#ModalSaveCategory">Adicionar Categoria</button>
                 </div>
                <div class="card-body my-4">
                   <table class="table table-borderless datatable">
@@ -26,39 +26,17 @@
                         </tr>
                      </thead>
                      <tbody>
-                        <tr>
-                           <th scope="row"><a href="#">#2457</a></th>
-                           <td>Salário</td>
+                        <tr *ngFor="let category of categories$ | async, let i = index">
+                           <th scope="row"><a href="#">#{{ ('0' + (i + 1)).slice(-2) }}</a></th>
+                           <td>{{ category.name }}</td>
                            <td><a href="#" class="text-primary">Ver Todas</a></td>
                            <td>01/02/2023</td>
                            <td>
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#ModalEditCategoria">Edit</a>
+                                <a href="#" (click)="onCategory(category.id)" data-bs-toggle="modal" data-bs-target="#ModalSaveCategory">Edit</a>
                                 || 
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#ModalDeleteCategoria">Delete</a>
+                                <a href="#" (click)="onCategory(category.id)" data-bs-toggle="modal" data-bs-target="#ModalDeleteCategory">Delete</a>
                             </td>
                         </tr>
-                        <tr>
-                            <th scope="row"><a href="#">#2457</a></th>
-                            <td>Alimentação</td>
-                            <td><a href="#" class="text-primary">Ver Todas</a></td>
-                            <td>01/02/2023</td>
-                            <td>
-                                 <a href="#" data-bs-toggle="modal" data-bs-target="#ModalEditCategoria">Edit</a>
-                                 || 
-                                 <a href="#" data-bs-toggle="modal" data-bs-target="#ModalDeleteCategoria">Delete</a>
-                             </td>
-                         </tr>
-                         <tr>
-                            <th scope="row"><a href="#">#2457</a></th>
-                            <td>Lazer</td>
-                            <td><a href="#" class="text-primary">Ver Todas</a></td>
-                            <td>01/02/2023</td>
-                            <td>
-                                 <a href="#" data-bs-toggle="modal" data-bs-target="#ModalEditCategoria">Edit</a>
-                                 || 
-                                 <a href="#" data-bs-toggle="modal" data-bs-target="#ModalDeleteCategoria">Delete</a>
-                             </td>
-                         </tr>
                      </tbody>
                   </table>
                </div>
@@ -67,22 +45,23 @@
     </section>
  </main>
  <!-- Add - Modal -->
-<div class="modal fade" id="ModalAddCategoria" tabindex="-1">
+<div class="modal fade" id="ModalSaveCategory" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="ModalSaveCategoryLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Adicionar Categoria</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="ModalSaveCategoryLabel">{{ modalTitle }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="clearCategoryFields()"></button>
             </div>
             <div class="modal-body">
                 <form class="row g-3">
+                    <input type="hidden" name="id" [(ngModel)]="categoryId">
                     <div class="col-md-12">
-                        <label for="Name" class="form-label">Nome*</label>
-                        <input type="text" class="form-control" name="name" id="Name">
+                        <label for="name" class="form-label">Nome*</label>
+                        <input type="text" class="form-control" name="name" id="name" [(ngModel)]="categorySave.name">
                     </div>
                     <div class="col-md-12">
-                        <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Fechar</button>
-                        <button type="button" class="btn btn-primary">Salvar</button>
+                        <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal" (click)="clearCategoryFields()">Fechar</button>
+                        <button type="button" [ngClass]="categoryId ? 'btn btn-primary' : 'btn btn-success'" (click)="saveCategory()" data-bs-dismiss="modal">{{ categoryId ? 'Atualizar' : 'Salvar' }}</button>
                     </div>
                 </form>
             </div>
@@ -90,46 +69,20 @@
     </div>
 </div>
 <!-- Add - Modal End -->
-
-<!-- Edit - Modal Start -->
-<div class="modal fade" id="ModalEditCategoria" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Editar Categoria: NomeCategoria</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form class="row g-3">
-                    <div class="col-md-12">
-                        <label for="Name" class="form-label">Nome*</label>
-                        <input type="text" class="form-control" name="name" id="Name">
-                    </div>
-                    <div class="col-md-12">
-                        <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Fechar</button>
-                        <button type="button" class="btn btn-primary">Atualizar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Edit - Modal End -->
-
 <!-- Delete - Modal Start -->
-<div class="modal fade" id="ModalDeleteCategoria" tabindex="-1">
+<div class="modal fade" id="ModalDeleteCategory" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="ModalDeleteCategoryLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Deletar Categoria: NomeCategoria</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="ModalDeleteCategoryLabel">Deletar Categoria: {{ categorySave.name}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="clearCategoryFields()"></button>
             </div>
             <div class="modal-body">
                 <form class="row g-3">
                     
                     <div class="col-md-12">
-                        <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-danger">Deletar</button>
+                        <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal" (click)="clearCategoryFields()">Cancelar</button>
+                        <button type="button" class="btn btn-danger" (click)="deleteCategory(categoryId)" data-bs-dismiss="modal">Deletar</button>
                     </div>
                 </form>
             </div>
