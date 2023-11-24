@@ -9,8 +9,8 @@ import { environment } from 'src/environments/environment';
 export abstract class BaseService {
 
   public LocalStorage = new LocalStorageUtils();
-  protected PublicUrl: string = environment.api;
-  protected AuthUrl: string = environment.api;
+  protected PublicUrl: string = environment.publicApi;
+  protected AdminUrl: string = environment.adminApi;
   
   protected getHeaderJson(){
       return {

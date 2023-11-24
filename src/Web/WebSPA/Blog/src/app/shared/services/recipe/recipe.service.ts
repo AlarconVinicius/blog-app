@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { RecipeResponse, RecipeRequest } from 'src/app/core/models/recipe/recipe.model';
 import { Observable, map } from 'rxjs';
 import { BaseService } from '../base/base.service';
@@ -9,8 +8,8 @@ import { BaseService } from '../base/base.service';
 })
 export class RecipeService extends BaseService {
 
-  private publicUrl = `${environment.api}`+ '/recipes';
-  private adminUrl = `${environment.api}`+ '/admin/recipes';
+  private publicUrl = `${this.PublicUrl}`+ '/recipes';
+  private adminUrl = `${this.AdminUrl}`+ '/recipes';
   constructor(private httpClient: HttpClient) { super(); }
 
   getPublicRecipes(): Observable<RecipeResponse[]> {

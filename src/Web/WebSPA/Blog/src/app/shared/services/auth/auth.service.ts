@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { LoginRequest, LoginResponse } from 'src/app/core/models/auth/login.model';
-import { environment } from 'src/environments/environment';
 import { BaseService } from '../base/base.service';
 
 @Injectable({
@@ -11,7 +10,7 @@ import { BaseService } from '../base/base.service';
 export class AuthService extends BaseService {
 
   
-  private authUrl = `${environment.api}`+ '/auth';
+  private authUrl = `${this.PublicUrl}`+ '/auth';
   constructor(private httpClient: HttpClient) { super ();}
 
   login(login: LoginRequest) : Observable<LoginResponse>{
