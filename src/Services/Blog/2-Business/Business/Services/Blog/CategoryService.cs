@@ -6,6 +6,7 @@ namespace Business.Services.Blog;
 
 public class CategoryService : MainService, ICategoryService
 {
+    private readonly Guid blogId = Guid.Parse("2a2ff613-6f3b-4dd8-9fd6-a2f824b67b62");
     private readonly ICategoryRepository _repository;
     public CategoryService(ICategoryRepository repository)
     {
@@ -21,6 +22,7 @@ public class CategoryService : MainService, ICategoryService
                 AddProcessingError("Erro ao adicionar categoria: Nome já existe.");
                 return;
             };
+            category.BlogId =  blogId;
             await _repository.AddAsync(category);
             return;
         }
