@@ -27,4 +27,17 @@ export class RecipeService extends BaseService {
   postAuthRecipe(recipe: RecipeRequest){
     return this.httpClient.post<void>(this.adminUrl, recipe, this.getAuthHeaderJson());
   }
+
+  getAuthRecipes(): Observable<RecipeResponse[]> {
+    return this.httpClient.get<{ data: RecipeResponse[] }>(this.adminUrl, this.getAuthHeaderJson())
+      .pipe(
+        map((response: { data: RecipeResponse[] }) => response.data)
+      );
+  }
+  getAuthRecipesById(id: string): Observable<RecipeResponse> {
+    return this.httpClient.get<{ data: RecipeResponse }>(this.adminUrl + '/' + id, this.getAuthHeaderJson())
+      .pipe(
+        map((response: { data: RecipeResponse }) => response.data)
+      );
+  }
 }

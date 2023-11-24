@@ -83,88 +83,21 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row"><a href="#">#2457</a></th>
-                      <td>Bolo de Cenoura</td>
-                      <td><a href="#" class="text-primary">Sobremesa</a></td>
-                      <td>Vinicius Alarcon</td>
+                    <tr *ngFor="let recipe of recipes$ | async, let i = index">
+                      <th scope="row"><a href="#">#{{ ('0' + (i + 1)).slice(-2) }}</a></th>
+                      <td>{{ recipe.title }}</td>
+                      <td><a href="#" class="text-primary">{{ recipe.category.name }}</a></td>
+                      <td>{{ recipe.author.fullName }}</td>
+                      <!-- <td>
+                        <span [ngClass]="recipe.status ? 'badge bg-success' : 'badge bg-danger'">
+                          {{ recipe.status ? 'Visível' : 'Oculto' }}
+                        </span>
+                      </td> -->
                       <td><span class="badge bg-success">Visível</span></td>
-                      <td>01/02/2023</td>
-                      <td>01/02/2023</td>
+                      <td>{{ recipe.createdAt }}</td>
+                      <td>{{ recipe.updatedAt }}</td>
                       <td>
-                        <a href="receitas/editar">Edit</a>
-                        ||
-                        <a
-                          href="#"
-                          data-bs-toggle="modal"
-                          data-bs-target="#ModalDeleteTransacao"
-                          >Delete</a
-                        >
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row"><a href="#">#2457</a></th>
-                      <td>Lasanha</td>
-                      <td><a href="#" class="text-primary">Almoço</a></td>
-                      <td>Vinicius Alarcon</td>
-                      <td><span class="badge bg-danger">Oculto</span></td>
-                      <td>01/02/2023</td>
-                      <td>01/02/2023</td>
-                      <td>
-                        <a
-                          href="#"
-                          data-bs-toggle="modal"
-                          data-bs-target="#ModalEditTransacao"
-                          >Edit</a
-                        >
-                        ||
-                        <a
-                          href="#"
-                          data-bs-toggle="modal"
-                          data-bs-target="#ModalDeleteTransacao"
-                          >Delete</a
-                        >
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row"><a href="#">#2457</a></th>
-                      <td>Almondega</td>
-                      <td><a href="#" class="text-primary">Almoço</a></td>
-                      <td>Vinicius Alarcon</td>
-                      <td><span class="badge bg-success">Visível</span></td>
-                      <td>01/02/2023</td>
-                      <td>01/02/2023</td>
-                      <td>
-                        <a
-                          href="#"
-                          data-bs-toggle="modal"
-                          data-bs-target="#ModalEditTransacao"
-                          >Edit</a
-                        >
-                        ||
-                        <a
-                          href="#"
-                          data-bs-toggle="modal"
-                          data-bs-target="#ModalDeleteTransacao"
-                          >Delete</a
-                        >
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row"><a href="#">#2457</a></th>
-                      <td>Lasanha</td>
-                      <td><a href="#" class="text-primary">Almoço</a></td>
-                      <td>Vinicius Alarcon</td>
-                      <td><span class="badge bg-success">Visível</span></td>
-                      <td>01/02/2023</td>
-                      <td>01/02/2023</td>
-                      <td>
-                        <a
-                          href="#"
-                          data-bs-toggle="modal"
-                          data-bs-target="#ModalEditTransacao"
-                          >Edit</a
-                        >
+                        <a href="admin/receitas/editar/{{ recipe.id }}">Edit</a>
                         ||
                         <a
                           href="#"
