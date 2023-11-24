@@ -5,26 +5,26 @@ import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './layouts/header/header.component';
-import { FooterComponent } from './layouts/footer/footer.component';
-import { SidebarComponent } from './layouts/sidebar/sidebar.component';
-import { AlertsComponent } from './components/alerts/alerts.component';
+import { HeaderComponent } from './core/components/admin/header/header.component';
+import { FooterComponent } from './core/components/admin/footer/footer.component';
+import { SidebarComponent } from './core/components/admin/sidebar/sidebar.component';
+import { AlertsComponent } from './core/components/alerts/alerts.component';
 
-import { HomeComponent } from './pages/site/home/home.component';
+import { HomeComponent } from './features/site/home/home.component';
 
-import { LoginComponent } from './pages/auth/login/login.component';
-import { RegisterComponent } from './pages/auth/register/register.component';
+import { LoginComponent } from './features/auth/login/login.component';
+import { RegisterComponent } from './features/auth/register/register.component';
 
-import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
-import { RecipeComponent } from './pages/admin/recipe/recipe.component';
-import { AddUpdRecipeComponent } from './pages/admin/add-upd-recipe/add-upd-recipe.component';
-import { CategoryComponent } from './pages/admin/category/category.component';
-import { UsersProfileComponent } from './pages/admin/users-profile/users-profile.component';
-import { ContactComponent } from './pages/admin/contact/contact.component';
-import { FaqComponent } from './pages/admin/faq/faq.component';
+import { DashboardComponent } from './features/admin/dashboard/dashboard.component';
+import { RecipeComponent } from './features/admin/recipes/recipe/recipe.component';
+import { AddUpdRecipeComponent } from './features/admin/recipes/add-upd/add-upd-recipe.component';
+import { CategoryComponent } from './features/admin/categories/category/category.component';
+import { UsersProfileComponent } from './features/admin/users-profile/users-profile.component';
+import { ContactComponent } from './features/admin/contacts/contact/contact.component';
+import { FaqComponent } from './features/admin/faq/faq.component';
 
-import { Error404Component } from './pages/error/error404/error404.component';
-import { RecipeDetailsComponent } from './pages/site/recipe-details/recipe-details.component';
+import { Error404Component } from './features/error/error404/error404.component';
+import { RecipeDetailsComponent } from './features/site/recipe-details/recipe-details.component';
 
 @NgModule({
   declarations: [

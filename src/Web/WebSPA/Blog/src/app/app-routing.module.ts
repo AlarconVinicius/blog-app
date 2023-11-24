@@ -1,22 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AlertsComponent } from './components/alerts/alerts.component';
-import { ContactComponent } from './pages/admin/contact/contact.component';
+import { AlertsComponent } from './core/components/alerts/alerts.component';
+import { ContactComponent } from './features/admin/contacts/contact/contact.component';
 
-import { HomeComponent } from './pages/site/home/home.component';
+import { HomeComponent } from './features/site/home/home.component';
 
-import { LoginComponent } from './pages/auth/login/login.component';
-import { RegisterComponent } from './pages/auth/register/register.component';
+import { LoginComponent } from './features/auth/login/login.component';
+import { RegisterComponent } from './features/auth/register/register.component';
 
-import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
-import { RecipeComponent } from './pages/admin/recipe/recipe.component';
-import { AddUpdRecipeComponent } from './pages/admin/add-upd-recipe/add-upd-recipe.component';
-import { CategoryComponent } from './pages/admin/category/category.component';
-import { UsersProfileComponent } from './pages/admin/users-profile/users-profile.component';
-import { FaqComponent } from './pages/admin/faq/faq.component';
-import { Error404Component } from './pages/error/error404/error404.component';
-import { RecipeDetailsComponent } from './pages/site/recipe-details/recipe-details.component';
-import { AuthGuard } from './guards/auth.guard';
+import { DashboardComponent } from './features/admin/dashboard/dashboard.component';
+import { RecipeComponent } from './features/admin/recipes/recipe/recipe.component';
+import { AddUpdRecipeComponent } from './features/admin/recipes/add-upd/add-upd-recipe.component';
+import { CategoryComponent } from './features/admin/categories/category/category.component';
+import { UsersProfileComponent } from './features/admin/users-profile/users-profile.component';
+import { FaqComponent } from './features/admin/faq/faq.component';
+import { Error404Component } from './features/error/error404/error404.component';
+import { RecipeDetailsComponent } from './features/site/recipe-details/recipe-details.component';
+import { AuthGuard } from './core/guards/auth.guard';
 
 const authRoutes: Routes = [
   { path: 'login', component: LoginComponent },
