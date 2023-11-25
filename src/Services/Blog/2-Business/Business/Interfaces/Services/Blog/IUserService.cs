@@ -8,4 +8,6 @@ public interface IUserService : IMainService
     public Task UpdateAuthenticatedUser(UserUpdDto user);
 
     public Task<UserViewDto> GetAuthenticatedUser();
+
+    public Task UpdatePassword(UserPasswordDto userPassword);
 }

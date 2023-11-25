@@ -54,7 +54,22 @@ public class UserService : MainService, IUserService
         userDb.PhoneNumber = user.PhoneNumber;
         userDb.PhoneNumberConfirmed = true;
         await _userManager.UpdateAsync(userDb);
-        return;
+    }
+
+    public async Task UpdatePassword(UserPasswordDto userPassword) {
+        if(userPassword.NewPassword != userPassword.ConfirmNewPassword){
+            AddProcessingError("Falha ao atualizar a senha: As senhas não coincidem.");
+            return;
+        }
+        var userId = AuthHelper.GetUserId(_httpAccessor).ToString();
+        var userDb = await _userManager.FindByIdAsync(userId);
+
+        if(userDb is null){
+            AddProcessingError("Falha ao atualizar a senha: Usuário não encontrado.");
+            return;
+        }
+
+        await _userManager.ChangePasswordAsync(userDb, userPassword.OldPassword, userPassword.NewPassword);
     }
 
 }
