@@ -1,0 +1,11 @@
+
+using Business.Models.Blog.Dtos;
+
+namespace Business.Interfaces.Services.Blog;
+
+public interface IUserService : IMainService
+{
+    public Task UpdateAuthenticatedUser(UserUpdDto user);
+
+    public Task<UserViewDto> GetAuthenticatedUser();
+}
