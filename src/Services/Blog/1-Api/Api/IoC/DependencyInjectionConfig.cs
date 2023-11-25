@@ -92,6 +92,8 @@ public static class DependencyInjectionConfig
         services.AddScoped<IRecipePostRepository, RecipePostRepository>();
         services.AddScoped<IRecipePostService, RecipePostService>();
 
+        services.AddScoped<IUserService, UserService>();
+
         services.AddScoped<IValidator<RecipePostAddDto>, RecipePostAddValidator>();
     }
 }
