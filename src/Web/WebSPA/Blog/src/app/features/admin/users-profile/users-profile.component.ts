@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthorRequest, AuthorResponse } from 'src/app/core/models/author/author.model';
+import { AuthorRequest, AuthorResponse, UserPasswordRequest } from 'src/app/core/models/author/author.model';
 import { UserService } from 'src/app/shared/services/user/user.service';
 
 @Component({
@@ -12,6 +12,7 @@ import { UserService } from 'src/app/shared/services/user/user.service';
 export class UsersProfileComponent implements OnInit {
   user = {} as AuthorResponse;
   userInput = {} as AuthorRequest;
+  userPasswordInput = {} as UserPasswordRequest;
   constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
@@ -29,6 +30,16 @@ export class UsersProfileComponent implements OnInit {
     this.userService.putAuthUser(this.userInput).subscribe(_ => {
       this.getAuthUser();
       this.router.navigate(['admin/perfil']);
+    });
+  }
+
+  public putChangeUserPassword(){
+    this.userService.putChangeUserPassword(this.userPasswordInput).subscribe(_ => {
+      this.getAuthUser();
+      this.router.navigate(['admin/perfil']);
+      this.userPasswordInput.oldPassword = '';
+      this.userPasswordInput.newPassword = '';
+      this.userPasswordInput.confirmNewPassword = '';
     });
   }
 }

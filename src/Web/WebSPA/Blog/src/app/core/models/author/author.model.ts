@@ -13,3 +13,9 @@ export interface AuthorRequest {
   email: string;
   phoneNumber: string;
 } 
+
+export interface UserPasswordRequest {
+  oldPassword: string;
+  newPassword: string;
+  confirmNewPassword: string;
+} 

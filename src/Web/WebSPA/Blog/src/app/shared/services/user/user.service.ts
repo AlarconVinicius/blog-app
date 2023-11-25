@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BaseService } from '../base/base.service';
 import { HttpClient } from '@angular/common/http';
-import { AuthorRequest, AuthorResponse } from 'src/app/core/models/author/author.model';
+import { AuthorRequest, AuthorResponse, UserPasswordRequest } from 'src/app/core/models/author/author.model';
 import { Observable, map } from 'rxjs';
 
 @Injectable({
@@ -22,6 +22,10 @@ export class UserService extends BaseService{
 
   putAuthUser(user: AuthorRequest) {
     return this.httpClient.put<void>(this.adminUrl, user, this.getAuthHeaderJson());
+  }
+
+  putChangeUserPassword(userPassword: UserPasswordRequest) {
+    return this.httpClient.put<void>(`${this.adminUrl}/change-password`, userPassword, this.getAuthHeaderJson());
   }
 
 }

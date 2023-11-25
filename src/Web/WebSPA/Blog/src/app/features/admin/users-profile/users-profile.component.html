@@ -73,18 +73,18 @@
                      <div class="tab-pane fade pt-3" id="profile-change-password">
                         <form>
                            <div class="row mb-3">
-                              <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Senha Atual</label>
-                              <div class="col-md-8 col-lg-9"> <input name="password" type="password" class="form-control" id="currentPassword"></div>
+                              <label for="oldPassword" class="col-md-4 col-lg-3 col-form-label">Senha Atual</label>
+                              <div class="col-md-8 col-lg-9"> <input name="oldPassword" type="password" class="form-control" id="oldPassword" [(ngModel)]="userPasswordInput.oldPassword"></div>
                            </div>
                            <div class="row mb-3">
                               <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">Nova Senha</label>
-                              <div class="col-md-8 col-lg-9"> <input name="newpassword" type="password" class="form-control" id="newPassword"></div>
+                              <div class="col-md-8 col-lg-9"> <input name="newPassword" type="password" class="form-control" id="newPassword" [(ngModel)]="userPasswordInput.newPassword"></div>
                            </div>
                            <div class="row mb-3">
-                              <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Confirmar Nova Senha</label>
-                              <div class="col-md-8 col-lg-9"> <input name="renewpassword" type="password" class="form-control" id="renewPassword"></div>
+                              <label for="confirmPassword" class="col-md-4 col-lg-3 col-form-label">Confirmar Nova Senha</label>
+                              <div class="col-md-8 col-lg-9"> <input name="confirmPassword" type="password" class="form-control" id="confirmPassword" [(ngModel)]="userPasswordInput.confirmNewPassword"></div>
                            </div>
-                           <div class="text-center"> <button type="submit" class="btn btn-primary">Alterar Senha</button></div>
+                           <div class="text-center"> <button type="submit" class="btn btn-primary" (click)="putChangeUserPassword()">Alterar Senha</button></div>
                         </form>
                      </div>
                   </div>
