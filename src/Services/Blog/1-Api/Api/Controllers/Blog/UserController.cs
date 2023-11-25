@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers.Blog;
 
-[Route("api/users")]
+[Route("api/admin/users")]
 public class UserController : MainController
 {
     private readonly IUserService _service;
