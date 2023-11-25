@@ -31,4 +31,12 @@ public class UserController : MainController
         await _service.UpdateAuthenticatedUser(user);
         return _service.IsOperationValid() ? CustomResponse() : CustomResponse(_service.GetErrors());
     }
+
+    [Authorize]
+    [HttpPut("change-password")]
+    public async Task<IActionResult> PutChangeUserPassword(UserPasswordDto userPassword)
+    {
+        await _service.UpdatePassword(userPassword);
+        return _service.IsOperationValid() ? CustomResponse() : CustomResponse(_service.GetErrors());
+    }
 }
