@@ -1,6 +1,15 @@
-export interface Author {
-    id: string;
-    fullName: string;
-    userName: string;
-  }
-  
+export interface AuthorResponse {
+  id: string;
+  name: string;
+  lastName: string;
+  fullName: string;
+  email: string;
+  phoneNumber: string;
+}
+export interface AuthorRequest {
+  name: string;
+  lastName: string;
+  fullName: string;
+  email: string;
+  phoneNumber: string;
+} 

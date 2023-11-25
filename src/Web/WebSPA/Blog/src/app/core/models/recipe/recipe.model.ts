@@ -1,4 +1,4 @@
-import { Author } from "../author/author.model";
+import { AuthorResponse } from "../author/author.model";
 import { CategoryResponse } from "../category/category.model";
 import { Difficulty } from "../difficulty/difficulty.model";
 import { Ingredient } from "../ingredient/ingredient.model";
@@ -18,7 +18,7 @@ export interface RecipeResponse {
   id: string;
   title: string;
   preparationSteps: string[];
-  author: Author;
+  author: AuthorResponse;
   category: CategoryResponse;
   difficulty: Difficulty;
   preparationTime: string;
