@@ -24,10 +24,10 @@ public class RecipeController : MainController
         return _service.IsOperationValid() ? CustomResponse(result) : CustomResponse(_service.GetErrors());
     }
 
-    [HttpPost("search")]
-    public async Task<IActionResult> GetRecipeBySearch([FromBody] string searchQuery)
+    [HttpGet("search/{search}")]
+    public async Task<IActionResult> GetRecipeBySearch([FromRoute] string search)
     {
-        var result = await _service.GetRecipeBySearch(searchQuery);
+        var result = await _service.GetRecipeBySearch(search);
         return _service.IsOperationValid() ? CustomResponse(result) : CustomResponse(_service.GetErrors());
     }
 
