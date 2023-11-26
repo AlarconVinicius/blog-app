@@ -25,6 +25,7 @@ import { FaqComponent } from './features/admin/faq/faq.component';
 
 import { Error404Component } from './features/error/error404/error404.component';
 import { RecipeDetailsComponent } from './features/site/recipe-details/recipe-details.component';
+import { SiteHeaderComponent } from './core/components/site/header/site-header.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { RecipeDetailsComponent } from './features/site/recipe-details/recipe-de
     AlertsComponent,
     UsersProfileComponent,
     
+    SiteHeaderComponent,
     DashboardComponent,
     RecipeComponent,
     AddUpdRecipeComponent,
