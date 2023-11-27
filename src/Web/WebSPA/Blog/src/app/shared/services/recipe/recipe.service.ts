@@ -24,6 +24,12 @@ export class RecipeService extends BaseService {
         map((response: { data: RecipeResponse }) => response.data)
       );
   }
+  getPublicRecipesBySearch(search: string): Observable<RecipeResponse[]> {
+    return this.httpClient.get<{ data: RecipeResponse[] }>(this.publicUrl + '/search/' + search, this.getHeaderJson())
+      .pipe(
+        map((response: { data: RecipeResponse[] }) => response.data)
+      );
+  }
   postAuthRecipe(recipe: RecipeRequest){
     return this.httpClient.post<void>(this.adminUrl, recipe, this.getAuthHeaderJson());
   }

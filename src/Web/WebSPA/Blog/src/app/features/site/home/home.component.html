@@ -3,14 +3,17 @@
   <main id="site-search-recipe">
     <h1 class="site-brand">Receitas de Casal</h1>
     <form>
-      <input type="text" placeholder="Pesquisar receita..." />
+      <input type="text" placeholder="Pesquisar receita..." [(ngModel)]="search" name="search" (keyup.enter)="onSearch()"/>
       <span name="search"></span>
     </form>
   </main>
   <hr />
   <section id="site-recipes" class="site-container site-section">
-    <h2>Últimas Receitas</h2>
+    <h2>{{ title }}</h2>
     <div id="site-recipe-container" class="site-card-container">
+      <div *ngIf="showNoRecipesMessage && !(recipes$ | async)?.length">
+        Nenhuma receita encontrada.
+      </div>
       <div class="site-card" *ngFor="let recipe of recipes$ | async">
         <img src="../../../../assets/site-template/img/1.jpg" alt="" />
         <div class="site-card-content">
