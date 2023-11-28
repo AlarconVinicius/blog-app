@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   publicApi: '',
-  adminApi: ''
+  adminApi: '',
+  tinyMceApi: ''
 };
 
 /*
