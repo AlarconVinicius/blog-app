@@ -31,8 +31,5 @@ public class RecipePostAddValidator : AbstractValidator<RecipePostAddDto>
 
         RuleFor(dto => dto.Ingredients)
             .NotNull().WithMessage("Os ingredientes são obrigatórios.");
-
-        RuleFor(dto => dto.Ingredients.Ingredients)
-            .NotEmpty().WithMessage("A lista de ingredientes não pode estar vazia.");
     }
 }

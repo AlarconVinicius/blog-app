@@ -204,11 +204,11 @@ public class RecipePostService : MainService, IRecipePostService
                 }
             }
             recipeDb.Title = recipe.Title;
-            recipeDb.PreparationSteps = RecipePostAddDto.PrepStepsToString(recipe.PreparationSteps);
+            recipeDb.PreparationSteps = recipe.PreparationSteps;
             recipeDb.PreparationTime = recipe.PreparationTime;
             recipeDb.Difficulty = recipe.Difficulty;
             recipeDb.Servings = recipe.Servings;
-            recipeDb.Ingredients = recipe.Ingredients.ToString();
+            recipeDb.Ingredients = recipe.Ingredients;
             recipeDb.CategoryId = recipe.CategoryId;
             recipeDb.GenerateURL();
             await _repository.UpdateAsync(recipeDb);
