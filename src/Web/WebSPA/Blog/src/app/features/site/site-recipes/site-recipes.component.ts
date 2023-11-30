@@ -27,6 +27,11 @@ export class SiteRecipesComponent implements OnInit {
         this.title = `Resultado da busca por: ${this.search}`;
         this.getRecipeBySearch(this.search);
         this.search = '';
+      } else if (params['categoria']) {
+        this.search = params['categoria'];
+        this.title = `Receitas relacionadas a categoria: ${this.search}`;
+        this.getRecipeByCategory(this.search);
+        this.search = '';
       } else {
         this.title = 'Últimas Receitas';
         this.getRecipes();
@@ -41,6 +46,12 @@ export class SiteRecipesComponent implements OnInit {
   }
   getRecipeBySearch(search: string){
     this.recipeService.getPublicRecipesBySearch(search).subscribe(recipes => {
+      this.recipes$ = of(recipes);
+      this.hasRecipes(recipes);
+    });
+  }
+  getRecipeByCategory(category: string){
+    this.recipeService.getPublicRecipesByCategory(category).subscribe(recipes => {
       this.recipes$ = of(recipes);
       this.hasRecipes(recipes);
     });

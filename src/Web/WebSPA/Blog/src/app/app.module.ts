@@ -23,11 +23,12 @@ import { CategoryComponent } from './features/admin/categories/category/category
 import { UsersProfileComponent } from './features/admin/users-profile/users-profile.component';
 import { ContactComponent } from './features/admin/contacts/contact/contact.component';
 import { FaqComponent } from './features/admin/faq/faq.component';
-
 import { Error404Component } from './features/error/error404/error404.component';
+
 import { RecipeDetailsComponent } from './features/site/recipe-details/recipe-details.component';
 import { SiteHeaderComponent } from './core/components/site/header/site-header.component';
 import { SiteRecipesComponent } from './features/site/site-recipes/site-recipes.component';
+import { SiteCategoriesComponent } from './features/site/site-categories/site-categories.component';
 
 @NgModule({
   declarations: [
@@ -39,18 +40,19 @@ import { SiteRecipesComponent } from './features/site/site-recipes/site-recipes.
     UsersProfileComponent,
     
     SiteHeaderComponent,
+    HomeComponent,
+    RecipeDetailsComponent,
+    SiteRecipesComponent,
+    SiteCategoriesComponent,
+    LoginComponent,
+    RegisterComponent,
     DashboardComponent,
     RecipeComponent,
     AddUpdRecipeComponent,
-    LoginComponent,
     CategoryComponent,
-    RegisterComponent,
-    HomeComponent,
     ContactComponent,
     FaqComponent,
-    Error404Component,
-    RecipeDetailsComponent,
-    SiteRecipesComponent
+    Error404Component
   ],
   imports: [
     BrowserModule,

@@ -18,6 +18,7 @@ import { Error404Component } from './features/error/error404/error404.component'
 import { RecipeDetailsComponent } from './features/site/recipe-details/recipe-details.component';
 import { AuthGuard } from './core/guards/auth.guard';
 import { SiteRecipesComponent } from './features/site/site-recipes/site-recipes.component';
+import { SiteCategoriesComponent } from './features/site/site-categories/site-categories.component';
 
 const authRoutes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -39,6 +40,8 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'receitas', component: SiteRecipesComponent },
   { path: 'receitas/busca/:busca', component: SiteRecipesComponent },
+  { path: 'receitas/categoria/:categoria', component: SiteRecipesComponent },
+  { path: 'categorias', component: SiteCategoriesComponent },
   { path: 'receita/:id', component: RecipeDetailsComponent },
   { path: 'auth', children: authRoutes },
   { path: 'admin', children: adminRoutes, canActivate: [AuthGuard] },
