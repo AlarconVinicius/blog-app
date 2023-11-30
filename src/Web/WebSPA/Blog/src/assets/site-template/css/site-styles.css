@@ -4,7 +4,10 @@
     padding: 0;
     overflow-x: hidden;
 } */
-#site-body, #site-body header, #site-body input, #site-body main {
+#site-body,
+#site-body header,
+#site-body input,
+#site-body main {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -13,10 +16,16 @@
     color: #fff;
     background-color: #1A1A1B;
 }
-#site-body h1, #site-body h2, #site-body h3, #site-body h4, #site-body h5 {
+
+#site-body h1,
+#site-body h2,
+#site-body h3,
+#site-body h4,
+#site-body h5 {
     font-family: sans-serif !important;
     font-weight: bold !important;
 }
+
 .site-section {
     min-height: 100vh;
     width: 100%;
@@ -34,7 +43,7 @@
     background-color: #1A1A1B;
     width: 100%;
     padding: 100px 0 !important;
-    height: 50vh ;
+    height: 50vh;
 }
 
 #site-search-recipe .site-brand {
@@ -137,10 +146,11 @@
     border: none;
     cursor: pointer;
     outline: none;
-  }
-  #site-recipes .site-card-content .site-card-btn:hover {
+}
+
+#site-recipes .site-card-content .site-card-btn:hover {
     background-color: #444;
-  }
+}
 
 /* Post-Details */
 .site-recipe-headline span {
@@ -170,36 +180,61 @@
     margin-bottom: 0;
 }
 
-.site-single-preparation-step {
-    position: relative;
-    z-index: 1;
-    margin-bottom: 50px;
-}
-
-.site-single-preparation-step h4 {
-    color: #fff;
-    -webkit-box-flex: 0;
-    -ms-flex: 0 0 60px;
-    flex: 0 0 60px;
-    max-width: 60px;
-    width: 60px;
-    margin-bottom: 0;
-}
-
-.site-ingredients h4 {
+.editor-style h4 {
     color: #fff;
     margin-bottom: 30px;
 }
-.site-ingredients h5 {
+
+.editor-style h5 {
     margin-left: 15px;
     margin-bottom: 20px;
 }
-/* .site-ingredients .site-form-check .site-form-check-label::before{
-    width: 30px;
-    height: 30px;
-    background-color: #f3f5f8;
-    border-radius: 0;
-} */
+
+.editor-style-prep-steps ol {
+    list-style-type: none;
+    counter-reset: my-counter;
+    padding-left: 0;
+}
+
+.editor-style-prep-steps li {
+    counter-increment: my-counter;
+    margin-bottom: 10px;
+    color: #fff;
+    font-size: 16px;
+}
+
+.editor-style-prep-steps li::before {
+    content: counter(my-counter)'.';
+    display: inline-block;
+    color: #fff;
+    width: 24px;
+    font-size: 24px;
+    margin-right: 8px;
+    text-align: right;
+}
+
+.editor-style-ingredients ol {
+    list-style: none;
+    padding-left: 0;
+}
+
+.editor-style-ingredients li {
+    list-style: none;
+    margin-bottom: 10px;
+    color: #fff;
+    font-size: 16px;
+}
+
+.editor-style-ingredients li::before {
+    content: "\2022";
+    display: inline-block;
+    color: #fff;
+    width: 24px;
+    font-size: 24px;
+    margin-right: 8px;
+    text-align: right;
+}
+
 .site-ingredients .form-check-label {
     margin-bottom: 0;
     margin-left: 10px;
@@ -209,14 +244,17 @@
     color: #fff;
     cursor: pointer;
 }
+
 .site-ingredients .form-check-label:hover {
     color: #40ba37;
 }
+
 .site-ingredients .form-check {
     padding-left: 2.5rem;
     margin-bottom: 30px;
     min-height: 35px;
 }
+
 .site-ingredients .form-check .form-check-input {
     width: 20px;
     height: 20px;
@@ -224,11 +262,13 @@
     border-radius: 0;
     cursor: pointer;
 }
+
 .site-ingredients .form-check .form-check-input:focus,
 .site-ingredients .form-check .form-check-input:active {
     outline: none !important;
     box-shadow: none !important;
 }
+
 .site-ingredients .form-check .form-check-input:checked {
     background-color: #40ba37 !important;
     border: none;

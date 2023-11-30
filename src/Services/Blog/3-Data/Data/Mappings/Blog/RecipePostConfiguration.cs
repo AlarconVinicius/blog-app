@@ -19,10 +19,12 @@ public class RecipePostConfiguration : IEntityTypeConfiguration<RecipePost>
 
         builder.Property(rb => rb.PreparationSteps)
             .HasColumnName("preparation_steps")
+            .HasColumnType("text")
             .IsRequired();
 
         builder.Property(rb => rb.Ingredients)
             .HasColumnName("ingredients")
+            .HasColumnType("text")
             .IsRequired();
 
         builder.Property(rb => rb.BlogId)
