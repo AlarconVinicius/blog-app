@@ -31,6 +31,14 @@ public class RecipeController : MainController
         return _service.IsOperationValid() ? CustomResponse(result) : CustomResponse(_service.GetErrors());
     }
 
+    [HttpGet("category/{category}")]
+    public async Task<IActionResult> GetRecipeByCategory([FromRoute] string category)
+    {
+        Console.WriteLine(category);
+        var result = await _service.GetRecipeByCategory(category);
+        return _service.IsOperationValid() ? CustomResponse(result) : CustomResponse(_service.GetErrors());
+    }
+
     [HttpGet()]
     public async Task<IActionResult> GetRecipes()
     {
