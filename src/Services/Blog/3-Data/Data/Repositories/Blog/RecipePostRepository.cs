@@ -30,10 +30,21 @@ public class RecipePostRepository : BaseRepository<RecipePost>, IRecipePostRepos
                              .ToListAsync();
     }
 
+    public async Task<List<RecipePost>> GetRecipeByCategory(string category)
+    {
+        return await _context.Recipes
+                             .Include(rp => rp.Category)
+                             .Where(rp => rp.Category!.Name == category)
+                             //.Where(rp => EF.Functions.Like(rp.Category!.Name, "%" + category + "%"))
+                             .Include(rp => rp.User)
+                             .AsNoTracking()
+                             .ToListAsync();
+    }
+
     public async Task<List<RecipePost>> GetAllRecipes()
     {
         return await _context.Recipes
-                             .Include(rp =>  rp.User)
+                             .Include(rp => rp.User)
                              .Include(rp => rp.Category)
                              .AsNoTracking()
                              .ToListAsync();
