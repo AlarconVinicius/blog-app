@@ -17,6 +17,7 @@ import { FaqComponent } from './features/admin/faq/faq.component';
 import { Error404Component } from './features/error/error404/error404.component';
 import { RecipeDetailsComponent } from './features/site/recipe-details/recipe-details.component';
 import { AuthGuard } from './core/guards/auth.guard';
+import { SiteRecipesComponent } from './features/site/site-recipes/site-recipes.component';
 
 const authRoutes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -36,6 +37,8 @@ const adminRoutes: Routes = [
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'receitas', component: SiteRecipesComponent },
+  { path: 'receitas/busca/:busca', component: SiteRecipesComponent },
   { path: 'receita/:id', component: RecipeDetailsComponent },
   { path: 'auth', children: authRoutes },
   { path: 'admin', children: adminRoutes, canActivate: [AuthGuard] },
