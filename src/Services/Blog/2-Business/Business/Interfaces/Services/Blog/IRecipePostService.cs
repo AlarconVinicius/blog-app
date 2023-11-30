@@ -13,6 +13,7 @@ public interface IRecipePostService : IMainService
     public Task<IEnumerable<RecipePostViewDto>> GetRecipes();
 
     Task<IEnumerable<RecipePostViewDto>> GetRecipeBySearch(string searchQuery);
+    Task<IEnumerable<RecipePostViewDto>> GetRecipeByCategory(string category);
     public Task<RecipePostViewDto> GetRecipeById(Guid id);
     public Task<RecipePostViewDto> GetRecipeByIdForCurrentUser(Guid id);
     public Task<IEnumerable<RecipePostViewDto>> GetRecipesForCurrentUser();
