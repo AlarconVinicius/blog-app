@@ -33,7 +33,9 @@
           <div class="col-12 col-lg-8">
             <h4>Modo de Preparo</h4>
             <br />
-            <div [innerHTML]=recipeData.preparationSteps></div>
+            <div class="editor-style editor-style-prep-steps">
+              <div [innerHTML]=recipeData.preparationSteps></div>
+            </div>
             <!-- Single Preparation Step -->
             <!-- <ng-container *ngFor="let step of recipeData.preparationSteps, let i = index">
               <div class="site-single-preparation-step d-flex">
@@ -49,7 +51,9 @@
           <div class="col-12 col-lg-4">
             <div class="site-ingredients">
               <h4>Ingredientes</h4>
-              <div [innerHTML]=recipeData.ingredients></div>
+              <div class="editor-style editor-style-ingredients">
+                <div [innerHTML]=recipeData.ingredients></div>
+              </div>
               <!-- <ng-container *ngFor="let ingredient of recipeData?.ingredients?.ingredients | keyvalue">
                 <ng-container *ngIf="ingredient.value">
                   <h5>{{ ingredient.key }}</h5>
