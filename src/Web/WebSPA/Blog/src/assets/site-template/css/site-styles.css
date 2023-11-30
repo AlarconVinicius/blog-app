@@ -101,7 +101,8 @@
 
 /* Recipe Section */
 #site-recipes,
-#site-categories {
+#site-categories,
+#site-recipe-details {
     min-height: 92vh !important;
 }
 #site-recipes h2 {
@@ -267,20 +268,22 @@
 
 /* Post-Details */
 .site-recipe-headline span {
-    font-size: 14px;
+    font-size: 15px;
     display: block;
-    color: #a4a4a4;
-    margin-bottom: 0;
+    color: var(--dark-brown);
+    margin-bottom: 10px;
+}
+#site-recipe-details .site-recipe-photo {
+    min-width: 500px;
 }
 
 .site-recipe-headline h2 {
     font-size: 36px;
-    color: #fff;
     margin-bottom: 30px;
 }
 
 .site-recipe-headline .site-recipe-duration {
-    border-left: 3px solid #40ba37;
+    border-left: 3px solid var(--orange);
     padding: 15px;
 }
 
@@ -294,7 +297,6 @@
 }
 
 .editor-style h4 {
-    color: #fff;
     margin-bottom: 30px;
 }
 
@@ -312,14 +314,12 @@
 .editor-style-prep-steps li {
     counter-increment: my-counter;
     margin-bottom: 10px;
-    color: #fff;
     font-size: 16px;
 }
 
 .editor-style-prep-steps li::before {
     content: counter(my-counter)'.';
     display: inline-block;
-    color: #fff;
     width: 24px;
     font-size: 24px;
     margin-right: 8px;
@@ -334,18 +334,16 @@
 .editor-style-ingredients li {
     list-style: none;
     margin-bottom: 10px;
-    color: #fff;
     font-size: 16px;
 }
 
 .editor-style-ingredients li:hover {
-    color: #40ba37;
+    color: var(--orange);
 }
 
 .editor-style-ingredients li::before {
     content: "\2022";
     display: inline-block;
-    color: #fff;
     width: 24px;
     font-size: 24px;
     margin-right: 8px;
