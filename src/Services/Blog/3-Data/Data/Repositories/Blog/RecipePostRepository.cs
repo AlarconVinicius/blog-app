@@ -23,7 +23,7 @@ public class RecipePostRepository : BaseRepository<RecipePost>, IRecipePostRepos
     public async Task<List<RecipePost>> GetRecipeBySearch(string searchQuery)
     {
         return await _context.Recipes
-                             .Where(rp => rp.Title.Contains(searchQuery) || rp.Ingredients.Contains(searchQuery))
+                             .Where(rp => rp.Title.Contains(searchQuery) || EF.Functions.Like(rp.Ingredients, "%" + searchQuery + "%"))
                              .Include(rp => rp.User)
                              .Include(rp => rp.Category)
                              .AsNoTracking()
