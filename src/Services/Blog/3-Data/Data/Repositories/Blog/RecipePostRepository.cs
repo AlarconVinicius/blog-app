@@ -1,5 +1,4 @@
 ﻿using Business.Interfaces.Repositories.Blog;
-using Business.Models.Blog;
 using Business.Models.Blog.Recipe;
 using Data.Configuration;
 using Data.Repositories;
@@ -35,7 +34,6 @@ public class RecipePostRepository : BaseRepository<RecipePost>, IRecipePostRepos
         return await _context.Recipes
                              .Include(rp => rp.Category)
                              .Where(rp => rp.Category!.Name == category)
-                             //.Where(rp => EF.Functions.Like(rp.Category!.Name, "%" + category + "%"))
                              .Include(rp => rp.User)
                              .AsNoTracking()
                              .ToListAsync();
