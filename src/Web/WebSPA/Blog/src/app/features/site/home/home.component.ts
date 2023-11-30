@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,9 +9,10 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
   search: string = '';
-  constructor(private router: Router) { }
+  constructor(private router: Router, private titleService: Title) { }
 
   ngOnInit(): void {
+    this.titleService.setTitle("Início | Receitas de Casal")
   }
   onSearch(){
     this.router.navigate([`receitas/busca/${this.search}`]);

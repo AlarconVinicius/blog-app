@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { RecipeResponse } from 'src/app/core/models/recipe/recipe.model';
@@ -15,9 +16,10 @@ export class SiteRecipesComponent implements OnInit {
   recipes$ = new Observable<RecipeResponse[]>();
   showNoRecipesMessage: boolean = false;
 
-  constructor(private recipeService: RecipeService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private recipeService: RecipeService, private route: ActivatedRoute, private router: Router, private titleService: Title) { }
 
   ngOnInit() {
+    this.titleService.setTitle("Receitas | Receitas de Casal");
     this.getInitRecipes();
   }
   getInitRecipes(){

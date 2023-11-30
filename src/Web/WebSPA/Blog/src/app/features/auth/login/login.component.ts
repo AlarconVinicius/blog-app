@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { LocalStorageUtils } from 'src/app/shared/helpers/localstorage/localstorage';
 import { LoginRequest, LoginResponse } from 'src/app/core/models/auth/login.model';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -14,9 +15,10 @@ export class LoginComponent implements OnInit {
 
   loginObj: LoginRequest = {} as LoginRequest;
   loginResponse = {} as LoginResponse;
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private titleService: Title) { }
 
   ngOnInit(): void {
+    this.titleService.setTitle("Login | Receitas de Casal");
     this.isLoggedIn();
   }
 
