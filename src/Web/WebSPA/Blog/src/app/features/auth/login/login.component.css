@@ -7,19 +7,35 @@
     --brown-rgba: #9b5b45c7;
     --light-brown: #9b5a45;
     --dark-brown: #5e3c2c;
-	scroll-behavior: smooth;
-  }
-  a {
+    scroll-behavior: smooth;
+}
+
+a {
     color: var(--orange);
 }
+
 h5 {
     color: var(--dark-brown);
 }
+
 button {
     background: var(--orange);
     color: var(--light-beige);
 }
+
 button:hover {
     background: #ec9915 !important;
     color: #fff;
+}
+
+form input {
+    color: var(--dark-brown) !important;
+}
+
+.logo {
+    text-decoration-color: var(--dark-brown);
+}
+
+.logo span {
+    color: var(--dark-brown);
 }

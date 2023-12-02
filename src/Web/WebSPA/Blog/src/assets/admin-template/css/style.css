@@ -2,20 +2,12 @@
 # General
 --------------------------------------------------------------*/
 :root {
-    --white: #fff;
-    --light-beige: #f6e4da;
-    --dark-beige: #d3bcaf;
-    --yellow: #dca652;
-    --orange: #e2954d;
-    --brown-rgba: #9b5b45c7;
-    --light-brown: #9b5a45;
-    --dark-brown: #5e3c2c;
 	scroll-behavior: smooth;
   }
   body {
 	font-family: "Open Sans", sans-serif;
-	background: var(--light-beige) !important;
-	color: var(--dark-brown) !important;
+	background: #f6f9ff;
+	color: #444444;
 	box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -23,20 +15,17 @@
   }
   
   a {
-	color: var(--dark-brown);
+	color: #4154f1;
 	text-decoration: none;
   }
-  
+
   a:hover {
-	color: var(--orange);
+	color: #717ff5;
 	text-decoration: none;
   }
   
   h1, h2, h3, h4, h5, h6 {
 	font-family: "Nunito", sans-serif;
-  }
-  form input {
-	color: var(--dark-brown) !important;
   }
   /*--------------------------------------------------------------
   # Main
@@ -338,7 +327,6 @@
   --------------------------------------------------------------*/
   .logo {
 	line-height: 1;
-	text-decoration-color: var(--dark-brown);
   }
   @media (min-width: 1200px) {
 	.logo {
@@ -352,7 +340,7 @@
   .logo span {
 	font-size: 26px;
 	font-weight: 700;
-	color: var(--dark-brown);
+	color: #012970;
 	font-family: "Nunito", sans-serif;
   }
   
