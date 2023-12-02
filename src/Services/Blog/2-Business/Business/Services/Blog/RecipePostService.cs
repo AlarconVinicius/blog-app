@@ -5,6 +5,7 @@ using Business.Mappings.Blog;
 using Business.Models.Blog.Dtos;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Business.Services.Blog;
 
@@ -24,11 +25,34 @@ public class RecipePostService : MainService, IRecipePostService
     }
 
     #region Public Methods
-    public async Task<RecipePostViewDto> GetRecipeById(Guid id)
+    public async Task<RecipePostViewDto> GetRecipeById(Guid id, Guid? userId = null)
     {
         try
         {
+            if (userId != null && userId != Guid.Empty)
+            {
+                var userAuthenticated = AuthHelper.GetUserId(_httpAccessor).ToString();
+                if (Guid.Parse(userAuthenticated) != userId)
+                {
+                    AddProcessingError("Falha ao buscar receita: Usuário não autenticado.");
+                    AddProcessingError("Falha ao buscar receita: Receita não encontrada.");
+                    return null!;
+                }
+                var recipeUserDb = await _repository.GetRecipeById(id, userId);
+                if (recipeUserDb == null)
+                {
+                    AddProcessingError("Falha ao buscar receita: Receita não encontrada.");
+                    return null!;
+                }
+                return recipeUserDb.ToDto();
+            }
             var recipeDb = await _repository.GetRecipeById(id);
+
+            if (recipeDb == null)
+            {
+                AddProcessingError("Falha ao buscar receita: Receita não encontrada.");
+                return null!;
+            }
             return recipeDb.ToDto();
         }
         catch (Exception ex)
@@ -38,12 +62,35 @@ public class RecipePostService : MainService, IRecipePostService
         }
     }
 
-    public async Task<IEnumerable<RecipePostViewDto>> GetRecipes()
+    public async Task<RecipePostViewDto> GetRecipeByUrl(string url, Guid? userId = null)
     {
         try
         {
-            var recipeDb = await _repository.GetAllRecipes();
-            return recipeDb.Select(x => x.ToDto());
+            if (userId != null && userId != Guid.Empty)
+            {
+                var userAuthenticated = AuthHelper.GetUserId(_httpAccessor).ToString();
+                if (Guid.Parse(userAuthenticated) != userId)
+                {
+                    AddProcessingError("Falha ao buscar receita: Usuário não autenticado.");
+                    AddProcessingError("Falha ao buscar receita: Receita não encontrada.");
+                    return null!;
+                }
+                var recipeUserDb = await _repository.GetRecipeByUrl(url, userId);
+                if (recipeUserDb == null)
+                {
+                    AddProcessingError("Falha ao buscar receita: Receita não encontrada.");
+                    return null!;
+                }
+                return recipeUserDb.ToDto();
+            }
+            var recipeDb = await _repository.GetRecipeByUrl(url);
+
+            if (recipeDb == null)
+            {
+                AddProcessingError("Falha ao buscar receita: Receita não encontrada.");
+                return null!;
+            }
+            return recipeDb.ToDto();
         }
         catch (Exception ex)
         {
@@ -52,12 +99,23 @@ public class RecipePostService : MainService, IRecipePostService
         }
     }
 
-    public async Task<IEnumerable<RecipePostViewDto>> GetRecipeBySearch(string searchQuery)
+
+    public async Task<IEnumerable<RecipePostViewDto>> GetRecipes(Guid? userId = null)
     {
         try
         {
-            var recipeDb = await _repository.GetRecipeBySearch(searchQuery);
-            return recipeDb.Select(x => x.ToDto());
+            if(userId != null && userId != Guid.Empty)
+            {
+                var userAuthenticated = AuthHelper.GetUserId(_httpAccessor).ToString();
+                if(Guid.Parse(userAuthenticated) != userId)
+                {
+                    AddProcessingError("Falha ao buscar receita: Usuário não autenticado.");
+                    AddProcessingError("Falha ao buscar receitas: Nenhuma receita encontrada.");
+                    return null!;
+                }
+                return (await _repository.GetAllRecipes(userId)).Select(x => x.ToDto());
+            }
+            return (await _repository.GetAllRecipes()).Select(x => x.ToDto());
         }
         catch (Exception ex)
         {
@@ -66,12 +124,46 @@ public class RecipePostService : MainService, IRecipePostService
         }
     }
 
-    public async Task<IEnumerable<RecipePostViewDto>> GetRecipeByCategory(string category)
+    public async Task<IEnumerable<RecipePostViewDto>> GetRecipesBySearch(string searchQuery, Guid? userId = null)
     {
         try
         {
-            var recipeDb = await _repository.GetRecipeByCategory(category);
-            return recipeDb.Select(x => x.ToDto());
+            if (userId != null && userId != Guid.Empty)
+            {
+                var userAuthenticated = AuthHelper.GetUserId(_httpAccessor).ToString();
+                if (Guid.Parse(userAuthenticated) != userId)
+                {
+                    AddProcessingError("Falha ao buscar receita: Usuário não autenticado.");
+                    AddProcessingError("Falha ao buscar receitas: Nenhuma receita encontrada.");
+                    return null!;
+                }
+                return (await _repository.GetRecipesBySearch(searchQuery, userId)).Select(x => x.ToDto());
+            }
+            return (await _repository.GetRecipesBySearch(searchQuery)).Select(x => x.ToDto());
+        }
+        catch (Exception ex)
+        {
+            AddProcessingError($"Falha ao buscar receita: {ex.Message}");
+            return null!;
+        }
+    }
+
+    public async Task<IEnumerable<RecipePostViewDto>> GetRecipesByCategory(string category, Guid? userId = null)
+    {
+        try
+        {
+            if (userId != null && userId != Guid.Empty)
+            {
+                var userAuthenticated = AuthHelper.GetUserId(_httpAccessor).ToString();
+                if (Guid.Parse(userAuthenticated) != userId)
+                {
+                    AddProcessingError("Falha ao buscar receita: Usuário não autenticado.");
+                    AddProcessingError("Falha ao buscar receitas: Nenhuma receita encontrada.");
+                    return null!;
+                }
+                return (await _repository.GetRecipesByCategory(category, userId)).Select(x => x.ToDto());
+            }
+            return (await _repository.GetRecipesByCategory(category)).Select(x => x.ToDto());
         }
         catch (Exception ex)
         {
@@ -82,45 +174,6 @@ public class RecipePostService : MainService, IRecipePostService
     #endregion
 
     #region Authenticated Methods
-    public async Task<RecipePostViewDto> GetRecipeByIdForCurrentUser(Guid id)
-    {
-        try
-        {
-            var userAuthenticated = AuthHelper.GetUserId(_httpAccessor).ToString();
-            var recipeDb = await _repository.GetRecipeByIdAndUser(id, userAuthenticated);
-            if (recipeDb == null || recipeDb.UserId != userAuthenticated)
-            {
-                AddProcessingError("Falha ao buscar receita: Receita não encontrada.");
-                return null!;
-            };
-            return recipeDb.ToDto();
-        }
-        catch (Exception ex)
-        {
-            AddProcessingError($"Falha ao buscar receita: {ex.Message}");
-            return null!;
-        }
-    }
-
-    public async Task<IEnumerable<RecipePostViewDto>> GetRecipesForCurrentUser()
-    {
-        try
-        {
-            var userAuthenticated = AuthHelper.GetUserId(_httpAccessor).ToString();
-            var recipesDb = await _repository.GetAllRecipesByUser(userAuthenticated);
-            if (recipesDb == null || recipesDb.All(r => r.UserId != userAuthenticated))
-            {
-                AddProcessingError("Falha ao buscar receitas: Receitas não encontradas.");
-                return null!;
-            };
-            return recipesDb.Select(x => x.ToDto());
-        }
-        catch (Exception ex)
-        {
-            AddProcessingError($"Falha ao buscar receita: {ex.Message}");
-            return null!;
-        }
-    }
     public async Task AddRecipe(RecipePostAddDto recipe)
     {
         try

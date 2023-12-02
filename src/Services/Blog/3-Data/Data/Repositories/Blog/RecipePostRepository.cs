@@ -13,68 +13,86 @@ public class RecipePostRepository : BaseRepository<RecipePost>, IRecipePostRepos
     {
     }
 
-    public async Task<RecipePost> GetRecipeByTitle(string title)
+    public async Task<RecipePost> GetRecipeByTitle(string url)
     {
-        var recipeDb = await _context.Recipes.FirstOrDefaultAsync(b => b.Title == title);
+        var recipeDb = await _context.Recipes.FirstOrDefaultAsync(b => b.URL == url);
         if (recipeDb == null) return null!;
         return recipeDb;
     }
-    public async Task<List<RecipePost>> GetRecipeBySearch(string searchQuery)
+    public async Task<RecipePost> GetRecipeByUrl(string url, Guid? userId = null)
     {
-        return await _context.Recipes
-                             .Where(rp => rp.Title.Contains(searchQuery) || EF.Functions.Like(rp.Ingredients, "%" + searchQuery + "%"))
-                             .Include(rp => rp.User)
-                             .Include(rp => rp.Category)
-                             .AsNoTracking()
-                             .ToListAsync();
+        var query = _context.Recipes.AsQueryable();
+
+        if (userId != null && userId != Guid.Empty)
+        {
+            query = query.Where(rp => rp.UserId == userId.ToString());
+        }
+        var recipeDb = await query.FirstOrDefaultAsync(b => b.URL == url);
+        if (recipeDb == null) return null!;
+        return recipeDb;
+    }
+    public async Task<List<RecipePost>> GetRecipesBySearch(string searchQuery, Guid? userId = null)
+    {
+        var query = _context.Recipes.AsQueryable();
+
+        if (userId != null && userId != Guid.Empty)
+        {
+            query = query.Where(rp => rp.UserId == userId.ToString());
+        }
+
+        return await query
+                        .Where(rp => rp.Title.Contains(searchQuery) || EF.Functions.Like(rp.Ingredients, "%" + searchQuery + "%"))
+                        .Include(rp => rp.User)
+                        .Include(rp => rp.Category)
+                        .AsNoTracking()
+                        .ToListAsync();
     }
 
-    public async Task<List<RecipePost>> GetRecipeByCategory(string category)
+
+    public async Task<List<RecipePost>> GetRecipesByCategory(string category, Guid? userId = null)
     {
-        return await _context.Recipes
-                             .Include(rp => rp.Category)
-                             .Where(rp => rp.Category!.Name == category)
-                             .Include(rp => rp.User)
-                             .AsNoTracking()
-                             .ToListAsync();
+        var query = _context.Recipes.AsQueryable();
+
+        if (userId != null && userId != Guid.Empty)
+        {
+            query = query.Where(rp => rp.UserId == userId.ToString());
+        }
+        return await query
+                        .Include(rp => rp.Category)
+                        .Where(rp => rp.Category!.Name == category)
+                        .Include(rp => rp.User)
+                        .AsNoTracking()
+                        .ToListAsync();
     }
 
-    public async Task<List<RecipePost>> GetAllRecipes()
+    public async Task<List<RecipePost>> GetAllRecipes(Guid? userId = null)
     {
-        return await _context.Recipes
-                             .Include(rp => rp.User)
-                             .Include(rp => rp.Category)
-                             .AsNoTracking()
-                             .ToListAsync();
+        var query = _context.Recipes.AsQueryable();
+
+        if (userId != null && userId != Guid.Empty)
+        {
+            query = query.Where(rp => rp.UserId == userId.ToString());
+        }
+        return await query
+                        .Include(rp => rp.User)
+                        .Include(rp => rp.Category)
+                        .AsNoTracking()
+                        .ToListAsync();
     }
 
-    public async Task<RecipePost> GetRecipeById(Guid id)
+    public async Task<RecipePost> GetRecipeById(Guid id, Guid? userId = null)
     {
-        var entityDb = await _context.Recipes
-                                     .Include(rp => rp.User)
-                                     .Include(rp => rp.Category)
-                                     .FirstOrDefaultAsync(rp => rp.Id == id);
+        var query = _context.Recipes.AsQueryable();
+
+        if (userId != null && userId != Guid.Empty)
+        {
+            query = query.Where(rp => rp.UserId == userId.ToString());
+        }
+        var entityDb = await query
+                                .Include(rp => rp.User)
+                                .Include(rp => rp.Category)
+                                .FirstOrDefaultAsync(rp => rp.Id == id);
         if (entityDb == null) return null!;
         return entityDb;
-    }
-
-    public async Task<RecipePost> GetRecipeByIdAndUser(Guid id, string userId)
-    {
-        var entityDb = await _context.Recipes
-                                     .Include(rp => rp.User)
-                                     .Include(rp => rp.Category)
-                                     .FirstOrDefaultAsync(rp => rp.Id == id && rp.UserId == userId);
-        if (entityDb == null) return null!;
-        return entityDb;
-    }
-
-    public async Task<List<RecipePost>> GetAllRecipesByUser(string userId)
-    {
-        return await _context.Recipes
-                             .Where(rp => rp.UserId == userId)
-                             .Include(rp => rp.User)
-                             .Include(rp => rp.Category)
-                             .AsNoTracking()
-                             .ToListAsync();
     }
 }
