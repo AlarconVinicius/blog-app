@@ -16,20 +16,6 @@
           
           <div class="col-12">
             <div class="card recent-sales overflow-auto">
-              <!-- <div class="filter">
-                <a class="icon" href="#" data-bs-toggle="dropdown"
-                  ><i class="bi bi-three-dots"></i
-                ></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filtro</h6>
-                  </li>
-                  <li><a class="dropdown-item" href="#">Hoje</a></li>
-                  <li><a class="dropdown-item" href="#">Esse Mês</a></li>
-                  <li><a class="dropdown-item" href="#">Esse Trimestre</a></li>
-                  <li><a class="dropdown-item" href="#">Esse Ano</a></li>
-                </ul>
-              </div> -->
               <div class="card-header d-flex justify-content-between mx-1 mt-3 bg-white">
                 <div class="d-flex align-items-center">
                   <h5 class="card-title">
@@ -88,12 +74,7 @@
                       <td>
                         <a href="admin/receitas/editar/{{ recipe.id }}">Edit</a>
                         ||
-                        <a
-                          href="#"
-                          data-bs-toggle="modal"
-                          data-bs-target="#ModalDeleteTransacao"
-                          >Delete</a
-                        >
+                        <a href="#" (click)="onDelete(recipe.id)" data-bs-toggle="modal" data-bs-target="#ModalDeleteRecipe">Delete</a>
                       </td>
                     </tr>
                   </tbody>
@@ -107,12 +88,12 @@
   </section>
 </main>
 <!-- Delete - Modal Start -->
-<div class="modal fade" id="ModalDeleteTransacao" tabindex="-1">
+<div class="modal fade" id="ModalDeleteRecipe" tabindex="-1"  data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="ModalDeleteRecipeLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">
-          Deletar Transação: XYZ
+        <h5 class="modal-title" id="ModalDeleteRecipeLabel">
+          Deletar Transação: {{ recipe.title }}
         </h5>
         <button
           type="button"
@@ -124,14 +105,8 @@
       <div class="modal-body">
         <form class="row g-3">
           <div class="col-md-12">
-            <button
-              type="button"
-              class="btn btn-secondary me-2"
-              data-bs-dismiss="modal"
-            >
-              Cancelar
-            </button>
-            <button type="button" class="btn btn-danger">Deletar</button>
+            <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal" (click)="clearRecipeFields()">Cancelar</button>
+            <button type="button" class="btn btn-danger" (click)="deleteRecipe(recipe.id)" data-bs-dismiss="modal">Deletar</button>
           </div>
         </form>
       </div>

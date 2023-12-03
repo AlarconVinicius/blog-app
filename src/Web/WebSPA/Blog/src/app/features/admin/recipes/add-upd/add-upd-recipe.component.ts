@@ -60,7 +60,6 @@ export class AddUpdRecipeComponent implements OnInit {
       this.recipe.preparationSteps = data.preparationSteps;
       this.recipe.ingredients = data.ingredients;
       this.recipe.servings = data.servings;
-      console.log(data)
     });
   } 
   
@@ -83,10 +82,17 @@ export class AddUpdRecipeComponent implements OnInit {
       ingredients: this.recipe.ingredients
     };
     var recipeJson = JSON.stringify(recipe);
-    this.recipeService.postRecipe(recipe).subscribe(_ => {
+    if(this.recipeId != ''){
+      this.recipeService.putRecipe(this.recipeId, recipe).subscribe(_ => {
+      this.recipeService.getRecipes(this.userId)
+      this.router.navigate([`admin/receitas`]);
+      });
+    } else {
+      this.recipeService.postRecipe(recipe).subscribe(_ => {
       this.recipeService.getRecipes(this.userId)
       this.router.navigate([`admin/receitas`]);
     });
+    }
     console.log(recipeJson);
   }
   getCategories(){

@@ -60,4 +60,10 @@ export class RecipeService extends BaseService {
   postRecipe(recipe: RecipeRequest){
     return this.httpClient.post<void>(this.adminUrl, recipe, this.getAuthHeaderJson());
   }
+  putRecipe(recipeId: string, recipe: RecipeRequest){
+    return this.httpClient.put<void>(this.adminUrl+'/'+recipeId, recipe, this.getAuthHeaderJson());
+  }
+  deleteRecipe(recipeId: string){
+    return this.httpClient.delete<void>(this.adminUrl+'/'+recipeId, this.getAuthHeaderJson());
+  }
 }
