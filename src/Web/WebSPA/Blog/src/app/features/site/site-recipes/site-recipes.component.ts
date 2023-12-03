@@ -41,19 +41,19 @@ export class SiteRecipesComponent implements OnInit {
     });
   }
   getRecipes(){
-    this.recipeService.getPublicRecipes().subscribe(recipes => {
+    this.recipeService.getRecipes().subscribe(recipes => {
       this.recipes$ = of(recipes);
       this.hasRecipes(recipes);
     });
   }
   getRecipeBySearch(search: string){
-    this.recipeService.getPublicRecipesBySearch(search).subscribe(recipes => {
+    this.recipeService.getRecipesBySearch(search).subscribe(recipes => {
       this.recipes$ = of(recipes);
       this.hasRecipes(recipes);
     });
   }
   getRecipeByCategory(category: string){
-    this.recipeService.getPublicRecipesByCategory(category).subscribe(recipes => {
+    this.recipeService.getRecipesByCategory(category).subscribe(recipes => {
       this.recipes$ = of(recipes);
       this.hasRecipes(recipes);
     });

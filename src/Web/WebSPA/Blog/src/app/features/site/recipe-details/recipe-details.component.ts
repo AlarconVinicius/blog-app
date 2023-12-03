@@ -23,7 +23,7 @@ export class RecipeDetailsComponent implements OnInit {
     this.getRecipesById(this.recipeId);
   }
   getRecipesById(id:string){
-    this.recipeService.getPublicRecipesById(id).subscribe(data => {
+    this.recipeService.getRecipeById(id).subscribe(data => {
       this.recipeData = data;
       this.createdAt = data.createdAt;
       this.difficultyMapped = this.recipeUtils.mapDifficulty(data.difficulty.id);
