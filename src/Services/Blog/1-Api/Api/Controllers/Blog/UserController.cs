@@ -41,9 +41,9 @@ public class UserController : MainController
     }
 
     [HttpPost("favorite-recipes/{recipeId}")]
-    public async Task<IActionResult> PostFavoriteRecipe(Guid recipeId, [FromQuery] bool favorite)
+    public async Task<IActionResult> PostFavoriteRecipe(Guid recipeId)
     {
-        await _service.FavoriteRecipe(recipeId, favorite);
+        await _service.FavoriteRecipe(recipeId);
         return _service.IsOperationValid() ? CustomResponse() : CustomResponse(_service.GetErrors());
     }
 
