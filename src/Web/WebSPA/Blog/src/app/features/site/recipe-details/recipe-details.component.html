@@ -17,6 +17,7 @@
             <div class="site-recipe-headline my-5">
               <span><!-- April 05, 2018 --> {{ createdAt }}</span>
               <h2>{{ recipeData.title }}</h2>
+              <div class="fav-icon" (click)="onFavorite()"><i class="bi bi-heart"></i> Favoritar Receita</div> <!-- <i class="bi bi-heart-fill"></i> -->
               <div class="site-recipe-duration">
                 <h6 id="prep-time">Tempo de Preparo: {{ recipeData.preparationTime }}</h6>
                 <h6 id="difficulty">Dificuldade: {{ difficultyMapped }}</h6>

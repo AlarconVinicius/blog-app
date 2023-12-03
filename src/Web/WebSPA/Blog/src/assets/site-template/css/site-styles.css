@@ -279,9 +279,15 @@
 
 .site-recipe-headline h2 {
     font-size: 36px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
-
+.site-recipe-headline .fav-icon {
+    font-size: 16px;
+    margin-bottom: 15px;
+    display: inline-block;
+    padding: 5px;
+    cursor: pointer;
+}
 .site-recipe-headline .site-recipe-duration {
     border-left: 3px solid var(--orange);
     padding: 15px;

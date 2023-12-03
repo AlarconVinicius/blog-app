@@ -28,4 +28,8 @@ export class UserService extends BaseService{
     return this.httpClient.put<void>(`${this.adminUrl}/change-password`, userPassword, this.getAuthHeaderJson());
   }
 
+  postFavoriteRecipe(recipeId: string) {
+    return this.httpClient.post<void>(`${this.adminUrl}/favorite-recipes/${recipeId}`, {}, this.getAuthHeaderJson());
+  }
+
 }
