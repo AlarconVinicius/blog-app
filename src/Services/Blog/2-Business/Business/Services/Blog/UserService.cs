@@ -75,18 +75,18 @@ public class UserService : MainService, IUserService
         await _userManager.ChangePasswordAsync(userDb, userPassword.OldPassword, userPassword.NewPassword);
     }
 
-    public async Task FavoriteRecipe(Guid recipeId, bool favorite)
+    public async Task FavoriteRecipe(Guid recipeId)
     {
         var userId = AuthHelper.GetUserId(_httpAccessor);
         var userRecipe = new UserFavoriteRecipe(recipeId, userId.ToString());
 
         var existingFavorite = await _userRepository.GetFavoriteRecipeByUserAndRecipeId(userRecipe);
 
-        if (existingFavorite != null && !favorite)
+        if (existingFavorite != null)
         {
             await _userRepository.UnfavoriteRecipe(existingFavorite);
         }
-        else if (existingFavorite == null && favorite)
+        else if (existingFavorite == null)
         {
             await _userRepository.FavoriteRecipe(userRecipe);
         }

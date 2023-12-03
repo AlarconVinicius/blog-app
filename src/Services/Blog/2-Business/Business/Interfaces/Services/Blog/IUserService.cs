@@ -1,6 +1,5 @@
 
 using Business.Models.Blog.Dtos;
-using Business.Models.Blog.Recipe;
 
 namespace Business.Interfaces.Services.Blog;
 
@@ -12,6 +11,6 @@ public interface IUserService : IMainService
 
     public Task UpdatePassword(UserPasswordDto userPassword);
 
-    public Task FavoriteRecipe(Guid recipeId, bool favorite);
+    public Task FavoriteRecipe(Guid recipeId);
     public Task<IEnumerable<RecipePostViewDto>> GetFavoriteRecipesByUserId();
 }
