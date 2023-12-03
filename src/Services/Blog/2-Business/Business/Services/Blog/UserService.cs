@@ -1,8 +1,10 @@
 using Business.Helpers.Auth;
+using Business.Interfaces.Repositories.Blog;
 using Business.Interfaces.Services.Blog;
 using Business.Mappings.Blog;
 using Business.Models.Auth;
 using Business.Models.Blog.Dtos;
+using Business.Models.Blog.Recipe;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
@@ -13,12 +15,13 @@ public class UserService : MainService, IUserService
     
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IHttpContextAccessor _httpAccessor;
+    private readonly IUserRepository _userRepository;
 
-    public UserService(UserManager<ApplicationUser> userManager, IHttpContextAccessor httpAccessor)
+    public UserService(UserManager<ApplicationUser> userManager, IHttpContextAccessor httpAccessor, IUserRepository userRepository)
     {
         _userManager = userManager;
         _httpAccessor = httpAccessor;
-
+        _userRepository = userRepository;
     }
 
     public async Task<UserViewDto> GetAuthenticatedUser()
@@ -70,6 +73,29 @@ public class UserService : MainService, IUserService
         }
 
         await _userManager.ChangePasswordAsync(userDb, userPassword.OldPassword, userPassword.NewPassword);
+    }
+
+    public async Task FavoriteRecipe(Guid recipeId, bool favorite)
+    {
+        var userId = AuthHelper.GetUserId(_httpAccessor);
+        var userRecipe = new UserFavoriteRecipe(recipeId, userId.ToString());
+
+        var existingFavorite = await _userRepository.GetFavoriteRecipeByUserAndRecipeId(userRecipe);
+
+        if (existingFavorite != null && !favorite)
+        {
+            await _userRepository.UnfavoriteRecipe(existingFavorite);
+        }
+        else if (existingFavorite == null && favorite)
+        {
+            await _userRepository.FavoriteRecipe(userRecipe);
+        }
+    }
+
+    public async Task<IEnumerable<RecipePostViewDto>> GetFavoriteRecipesByUserId()
+    {
+        var userId = AuthHelper.GetUserId(_httpAccessor);
+        return (await _userRepository.GetFavoriteRecipesByUserId(userId)).Select(x => x.ToDto());
     }
 
 }
