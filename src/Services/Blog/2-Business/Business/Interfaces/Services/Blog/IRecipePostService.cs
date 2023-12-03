@@ -10,10 +10,10 @@ public interface IRecipePostService : IMainService
 
     public Task DeleteRecipe(Guid id);
 
-    public Task<IEnumerable<RecipePostViewDto>> GetRecipes();
+    public Task<RecipePostViewDto> GetRecipeById(Guid id, Guid? userId);
+    public Task<RecipePostViewDto> GetRecipeByUrl(string url, Guid? userId);
 
-    Task<IEnumerable<RecipePostViewDto>> GetRecipeBySearch(string searchQuery);
-    public Task<RecipePostViewDto> GetRecipeById(Guid id);
-    public Task<RecipePostViewDto> GetRecipeByIdForCurrentUser(Guid id);
-    public Task<IEnumerable<RecipePostViewDto>> GetRecipesForCurrentUser();
+    Task<IEnumerable<RecipePostViewDto>> GetRecipesBySearch(string searchQuery, Guid? userId);
+    Task<IEnumerable<RecipePostViewDto>> GetRecipesByCategory(string category, Guid? userId);
+    public Task<IEnumerable<RecipePostViewDto>> GetRecipes(Guid? userId);
 }

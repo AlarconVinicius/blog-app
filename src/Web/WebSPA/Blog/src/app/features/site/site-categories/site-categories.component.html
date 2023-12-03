@@ -1,0 +1,17 @@
+<div id="site-body">
+  <app-site-header></app-site-header>
+  <section id="site-categories" class="site-container site-section">
+    <div id="site-categories-container" class="site-card-container">
+      <div class="site-card" *ngFor="let category of categories$ | async">
+        <div class="site-card-content">
+          <p>
+            {{category.name}}
+          </p>
+        </div>
+        <button class="site-card-btn" (click)="onSearch(category.name)">
+          Ver mais
+        </button>
+      </div>
+    </div>
+  </section>
+</div>

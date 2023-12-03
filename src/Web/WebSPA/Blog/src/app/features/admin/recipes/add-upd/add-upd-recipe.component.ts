@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router';
+import { CategoryResponse } from 'src/app/core/models/category/category.model';
 import { EDifficulty } from 'src/app/core/models/difficulty/difficulty.model';
-import { RecipeRequest, RecipeResponse } from 'src/app/core/models/recipe/recipe.model';
-import { RecipeUtils } from 'src/app/shared/helpers/recipe/recipe-utils';
+import { RecipeRequest } from 'src/app/core/models/recipe/recipe.model';
+import { LocalStorageUtils } from 'src/app/shared/helpers/localstorage/localstorage';
 import { CategoryService } from 'src/app/shared/services/category/category.service';
 import { RecipeService } from 'src/app/shared/services/recipe/recipe.service';
 import { environment } from 'src/environments/environment';
@@ -14,70 +15,89 @@ import { environment } from 'src/environments/environment';
 })
 export class AddUpdRecipeComponent implements OnInit {
 
+  userId: string = '';
   tinyApi: string = environment.tinyMceApi;
   recipeId: string = '';
-  recipeData = {} as RecipeResponse;
-  createdAt: any;
-  difficultyMapped: string = '';
+  categoryDb: string = '';
+  routeRecipeId: string = '';
 
   pageTitle: string = '';
 
   recipe = {} as RecipeRequest;
-  prepStepInput: string = '';
-  categories: string[] = ['Sobremesa', 'Almoço', 'Janta'];
+  categories: CategoryResponse[] = [];
   difficulties: { id: number; nome: string }[] = [
     { id: Number(EDifficulty.Fácil), nome: 'Fácil' },
     { id: Number(EDifficulty.Médio), nome: 'Médio' },
     { id: Number(EDifficulty.Difícil), nome: 'Difícil' }
   ];
-  newGroup: string = '';
-  newIngredient: string = '';
-  newIngredients: string[] = [];
-  groups: string[] = [];
 
-  constructor(private recipeUtils: RecipeUtils, private recipeService: RecipeService, private categoryService: CategoryService, private route: ActivatedRoute) { }
+  constructor(private localStorage: LocalStorageUtils, private recipeService: RecipeService, private categoryService: CategoryService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    this.recipeId = this.recipeUtils.getIdFromCurrentUrl(this.route.snapshot.url);
-    this.getRecipesById(this.recipeId);
+    this.userId = this.localStorage.getUserId();
+    this.getCategories();
+    this.isUpdate();
   }
 
+  isUpdate(){
+    this.route.params.subscribe(params => {
+      if (params['id']) {
+        this.routeRecipeId = params['id'];
+        this.getRecipesById(this.routeRecipeId);
+      }
+    });
+    this.getPageTitle();
+    this.routeRecipeId = '';
+  }
   getRecipesById(id:string){
-    this.recipeService.getAuthRecipesById(id).subscribe(data => {
+    this.recipeService.getRecipeById(id, this.userId).subscribe(data => {
+      this.recipeId = data.id;
       this.recipe.title = data.title;
       this.recipe.categoryId = data.category.id;
+      this.categoryDb = data.category.name;
       this.recipe.difficulty = data.difficulty.id;
       this.recipe.preparationTime = data.preparationTime;
+      this.recipe.preparationSteps = data.preparationSteps;
+      this.recipe.ingredients = data.ingredients;
       this.recipe.servings = data.servings;
-      
-      this.getPageTitle();
-      console.log(data)
-      // this.difficultyMapped = this.recipeUtils.mapDifficulty(data.difficulty.id);
     });
   } 
   
   getPageTitle(){
-    if (this.recipeId != ''){
+    if (this.routeRecipeId != ''){
       this.pageTitle = "Editar Receita"
     } else {
-      this.pageTitle = "Adicionar Receita " + this.recipe.title
+      this.pageTitle = "Adicionar Receita "
     }
   }
   saveRecipe() {
     const recipe: RecipeRequest = {
       title: this.recipe.title,
       preparationSteps: this.recipe.preparationSteps,
-      // preparationSteps: this.spitPreparationStep(this.prepStepInput),
       blogId: "2a2ff613-6f3b-4dd8-9fd6-a2f824b67b62",
-      categoryId: "50a325fd-19e0-4feb-bead-a7c60c0581aa",
+      categoryId: this.recipe.categoryId,
       difficulty: Number(this.recipe.difficulty),
       preparationTime: this.recipe.preparationTime,
       servings: this.recipe.servings,
       ingredients: this.recipe.ingredients
-      // ingredients: this.recipeIngredients
     };
     var recipeJson = JSON.stringify(recipe);
-    this.recipeService.postAuthRecipe(recipe).subscribe(_ => this.recipeService.getPublicRecipes());
+    if(this.recipeId != ''){
+      this.recipeService.putRecipe(this.recipeId, recipe).subscribe(_ => {
+      this.recipeService.getRecipes(this.userId)
+      this.router.navigate([`admin/receitas`]);
+      });
+    } else {
+      this.recipeService.postRecipe(recipe).subscribe(_ => {
+      this.recipeService.getRecipes(this.userId)
+      this.router.navigate([`admin/receitas`]);
+    });
+    }
     console.log(recipeJson);
+  }
+  getCategories(){
+    this.categoryService.getPublicCategories().subscribe(data => {
+      this.categories = data;
+    })
   }
 }

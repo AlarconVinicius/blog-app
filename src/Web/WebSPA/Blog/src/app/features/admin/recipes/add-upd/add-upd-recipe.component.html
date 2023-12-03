@@ -32,14 +32,15 @@
                                 <div class="col-3">
                                     <label for="Category" class="form-label">Categoria*</label>
                                     <select name="Category" id="Category" class="form-select" [(ngModel)]="recipe.categoryId">
-                                      <option selected disabled>Selecione uma Categoria</option>
-                                      <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+                                      <!-- <option>Selecione uma Categoria</option> -->
+                                      <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
                                     </select>
                                 </div>
+                                  
                                 <div class="col-md-3">
                                     <label for="Difficulty" class="form-label">Dificuldade*</label>
                                     <select name="Difficulty" id="Difficulty" class="form-select" [(ngModel)]="recipe.difficulty">
-                                        <option selected disabled>Selecione uma Dificuldade</option>
+                                        <!-- <option selected disabled>Selecione uma Dificuldade</option> -->
                                         <option *ngFor="let difficulty of difficulties" [value]="difficulty.id">{{ difficulty.nome }}</option>
                                       </select>
                                 </div>
@@ -76,14 +77,13 @@
                                             }"
                                         
                                         name="preparationSteps"
-                                        id="preparationSteps"
                                         [(ngModel)]="recipe.preparationSteps"
-                                    >{{ recipe.preparationSteps }}</editor>
+                                    ></editor>
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="preparationSteps" class="form-label"
+                                    <label for="ingredients" class="form-label"
                                     >Ingredientes</label>
-                                    <editor 
+                                    <editor
                                         apiKey="{{ tinyApi }}"
                                         [init]="
                                             {
@@ -92,18 +92,16 @@
                                             }"
                                         
                                         name="ingredients"
-                                        id="ingredients"
                                         [(ngModel)]="recipe.ingredients"
-                                    >{{ recipe.ingredients }}</editor>
+                                    ></editor>
                                 </div>
                                 <div class="col-md-12">
-                                    <button
-                                    type="button"
+                                    <a
+                                    href="admin/receitas"
                                     class="btn btn-secondary me-2"
-                                    data-bs-dismiss="modal"
                                     >
-                                    Fechar
-                                    </button>
+                                    Cancelar
+                                    </a>
                                     <button type="button" class="btn btn-success" (click)="saveRecipe()">
                                     Salvar
                                     </button>

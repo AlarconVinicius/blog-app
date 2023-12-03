@@ -1,5 +1,9 @@
+import { Injectable } from "@angular/core";
 import { ClaimsResponse, LoginResponse } from "src/app/core/models/auth/login.model";
 
+@Injectable({
+    providedIn: 'root'
+})
 export class LocalStorageUtils {
 
     public getUser() {
@@ -8,10 +12,12 @@ export class LocalStorageUtils {
 
     public saveLocalUserData(response: LoginResponse) {
         this.saveUserToken(response.accessToken);
+        this.saveUserId(response.userToken.id);
         this.saveUserClaims(response.userToken.claims);
     }
 
     public clearLocalUserData() {
+        localStorage.removeItem('id');
         localStorage.removeItem('token');
         localStorage.removeItem('claims');
     }
@@ -19,6 +25,11 @@ export class LocalStorageUtils {
     public getUserToken(): string {
         return localStorage.getItem('token') || '';
     }
+
+    public getUserId(): string {
+        return localStorage.getItem('id') || '';
+    }
+
     public getUserClaims(): ClaimsResponse[] {
         const claimsString = localStorage.getItem('claims') || '[]';
         return JSON.parse(claimsString) as ClaimsResponse[];
@@ -26,6 +37,10 @@ export class LocalStorageUtils {
 
     public saveUserToken(token: string) {
         localStorage.setItem('token', token);
+    }
+
+    public saveUserId(id: string) {
+        localStorage.setItem('id', id);
     }
 
     public saveUserClaims(claims: ClaimsResponse[]) {
@@ -37,8 +52,8 @@ export class LocalStorageUtils {
         return claims.some(claim => claim.type === 'Permission' && claim.value.includes('Writer'));
     }
 
-    public isLoggedIn(): boolean{
-        if(Boolean(this.getUserToken())){
+    public isLoggedIn(): boolean {
+        if (Boolean(this.getUserToken())) {
             return true;
         }
         return false

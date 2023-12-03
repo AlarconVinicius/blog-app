@@ -18,44 +18,43 @@ public class RecipeController : MainController
 
     #region Public Methods
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetRecipeById(Guid id)
+    public async Task<IActionResult> GetRecipeById(Guid id, [FromQuery] Guid? userId)
     {
-        var result = await _service.GetRecipeById(id);
+        var result = await _service.GetRecipeById(id, userId);
+        return _service.IsOperationValid() ? CustomResponse(result) : CustomResponse(_service.GetErrors());
+    }
+
+    [HttpGet("url/{url}")]
+    public async Task<IActionResult> GetRecipeByUrl(string url, [FromQuery] Guid? userId)
+    {
+        var result = await _service.GetRecipeByUrl(url, userId);
         return _service.IsOperationValid() ? CustomResponse(result) : CustomResponse(_service.GetErrors());
     }
 
     [HttpGet("search/{search}")]
-    public async Task<IActionResult> GetRecipeBySearch([FromRoute] string search)
+    public async Task<IActionResult> GetRecipesBySearch([FromRoute] string search, [FromQuery] Guid? userId)
     {
-        var result = await _service.GetRecipeBySearch(search);
+        var result = await _service.GetRecipesBySearch(search, userId);
+        return _service.IsOperationValid() ? CustomResponse(result) : CustomResponse(_service.GetErrors());
+    }
+
+    [HttpGet("category/{category}")]
+    public async Task<IActionResult> GetRecipesByCategory([FromRoute] string category, [FromQuery] Guid? userId)
+    {
+        Console.WriteLine(category);
+        var result = await _service.GetRecipesByCategory(category, userId);
         return _service.IsOperationValid() ? CustomResponse(result) : CustomResponse(_service.GetErrors());
     }
 
     [HttpGet()]
-    public async Task<IActionResult> GetRecipes()
+    public async Task<IActionResult> GetRecipes([FromQuery] Guid? userId)
     {
-        var result = await _service.GetRecipes();
+        var result = await _service.GetRecipes(userId);
         return _service.IsOperationValid() ? CustomResponse(result) : CustomResponse(_service.GetErrors());
     }
     #endregion
 
     #region Authenticated Methods
-    [Authorize]
-    [HttpGet("/api/admin/recipes/{id}")]
-    public async Task<IActionResult> GetRecipeByIdForCurrentUser(Guid id)
-    {
-        var result = await _service.GetRecipeByIdForCurrentUser(id);
-        return _service.IsOperationValid() ? CustomResponse(result) : CustomResponse(_service.GetErrors());
-    }
-
-    [Authorize]
-    [HttpGet("/api/admin/recipes")]
-    public async Task<IActionResult> GetRecipesForCurrentUser()
-    {
-        var result = await _service.GetRecipesForCurrentUser();
-        return _service.IsOperationValid() ? CustomResponse(result) : CustomResponse(_service.GetErrors());
-    }
-
     [Authorize]
     [ClaimsAuthorize("Permission", "Writer")]
     [HttpPost("/api/admin/recipes")]

@@ -1,26 +1,12 @@
 <div id="site-body">
   <app-site-header></app-site-header>
-  <main id="site-search-recipe">
-    <h1 class="site-brand">Receitas de Casal</h1>
-    <form>
-      <input type="text" placeholder="Pesquisar receita..." [(ngModel)]="search" name="search" (keyup.enter)="onSearch()"/>
-      <span name="search"></span>
-    </form>
-  </main>
-  <hr />
-  <section id="site-recipes" class="site-container site-section">
-    <h2>{{ title }}</h2>
-    <div id="site-recipe-container" class="site-card-container">
-      <div *ngIf="showNoRecipesMessage && !(recipes$ | async)?.length">
-        Nenhuma receita encontrada.
-      </div>
-      <div class="site-card" *ngFor="let recipe of recipes$ | async">
-        <img src="../../../../assets/site-template/img/1.jpg" alt="" />
-        <div class="site-card-content">
-          <h3>{{ recipe.title }}</h3>
-          <button  class="site-card-btn" (click)="getRecipe(recipe)">Ver mais</button>
-        </div>
-      </div>
+  <main id="site-home-recipe">
+    <div class="site-home-group">
+      <h1 class="site-brand">Receitas de Casal</h1>
+      <form>
+        <input type="text" placeholder="Pesquisar receita..." [(ngModel)]="search" name="search" (keyup.enter)="onSearch()"/>
+        <span name="search"></span>
+      </form>
     </div>
-  </section>
+  </main>
 </div>

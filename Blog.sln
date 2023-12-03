@@ -11,23 +11,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blog", "Blog", "{6A0A94D5-1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1-Api", "1-Api", "{39CD5016-C681-432F-94FE-7103835F4E50}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "src\Services\Blog\1-Api\Api\Api.csproj", "{0B7695CC-1B20-43BC-9112-C364D0BBFEEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "src\Services\Blog\1-Api\Api\Api.csproj", "{0B7695CC-1B20-43BC-9112-C364D0BBFEEB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2-Business", "2-Business", "{D410CD57-787E-47C4-8846-5A311D04BF7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "src\Services\Blog\2-Business\Business\Business.csproj", "{5988C97E-4BEE-4249-A407-2432F5655E9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "src\Services\Blog\2-Business\Business\Business.csproj", "{5988C97E-4BEE-4249-A407-2432F5655E9C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3-Data", "3-Data", "{190FE539-A4B5-4533-A6DC-CE951CCBA31F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "src\Services\Blog\3-Data\Data\Data.csproj", "{B4707A20-644F-47B0-9ADC-C5C1685B2BB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "src\Services\Blog\3-Data\Data\Data.csproj", "{B4707A20-644F-47B0-9ADC-C5C1685B2BB1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{85DCAF55-ECE4-4EE4-9303-A271183E8154}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{0B7695CC-1B20-43BC-9112-C364D0BBFEEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -42,6 +44,9 @@ Global
 		{B4707A20-644F-47B0-9ADC-C5C1685B2BB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4707A20-644F-47B0-9ADC-C5C1685B2BB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4707A20-644F-47B0-9ADC-C5C1685B2BB1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{8C4D464D-CFF5-4EF9-8B7A-98534F14F230} = {6B6063A6-3266-4B66-B7E4-8775CAF3C7EC}

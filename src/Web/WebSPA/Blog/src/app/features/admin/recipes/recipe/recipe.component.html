@@ -16,36 +16,11 @@
           
           <div class="col-12">
             <div class="card recent-sales overflow-auto">
-              <div class="filter">
-                <a class="icon" href="#" data-bs-toggle="dropdown"
-                  ><i class="bi bi-three-dots"></i
-                ></a>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                  <li class="dropdown-header text-start">
-                    <h6>Filtro</h6>
-                  </li>
-                  <li><a class="dropdown-item" href="#">Hoje</a></li>
-                  <li><a class="dropdown-item" href="#">Esse Mês</a></li>
-                  <li><a class="dropdown-item" href="#">Esse Trimestre</a></li>
-                  <li><a class="dropdown-item" href="#">Esse Ano</a></li>
-                </ul>
-              </div>
-              <div class="card-header d-flex justify-content-between mx-1 mt-3">
+              <div class="card-header d-flex justify-content-between mx-1 mt-3 bg-white">
                 <div class="d-flex align-items-center">
                   <h5 class="card-title">
-                    Últimas Receitas <!-- <span>| Hoje</span> -->
+                    Últimas Receitas
                   </h5>
-                  <div class="form-group ms-3 my-3">
-                    <select
-                      class="form-select form-select-sm"
-                      id="controlFinanceiro"
-                      aria-label=".form-select-sm example"
-                      style="width: 200px"
-                    >
-                      <option value="1" selected>Vinícius</option>
-                      <option value="2">Camila</option>
-                    </select>
-                  </div>
                 </div>
                 <div class="d-flex align-items-center">
                   <div class="input-group me-3">
@@ -99,12 +74,7 @@
                       <td>
                         <a href="admin/receitas/editar/{{ recipe.id }}">Edit</a>
                         ||
-                        <a
-                          href="#"
-                          data-bs-toggle="modal"
-                          data-bs-target="#ModalDeleteTransacao"
-                          >Delete</a
-                        >
+                        <a href="#" (click)="onDelete(recipe.id)" data-bs-toggle="modal" data-bs-target="#ModalDeleteRecipe">Delete</a>
                       </td>
                     </tr>
                   </tbody>
@@ -117,239 +87,13 @@
     </div>
   </section>
 </main>
-<!-- Add - Modal -->
-<div class="modal fade" id="ModalAddTransacao" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Adicionar Transação</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <form class="row g-3 w-100">
-          <div class="col-md-6">
-            <label for="Name" class="form-label">Nome*</label>
-            <input type="text" class="form-control" name="Name" id="Name" />
-          </div>
-          <div class="col-md-6">
-            <label for="StoreName" class="form-label">Estabelecimento*</label>
-            <input
-              type="text"
-              class="form-control"
-              name="StoreName"
-              id="StoreName"
-            />
-          </div>
-          <div class="col-4">
-            <label for="Method" class="form-label">Método*</label>
-            <select name="Method" id="Method" class="form-select">
-              <option selected disabled>Selecione um Método</option>
-              <option>Crédito</option>
-              <option>Débito</option>
-              <option>Pix</option>
-            </select>
-          </div>
-          <div class="col-md-4">
-            <label for="Bank" class="form-label">Banco*</label>
-            <select name="Bank" id="Bank" class="form-select">
-              <option selected disabled>Selecione um Banco</option>
-              <option>Nubank</option>
-              <option>Santander</option>
-              <option>Inter</option>
-            </select>
-          </div>
-          <div class="col-md-4">
-            <label for="Amount" class="form-label">Valor*</label>
-            <input
-              type="number"
-              class="form-control"
-              name="Amount"
-              id="Amount"
-            />
-          </div>
-          <div class="col-md-4">
-            <label for="ControlType" class="form-label">Controle*</label>
-            <select id="ControlType" class="form-select">
-              <option selected disabled>Selecione um Controle</option>
-              <option>Vinicius</option>
-              <option>Camila</option>
-            </select>
-          </div>
-          <div class="col-4">
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                name="Entry"
-                id="Entry"
-              />
-              <label class="form-check-label" for="Entry"> Entrada </label>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                name="Paid"
-                id="Paid"
-              />
-              <label class="form-check-label" for="Paid"> Pago </label>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <label for="Description" class="form-label">Descrição</label>
-            <input
-              type="text"
-              class="form-control"
-              name="Description"
-              id="Description"
-            />
-          </div>
-          <div class="col-md-12">
-            <button
-              type="button"
-              class="btn btn-secondary me-2"
-              data-bs-dismiss="modal"
-            >
-              Fechar
-            </button>
-            <button type="button" class="btn btn-primary">Salvar</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Add - Modal End -->
-
-<!-- Edit - Modal Start -->
-<div class="modal fade" id="ModalEditTransacao" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">
-          Editar Transação: NomeTransação
-        </h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body" style="width: 100%">
-        <form class="row g-3 w-100">
-          <div class="col-md-6">
-            <label for="NameEdit" class="form-label">Nome*</label>
-            <input type="text" class="form-control" name="Name" id="NameEdit" />
-          </div>
-          <div class="col-md-6">
-            <label for="StoreNameEdit" class="form-label"
-              >Estabelecimento*</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              name="StoreName"
-              id="StoreNameEdit"
-            />
-          </div>
-          <div class="col-4">
-            <label for="MethodEdit" class="form-label">Método*</label>
-            <select name="Method" id="MethodEdit" class="form-select">
-              <option selected disabled>Selecione um Método</option>
-              <option>Crédito</option>
-              <option>Débito</option>
-              <option>Pix</option>
-            </select>
-          </div>
-          <div class="col-md-4">
-            <label for="BankEdit" class="form-label">Banco*</label>
-            <select name="Bank" id="BankEdit" class="form-select">
-              <option selected disabled>Selecione um Banco</option>
-              <option>Nubank</option>
-              <option>Santander</option>
-              <option>Inter</option>
-            </select>
-          </div>
-          <div class="col-md-4">
-            <label for="AmountEdit" class="form-label">Valor*</label>
-            <input
-              type="number"
-              class="form-control"
-              name="Amount"
-              id="AmountEdit"
-            />
-          </div>
-          <div class="col-md-4">
-            <label for="ControlType" class="form-label">Controle*</label>
-            <select id="ControlType" class="form-select">
-              <option selected disabled>Selecione um Controle</option>
-              <option>Vinicius</option>
-              <option>Camila</option>
-            </select>
-          </div>
-          <div class="col-4">
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                name="Entry"
-                id="EntryEdit"
-              />
-              <label class="form-check-label" for="EntryEdit"> Entrada </label>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                name="Paid"
-                id="PaidEdit"
-              />
-              <label class="form-check-label" for="PaidEdit"> Pago </label>
-            </div>
-          </div>
-          <div class="col-md-12">
-            <label for="DescriptionEdit" class="form-label">Descrição</label>
-            <input
-              type="text"
-              class="form-control"
-              name="Description"
-              id="DescriptionEdit"
-            />
-          </div>
-          <div class="col-md-12">
-            <button
-              type="button"
-              class="btn btn-secondary me-2"
-              data-bs-dismiss="modal"
-            >
-              Fechar
-            </button>
-            <button type="button" class="btn btn-primary">Salvar</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Edit - Modal End -->
-
 <!-- Delete - Modal Start -->
-<div class="modal fade" id="ModalDeleteTransacao" tabindex="-1">
+<div class="modal fade" id="ModalDeleteRecipe" tabindex="-1"  data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="ModalDeleteRecipeLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">
-          Deletar Transação: NomeTransação
+        <h5 class="modal-title" id="ModalDeleteRecipeLabel">
+          Deletar Transação: {{ recipe.title }}
         </h5>
         <button
           type="button"
@@ -361,14 +105,8 @@
       <div class="modal-body">
         <form class="row g-3">
           <div class="col-md-12">
-            <button
-              type="button"
-              class="btn btn-secondary me-2"
-              data-bs-dismiss="modal"
-            >
-              Cancelar
-            </button>
-            <button type="button" class="btn btn-danger">Deletar</button>
+            <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal" (click)="clearRecipeFields()">Cancelar</button>
+            <button type="button" class="btn btn-danger" (click)="deleteRecipe(recipe.id)" data-bs-dismiss="modal">Deletar</button>
           </div>
         </form>
       </div>
