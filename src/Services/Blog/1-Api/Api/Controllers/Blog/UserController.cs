@@ -39,4 +39,18 @@ public class UserController : MainController
         await _service.UpdatePassword(userPassword);
         return _service.IsOperationValid() ? CustomResponse() : CustomResponse(_service.GetErrors());
     }
+
+    [HttpPost("favorite-recipes/{recipeId}")]
+    public async Task<IActionResult> PostFavoriteRecipe(Guid recipeId, [FromQuery] bool favorite)
+    {
+        await _service.FavoriteRecipe(recipeId, favorite);
+        return _service.IsOperationValid() ? CustomResponse() : CustomResponse(_service.GetErrors());
+    }
+
+    [HttpGet("favorite-recipes")]
+    public async Task<IActionResult> GetFavoriteRecipeByUser()
+    {
+        var result = await _service.GetFavoriteRecipesByUserId();
+        return _service.IsOperationValid() ? CustomResponse(result) : CustomResponse(_service.GetErrors());
+    }
 }
