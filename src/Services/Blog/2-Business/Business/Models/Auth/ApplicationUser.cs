@@ -23,6 +23,7 @@ public class ApplicationUser : IdentityUser
     public ICollection<UserBlog>? Blogs { get; set; }
 
     public ICollection<RecipePost>? RecipePosts { get; set; }
+    public ICollection<UserFavoriteRecipe>? FavoriteRecipes { get; set; }
 
     public ApplicationUser()
     {

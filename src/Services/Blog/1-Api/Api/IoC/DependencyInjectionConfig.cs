@@ -11,6 +11,7 @@ using Business.Validators;
 using Data.Blog.Repositories;
 using Data.Configuration;
 using Data.Repositories;
+using Data.Repositories.Blog;
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -93,6 +94,7 @@ public static class DependencyInjectionConfig
         services.AddScoped<IRecipePostService, RecipePostService>();
 
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IUserRepository, UserRepository>();
 
         services.AddScoped<IValidator<RecipePostAddDto>, RecipePostAddValidator>();
     }

@@ -7,6 +7,7 @@ public class RecipePost : MainPost
     public string PreparationTime { get; set; } = string.Empty;
     public int Servings { get; set; }
     public string Ingredients { get; set; } = string.Empty;
+    public ICollection<UserFavoriteRecipe>? UserFavoriteRecipes { get; set; }
 
     public RecipePost(
         string title,
