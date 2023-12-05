@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 })
 export abstract class BaseService {
 
-  public LocalStorage = new LocalStorageUtils();
+  public localStorage = new LocalStorageUtils();
   protected PublicUrl: string = environment.publicApi;
   protected AdminUrl: string = environment.adminApi;
   
@@ -24,7 +24,7 @@ export abstract class BaseService {
       return {
           headers: new HttpHeaders({
               'Content-Type': 'application/json',
-              'Authorization': `Bearer ${this.LocalStorage.getUserToken()}`
+              'Authorization': `Bearer ${this.localStorage.getUserToken()}`
           })
       };
   }

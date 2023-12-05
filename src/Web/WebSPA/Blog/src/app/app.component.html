@@ -1,4 +1,4 @@
-<app-header *ngIf="_router.url.startsWith('/admin')" ></app-header>
+<app-header *ngIf="_router.url.startsWith('/admin') || _router.url.startsWith('/perfil')" ></app-header>
 <app-sidebar *ngIf="_router.url.startsWith('/admin')" ></app-sidebar>
 <router-outlet></router-outlet>
 <app-footer *ngIf="_router.url.startsWith('/admin')" ></app-footer>

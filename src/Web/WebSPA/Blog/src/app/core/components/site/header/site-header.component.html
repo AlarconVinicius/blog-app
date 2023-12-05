@@ -9,9 +9,11 @@
     <ul class="site-nav-list">
       <li><a href="receitas">Receitas</a></li>
       <li><a href="categorias">Categorias</a></li>
+      <li><a href="categorias">Favoritos</a></li>
       <!-- <li><a href="/">Sobre</a></li>
       <li><a href="/">Contato</a></li> -->
-      <li><a style="margin-left: 30px;" href="{{ loggedIn ? '/admin' : '/auth/login' }}">{{ loggedIn ? 'Dashboard' : 'Login/Registrar' }}</a></li>
+      <li><a style="margin-left: 30px;" href="{{ loggedIn ? (admin ? '/admin' : '/perfil') : '/auth/login' }}">{{ loggedIn ? (admin ? 'Dashboard' : 'Perfil') : 'Login/Registrar' }}</a></li>
+      <li *ngIf="loggedIn"><a href="" style="margin-left: 30px;" (click)="logout()">Sair</a></li>
     </ul>
   </nav>
 </header>

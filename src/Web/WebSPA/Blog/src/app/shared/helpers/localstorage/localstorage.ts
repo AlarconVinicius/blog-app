@@ -52,6 +52,12 @@ export class LocalStorageUtils {
         return claims.some(claim => claim.type === 'Permission' && claim.value.includes('Writer'));
     }
 
+    public isAdmin(): boolean {
+        const claims = this.getUserClaims();
+        console.log(claims.some(claim => claim.type === 'role' && claim.value.includes('Admin')))
+        return claims.some(claim => claim.type === 'role' && claim.value.includes('Admin'));
+    }
+    
     public isLoggedIn(): boolean {
         if (Boolean(this.getUserToken())) {
             return true;
