@@ -1,0 +1,58 @@
+:root {
+    --white: #fff;
+    --light-beige: #f6e4da;
+    --dark-beige: #d3bcaf;
+    --yellow: #dca652;
+    --orange: #e2954d;
+    --light-brown: #9b5a45;
+    --dark-brown: #5e3c2c;
+}
+
+/* navbar.css */
+.site-navbar {
+    color: var(--light-beige) !important;
+    font-family: sans-serif !important;
+    background: var(--light-brown) !important;
+}
+
+.site-navbar a {
+    color: var(--light-beige);
+    font-size: 16px !important;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.site-navbar a:hover {
+    opacity: 0.7;
+    color: var(--dark-beige);
+}
+
+.site-navbar .site-logo {
+    font-size: 24px !important;
+    text-transform: uppercase;
+    letter-spacing: 4px !important;
+}
+.site-navbar .navbar-toggler {
+    color: transparent !important;
+    border: none;
+}
+.site-navbar .navbar-toggler-icon {
+    color: var(--light-beige) !important;
+    font-size: 24px;
+}
+.navbar-toggler .icon-bar {
+    background-color: white !important;
+}
+.site-navbar .site-nav-list {
+    list-style: none;
+}
+
+.site-navbar .site-nav-list li {
+    letter-spacing: 3px;
+    font-size: 16px;
+}
+@media (max-width: 999px) {
+    .site-navbar .site-logo {
+      font-size: 18px !important;
+    }
+}

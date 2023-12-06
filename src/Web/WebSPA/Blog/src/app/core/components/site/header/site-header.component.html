@@ -1,19 +1,28 @@
-<header>
-  <nav id="site-navbar">
-    <a class="site-logo" href="/">Receitas de Casal</a>
-    <div class="site-mobile-menu">
-      <div class="site-line1"></div>
-      <div class="site-line2"></div>
-      <div class="site-line3"></div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light site-navbar">
+  <div class="container-fluid container-sm">
+    <a class="navbar-brand site-logo" href="#">Receitas de Casal</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 site-nav-list">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="receitas">Receitas</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="categorias">Categorias</a>
+        </li>
+        <li class="nav-item me-5">
+          <a class="nav-link" href="categorias">Favoritos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ loggedIn ? (admin ? '/admin' : '/perfil') : '/auth/login' }}">{{ loggedIn ? (admin ? 'Dashboard' : 'Perfil') : 'Login/Registrar' }}</a>
+        </li>
+        <li class="nav-item" *ngIf="loggedIn">
+          <a class="nav-link" href="" (click)="logout()">Sair</a>
+        </li>
+      </ul>
     </div>
-    <ul class="site-nav-list">
-      <li><a href="receitas">Receitas</a></li>
-      <li><a href="categorias">Categorias</a></li>
-      <li><a href="categorias">Favoritos</a></li>
-      <!-- <li><a href="/">Sobre</a></li>
-      <li><a href="/">Contato</a></li> -->
-      <li><a style="margin-left: 30px;" href="{{ loggedIn ? (admin ? '/admin' : '/perfil') : '/auth/login' }}">{{ loggedIn ? (admin ? 'Dashboard' : 'Perfil') : 'Login/Registrar' }}</a></li>
-      <li *ngIf="loggedIn"><a href="" style="margin-left: 30px;" (click)="logout()">Sair</a></li>
-    </ul>
-  </nav>
-</header>
+  </div>
+</nav>
+
