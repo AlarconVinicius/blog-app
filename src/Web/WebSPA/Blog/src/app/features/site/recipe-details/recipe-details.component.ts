@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
 import { RecipeResponse } from 'src/app/core/models/recipe/recipe.model';
 import { LocalStorageUtils } from 'src/app/shared/helpers/localstorage/localstorage';
 import { RecipeUtils } from 'src/app/shared/helpers/recipe/recipe-utils';
@@ -13,6 +14,8 @@ import { UserService } from 'src/app/shared/services/user/user.service';
   styleUrls: ['./recipe-details.component.css']
 })
 export class RecipeDetailsComponent implements OnInit {
+  isFavorite = false;
+  recipes = [] as RecipeResponse[];
   recipeId: string = '';
   recipeData = {} as RecipeResponse;
   createdAt: any;
@@ -36,6 +39,7 @@ export class RecipeDetailsComponent implements OnInit {
       this.recipeData = data;
       this.createdAt = data.createdAt;
       this.difficultyMapped = this.recipeUtils.mapDifficulty(data.difficulty.id);
+      this.isFavoriteRecipe(data.id);
     });
   }  
   onFavorite(){
@@ -44,9 +48,36 @@ export class RecipeDetailsComponent implements OnInit {
       this.router.navigate([`auth/login`]);
       return;
     }
+    if(this.isFavorite){
+      this.userService.postFavoriteRecipe(this.recipeData.id).subscribe(_ => {
+        this.isFavorite = false;
+        alert("Receita desfavoritada!");
+      });
+      return;
+    }
     this.userService.postFavoriteRecipe(this.recipeData.id).subscribe(_ => {
+      this.isFavorite = true;
       alert("Receita favoritada!");
     });
-    
+    return;
+  }
+  isFavoriteRecipe(recipeId: string){
+    this.isFavorite = false;
+    if(this.localStorage.isLoggedIn()){
+      this.getFavoriteRecipes(recipeId);
+    }
+  }
+  getFavoriteRecipes(recipeId: string){
+    this.userService.getFavoriteRecipes().subscribe(recipes => {
+      this.isFavorite = false;
+      var foundRecipe = recipes.find(x => x.id === recipeId);
+      if(foundRecipe != undefined && foundRecipe != null){
+        this.isFavorite = true;
+        console.log(this.isFavorite)
+      } else{
+        this.isFavorite = false;
+        console.log(this.isFavorite)
+      };
+    });
   }
 }

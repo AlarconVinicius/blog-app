@@ -12,8 +12,8 @@
         <li class="nav-item">
           <a class="nav-link" href="categorias">Categorias</a>
         </li>
-        <li class="nav-item me-5">
-          <a class="nav-link" href="categorias">Favoritos</a>
+        <li class="nav-item me-5" *ngIf="loggedIn">
+          <a class="nav-link" href="receitas/favoritas">Favoritos</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ loggedIn ? (admin ? '/admin' : '/perfil') : '/auth/login' }}">{{ loggedIn ? (admin ? 'Dashboard' : 'Perfil') : 'Login/Registrar' }}</a>

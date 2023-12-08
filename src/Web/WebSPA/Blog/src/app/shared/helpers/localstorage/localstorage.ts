@@ -54,7 +54,6 @@ export class LocalStorageUtils {
 
     public isAdmin(): boolean {
         const claims = this.getUserClaims();
-        console.log(claims.some(claim => claim.type === 'role' && claim.value.includes('Admin')))
         return claims.some(claim => claim.type === 'role' && claim.value.includes('Admin'));
     }
     

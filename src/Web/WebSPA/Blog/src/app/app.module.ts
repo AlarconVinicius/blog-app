@@ -29,6 +29,7 @@ import { RecipeDetailsComponent } from './features/site/recipe-details/recipe-de
 import { SiteHeaderComponent } from './core/components/site/header/site-header.component';
 import { SiteRecipesComponent } from './features/site/site-recipes/site-recipes.component';
 import { SiteCategoriesComponent } from './features/site/site-categories/site-categories.component';
+import { SiteFavoriteRecipesComponent } from './features/site/site-favorite-recipes/site-favorite-recipes.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { SiteCategoriesComponent } from './features/site/site-categories/site-ca
     CategoryComponent,
     ContactComponent,
     FaqComponent,
-    Error404Component
+    Error404Component,
+    SiteFavoriteRecipesComponent
   ],
   imports: [
     BrowserModule,

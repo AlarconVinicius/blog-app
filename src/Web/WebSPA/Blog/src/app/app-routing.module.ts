@@ -17,6 +17,7 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { SiteRecipesComponent } from './features/site/site-recipes/site-recipes.component';
 import { SiteCategoriesComponent } from './features/site/site-categories/site-categories.component';
 import { IsAdminGuard } from './core/guards/is-admin.guard';
+import { SiteFavoriteRecipesComponent } from './features/site/site-favorite-recipes/site-favorite-recipes.component';
 
 const authRoutes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -34,6 +35,7 @@ const adminRoutes: Routes = [
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'receitas', component: SiteRecipesComponent },
+  { path: 'receitas/favoritas', component: SiteFavoriteRecipesComponent, canActivate: [AuthGuard] },
   { path: 'receitas/busca/:busca', component: SiteRecipesComponent },
   { path: 'receitas/categoria/:categoria', component: SiteRecipesComponent },
   { path: 'categorias', component: SiteCategoriesComponent },

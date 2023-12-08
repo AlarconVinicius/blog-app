@@ -17,7 +17,7 @@
             <div class="site-recipe-headline my-5">
               <span><!-- April 05, 2018 --> {{ createdAt }}</span>
               <h2>{{ recipeData.title }}</h2>
-              <div class="fav-icon" (click)="onFavorite()"><i class="bi bi-heart"></i> Favoritar Receita</div> <!-- <i class="bi bi-heart-fill"></i> -->
+              <div class="fav-icon" (click)="onFavorite()"><i [ngClass]="isFavorite ? 'bi bi-heart-fill' : 'bi bi-heart'"></i> {{isFavorite ? "Desfavoritar" : "Favoritar"}} Receita</div>
               <div class="site-recipe-duration">
                 <h6 id="prep-time">Tempo de Preparo: {{ recipeData.preparationTime }}</h6>
                 <h6 id="difficulty">Dificuldade: {{ difficultyMapped }}</h6>
@@ -34,15 +34,6 @@
             <div class="editor-style editor-style-prep-steps">
               <div [innerHTML]=recipeData.preparationSteps></div>
             </div>
-            <!-- Single Preparation Step -->
-            <!-- <ng-container *ngFor="let step of recipeData.preparationSteps, let i = index">
-              <div class="site-single-preparation-step d-flex">
-                <h4>{{ ('0' + (i + 1)).slice(-2) }}.</h4>
-                <p>
-                  {{ step }}
-                </p>
-              </div>
-            </ng-container> -->
           </div>
 
           <!-- Ingredients -->
@@ -52,15 +43,6 @@
               <div class="editor-style editor-style-ingredients">
                 <div [innerHTML]=recipeData.ingredients></div>
               </div>
-              <!-- <ng-container *ngFor="let ingredient of recipeData?.ingredients?.ingredients | keyvalue">
-                <ng-container *ngIf="ingredient.value">
-                  <h5>{{ ingredient.key }}</h5>
-                  <div *ngFor="let item of ingredient.value" class="form-check">
-                    <input type="checkbox" class="form-check-input" id="{{ item }}" />
-                    <label class="form-check-label" [for]="item">{{ item }}</label>
-                  </div>
-                </ng-container>
-              </ng-container> -->
             </div>
           </div>
         </div>
