@@ -12,7 +12,7 @@ import { BaseComponent } from 'src/app/shared/helpers/base-component/base-compon
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent extends BaseComponent implements OnInit {
-
+  tokenExpiration: Date | null = null;
   loginObj: LoginRequest = {} as LoginRequest;
   loginResponse = {} as LoginResponse;
   constructor(
@@ -33,6 +33,9 @@ export class LoginComponent extends BaseComponent implements OnInit {
       if(Boolean(this.authService.localStorage.getUserToken)){
         this.router.navigate(['admin']);
       }
+      this.tokenExpiration = new Date(Date.now()); 
+      this.tokenExpiration.setUTCSeconds(this.loginResponse.expiresIn);
+      this.authService.localStorage.saveUserTokenExpire(this.tokenExpiration)
     });
   }
 }

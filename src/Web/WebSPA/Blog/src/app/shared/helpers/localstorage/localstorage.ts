@@ -19,11 +19,17 @@ export class LocalStorageUtils {
     public clearLocalUserData() {
         localStorage.removeItem('id');
         localStorage.removeItem('token');
+        localStorage.removeItem('expiresIn');
         localStorage.removeItem('claims');
     }
 
     public getUserToken(): string {
         return localStorage.getItem('token') || '';
+    }
+
+    public getUserTokenExpire(): number | null {
+        const expirationTime = localStorage.getItem('expiresIn');
+        return expirationTime ? parseInt(expirationTime, 10) : null;
     }
 
     public getUserId(): string {
@@ -38,6 +44,11 @@ export class LocalStorageUtils {
     public saveUserToken(token: string) {
         localStorage.setItem('token', token);
     }
+
+    public saveUserTokenExpire(expiresIn: Date) {
+        const expirationTime = expiresIn.getTime();
+        localStorage.setItem('expiresIn', expirationTime.toString());
+      }
 
     public saveUserId(id: string) {
         localStorage.setItem('id', id);
@@ -62,5 +73,14 @@ export class LocalStorageUtils {
             return true;
         }
         return false
+    }
+
+    isTokenExpired(): boolean {
+        const expirationTime = this.getUserTokenExpire();
+        console.log(expirationTime)
+        if (!expirationTime) {
+          return true;
+        }
+        return expirationTime < new Date().getTime();
     }
 }
