@@ -5,6 +5,7 @@ namespace Business.Models.Blog;
 public abstract class MainPost : Entity
 {
     public string Title { get; set; } = string.Empty;
+    public string CoverImage { get; set; } = string.Empty;
     public Guid BlogId { get; set; }
     public virtual BlogEntity? Blog { get; set; }
     public string UserId { get; set; }
@@ -18,18 +19,12 @@ public abstract class MainPost : Entity
 
     }
 
-    protected MainPost(string title, Guid blogId, Guid userId, Guid categoryId)
+    protected MainPost(string title, string coverImage, Guid blogId, Guid userId, Guid categoryId)
     {
         Title = title;
+        CoverImage = coverImage;
         BlogId = blogId;
         UserId = userId.ToString();
-        CategoryId = categoryId;
-        GenerateURL();
-    }
-
-    public void UpdateBlog(string title, Guid categoryId)
-    {
-        Title = title;
         CategoryId = categoryId;
         GenerateURL();
     }
