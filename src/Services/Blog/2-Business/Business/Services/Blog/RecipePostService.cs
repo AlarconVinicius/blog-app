@@ -1,4 +1,5 @@
-﻿using Business.Helpers.Auth;
+﻿using Business.Helpers;
+using Business.Helpers.Auth;
 using Business.Interfaces.Repositories.Blog;
 using Business.Interfaces.Services.Blog;
 using Business.Mappings.Blog;
@@ -200,9 +201,17 @@ public class RecipePostService : MainService, IRecipePostService
                 return;
             }
             var recipeMapped = recipe.ToDomain();
+
+            recipe.Image.Name = recipeMapped.Id + "_" + recipe.Image.Name;
+            recipeMapped.CoverImage = recipe.Image.Name;
             recipeMapped.BlogId = blogId;
             recipeMapped.UserId = AuthHelper.GetUserId(_httpAccessor).ToString();
             recipeMapped.GenerateURL();
+            if (!ImageHelper.UploadImage(recipe.Image))
+            {
+                AddProcessingError("Falha na imagem");
+                return;
+            }
             await _repository.AddAsync(recipeMapped);
             return;
         }
