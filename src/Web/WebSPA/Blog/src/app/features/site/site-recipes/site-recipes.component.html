@@ -11,7 +11,7 @@
           Nenhuma receita encontrada.
         </div>
         <div class="site-card" *ngFor="let recipe of recipes$ | async">
-            <img src="../../../../assets/site-template/img/1.jpg" alt="" />
+            <img src="{{getImageUrl(recipe.coverImage.file)}}" alt="" />
             <div class="site-card-content">
                 <p>{{ recipe.title.length > 60 ? (recipe.title | slice:0:60) + '...' : recipe.title }}</p>
             </div>

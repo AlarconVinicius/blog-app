@@ -1,6 +1,7 @@
 import { AuthorResponse } from "../author/author.model";
 import { CategoryResponse } from "../category/category.model";
 import { Difficulty } from "../difficulty/difficulty.model";
+import { ImageResponse } from "../image/image.model";
 
 export interface RecipeRequest {
   title: string;
@@ -16,6 +17,7 @@ export interface RecipeRequest {
 export interface RecipeResponse {
   id: string;
   title: string;
+  coverImage: ImageResponse;
   preparationSteps: string;
   author: AuthorResponse;
   category: CategoryResponse;

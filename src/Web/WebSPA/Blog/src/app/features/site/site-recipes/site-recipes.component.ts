@@ -67,4 +67,8 @@ export class SiteRecipesComponent implements OnInit {
   onSearch(){
     this.router.navigate([`receitas/busca/${this.search}`]);
   }
+  
+  getImageUrl(base64: string) {
+    return 'data:image/jpeg;base64,' + base64;
+  }
 }
