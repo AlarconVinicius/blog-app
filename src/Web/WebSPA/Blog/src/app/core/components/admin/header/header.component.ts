@@ -37,5 +37,7 @@ export class HeaderComponent extends BaseComponent implements OnInit {
   {
     this.document.body.classList.toggle('toggle-sidebar');
   }
-
+  getImageUrl(base64: string) {
+    return 'data:image/jpeg;base64,' + base64;
+  }
 }
