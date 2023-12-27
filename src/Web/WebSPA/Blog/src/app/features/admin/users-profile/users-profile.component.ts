@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { AuthorRequest, AuthorResponse, UserPasswordRequest } from 'src/app/core/models/author/author.model';
 import { ImageRequest } from 'src/app/core/models/image/image.model';
 import { UserService } from 'src/app/shared/services/user/user.service';

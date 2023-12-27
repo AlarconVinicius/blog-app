@@ -116,13 +116,10 @@ export class AddUpdRecipeComponent implements OnInit {
         if (typeof reader.result === 'string') {
             let base64Image = reader.result as string;
             
-            // Verifica se a string começa com o prefixo correto
             if (base64Image.startsWith('data:image/jpeg;base64,')) {
-                // Remove o prefixo para obter somente a parte base64
                 base64Image = base64Image.replace('data:image/jpeg;base64,', '');
             }
             
-            // Agora você pode atribuir a parte correta base64 para this.uploadImage.file
             this.uploadImage.file = base64Image;
             this.uploadImage.name = name;
         } else {

@@ -44,10 +44,8 @@ export class RecipeComponent implements OnInit {
       this.recipeService.getRecipes(this.userId);
       this.router.navigateByUrl('/',{skipLocationChange:true}).then(()=>{
         this.router.navigate(['admin/receitas']).then(()=>{
-          // console.log(`After navigation I am on:${this.router.url}`)
         })
       })
-      // this.router.navigate(['admin/receitas']);
     });
   }
 
