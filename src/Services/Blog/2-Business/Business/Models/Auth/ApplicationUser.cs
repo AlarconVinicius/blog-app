@@ -20,6 +20,8 @@ public class ApplicationUser : IdentityUser
     [StringLength(150)]
     public string FullName { get; private set; } = string.Empty;
 
+    public string? ProfileImage { get; set; } = string.Empty;
+
     public ICollection<UserBlog>? Blogs { get; set; }
 
     public ICollection<RecipePost>? RecipePosts { get; set; }
@@ -29,10 +31,11 @@ public class ApplicationUser : IdentityUser
     {
 
     }
-    public ApplicationUser(string name, string lastName)
+    public ApplicationUser(string name, string lastName, string? profileImage = null)
     {
         Name = name;
         LastName = lastName;
+        ProfileImage = profileImage;
         JoinName();
     }
     public void JoinName()

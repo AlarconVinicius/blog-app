@@ -1,3 +1,5 @@
-﻿namespace Business.Models.Blog.Dtos;
+﻿using Business.Models.Image;
 
-public record UserViewDto(Guid Id, string Name, string LastName, string FullName, string Email, string PhoneNumber);
+namespace Business.Models.Blog.Dtos;
+
+public record UserViewDto(Guid Id, string Name, string LastName, string FullName, string Email, string PhoneNumber, ImageViewDto ProfileImage);
