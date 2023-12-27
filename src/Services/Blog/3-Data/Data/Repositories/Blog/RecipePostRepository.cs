@@ -42,6 +42,7 @@ public class RecipePostRepository : BaseRepository<RecipePost>, IRecipePostRepos
 
         return await query
                         .Where(rp => rp.Title.Contains(searchQuery) || EF.Functions.Like(rp.Ingredients, "%" + searchQuery + "%"))
+                        .OrderByDescending(rp => rp.UpdatedAt)
                         .Include(rp => rp.User)
                         .Include(rp => rp.Category)
                         .AsNoTracking()
@@ -58,8 +59,9 @@ public class RecipePostRepository : BaseRepository<RecipePost>, IRecipePostRepos
             query = query.Where(rp => rp.UserId == userId.ToString());
         }
         return await query
-                        .Include(rp => rp.Category)
                         .Where(rp => rp.Category!.Name == category)
+                        .OrderByDescending(rp => rp.UpdatedAt)
+                        .Include(rp => rp.Category)
                         .Include(rp => rp.User)
                         .AsNoTracking()
                         .ToListAsync();
@@ -74,6 +76,7 @@ public class RecipePostRepository : BaseRepository<RecipePost>, IRecipePostRepos
             query = query.Where(rp => rp.UserId == userId.ToString());
         }
         return await query
+                        .OrderByDescending(rp => rp.UpdatedAt)
                         .Include(rp => rp.User)
                         .Include(rp => rp.Category)
                         .AsNoTracking()
