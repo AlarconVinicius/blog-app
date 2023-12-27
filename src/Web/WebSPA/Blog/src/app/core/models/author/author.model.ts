@@ -1,3 +1,5 @@
+import { ImageRequest, ImageResponse } from "../image/image.model";
+
 export interface AuthorResponse {
   id: string;
   name: string;
@@ -5,6 +7,7 @@ export interface AuthorResponse {
   fullName: string;
   email: string;
   phoneNumber: string;
+  profileImage: ImageResponse;
 }
 export interface AuthorRequest {
   name: string;
@@ -12,6 +15,7 @@ export interface AuthorRequest {
   fullName: string;
   email: string;
   phoneNumber: string;
+  profileImage: ImageRequest;
 } 
 
 export interface UserPasswordRequest {

@@ -11,6 +11,7 @@ public class RecipePost : MainPost
 
     public RecipePost(
         string title,
+        string coverImage,
         Guid blogId,
         Guid userId,
         Guid categoryId,
@@ -19,7 +20,7 @@ public class RecipePost : MainPost
         string preparationTime,
         int servings,
         string ingredients)
-        : base(title, blogId, userId, categoryId)
+        : base(title, coverImage, blogId, userId, categoryId)
     {
         PreparationSteps = preparationSteps;
         Difficulty = difficulty;
@@ -30,22 +31,5 @@ public class RecipePost : MainPost
 
     public RecipePost()
     {
-    }
-
-    public void UpdateRecipe(
-        string title,
-        Guid categoryId,
-        string preparationSteps,
-        Difficulty difficulty,
-        string preparationTime,
-        int servings,
-        string ingredients)
-    {
-        UpdateBlog(title, categoryId);
-        PreparationSteps = preparationSteps;
-        Difficulty = difficulty;
-        PreparationTime = preparationTime;
-        Servings = servings;
-        Ingredients = ingredients;
     }
 }

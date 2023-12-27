@@ -41,7 +41,7 @@ public class CreateInitialAdminSeed
         user.JoinName();
 
 
-        var userExists = _userManager.FindByEmailAsync(user.Email).Result;
+        var userExists = _userManager.FindByIdAsync(user.Id).Result;
 
         if (userExists is null)
         {

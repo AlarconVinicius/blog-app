@@ -48,6 +48,7 @@
                   <thead>
                     <tr>
                       <th scope="col">#</th>
+                      <th scope="col">Capa</th>
                       <th scope="col">Título</th>
                       <th scope="col">Categoria</th>
                       <th scope="col">Autor</th>
@@ -60,6 +61,7 @@
                   <tbody>
                     <tr *ngFor="let recipe of recipes$ | async, let i = index">
                       <th scope="row"><a href="#">#{{ ('0' + (i + 1)).slice(-2) }}</a></th>
+                      <td><img src="{{getImageUrl(recipe.coverImage.file)}}" alt="" class="img-table"/></td>
                       <td>{{ recipe.title }}</td>
                       <td><a href="#" class="text-primary">{{ recipe.category.name }}</a></td>
                       <td>{{ recipe.author.fullName }}</td>
@@ -72,9 +74,8 @@
                       <td>{{ recipe.createdAt }}</td>
                       <td>{{ recipe.updatedAt }}</td>
                       <td>
-                        <a href="admin/receitas/editar/{{ recipe.id }}">Edit</a>
-                        ||
-                        <a href="#" (click)="onDelete(recipe.id)" data-bs-toggle="modal" data-bs-target="#ModalDeleteRecipe">Delete</a>
+                        <a href="admin/receitas/editar/{{ recipe.id }}" class="btn btn-warning me-3"><span class="fa fa-pencil-alt"></span></a>
+                        <a href="#" (click)="onDelete(recipe.id)" data-bs-toggle="modal" data-bs-target="#ModalDeleteRecipe" class="btn btn-danger"><span class="fa fa-trash"></span></a>
                       </td>
                     </tr>
                   </tbody>

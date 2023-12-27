@@ -77,7 +77,6 @@ export class LocalStorageUtils {
 
     isTokenExpired(): boolean {
         const expirationTime = this.getUserTokenExpire();
-        console.log(expirationTime)
         if (!expirationTime) {
           return true;
         }

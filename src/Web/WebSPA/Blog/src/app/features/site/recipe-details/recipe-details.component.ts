@@ -80,4 +80,8 @@ export class RecipeDetailsComponent implements OnInit {
       };
     });
   }
+  
+  getImageUrl(base: string) {
+    return 'data:image/jpeg;base64,' + base;
+  }
 }

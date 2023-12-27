@@ -32,9 +32,8 @@
                            <td><a href="#" class="text-primary">Ver Todas</a></td>
                            <td>01/02/2023</td>
                            <td>
-                                <a href="#" (click)="onCategory(category.id)" data-bs-toggle="modal" data-bs-target="#ModalSaveCategory">Edit</a>
-                                || 
-                                <a href="#" (click)="onCategory(category.id)" data-bs-toggle="modal" data-bs-target="#ModalDeleteCategory">Delete</a>
+                                <a href="#" (click)="onCategory(category.id)" data-bs-toggle="modal" data-bs-target="#ModalSaveCategory" class="btn btn-warning me-3"><span class="fa fa-pencil-alt"></span></a>
+                                <a href="#" (click)="onCategory(category.id)" data-bs-toggle="modal" data-bs-target="#ModalDeleteCategory" class="btn btn-danger"><span class="fa fa-trash"></span></a>
                             </td>
                         </tr>
                      </tbody>

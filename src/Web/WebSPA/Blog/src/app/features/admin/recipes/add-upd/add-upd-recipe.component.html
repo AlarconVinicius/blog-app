@@ -17,7 +17,15 @@
                 <div class="col-12">
                     <div class="card recent-sales overflow-auto">
                         <div class="modal-body container-sm">
-                            <form class="row g-3 w-100">
+                            <form enctype="multipart/form-data" class="row g-3 w-100">
+                                
+                                <!-- <div class="alert alert-danger" *ngIf="errors.length > 0">
+                                    <h3 id="msgRetorno">Opa! Alguma coisa não deu certo:</h3>
+                                    <ul>
+                                        <li *ngFor="let error of errors">{{ error }}</li>
+                                    </ul>
+                                </div> -->
+                                
                                 <input type="hidden" name="id" [(ngModel)]="recipeId">
                                 <div class="col-md-12">
                                     <label for="Title" class="form-label">Título*</label>
@@ -94,6 +102,21 @@
                                         name="ingredients"
                                         [(ngModel)]="recipe.ingredients"
                                     ></editor>
+                                </div>
+                                <div class="col-md-8">
+                                    <label for="CoverPost" class="form-label">Capa do Post*</label>
+                                    <input
+                                    accept="image/jpeg"
+                                    type="file"
+                                    class="form-control"
+                                    name="CoverPost"
+                                    id="CoverPost"
+                                    (change)="upload($event)"
+                                    />
+                                </div>
+                                <div *ngIf="uploadImage.name !== undefined && uploadImage.name !== ''" class="col-md-4">
+                                    <img src="{{getImageUrl(uploadImage.file)}}" alt="" class="img-form"/>
+                                    <label class="form-label d-block mt-3">{{uploadImage.name.split("_")[1]}}</label>
                                 </div>
                                 <div class="col-md-12">
                                     <a

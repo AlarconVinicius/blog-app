@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryResponse } from 'src/app/core/models/category/category.model';
 import { EDifficulty } from 'src/app/core/models/difficulty/difficulty.model';
+import { ImageRequest } from 'src/app/core/models/image/image.model';
 import { RecipeRequest } from 'src/app/core/models/recipe/recipe.model';
 import { LocalStorageUtils } from 'src/app/shared/helpers/localstorage/localstorage';
 import { CategoryService } from 'src/app/shared/services/category/category.service';
@@ -24,6 +25,7 @@ export class AddUpdRecipeComponent implements OnInit {
   pageTitle: string = '';
 
   recipe = {} as RecipeRequest;
+  uploadImage = {} as ImageRequest;
   categories: CategoryResponse[] = [];
   difficulties: { id: number; nome: string }[] = [
     { id: Number(EDifficulty.Fácil), nome: 'Fácil' },
@@ -60,9 +62,13 @@ export class AddUpdRecipeComponent implements OnInit {
       this.recipe.preparationSteps = data.preparationSteps;
       this.recipe.ingredients = data.ingredients;
       this.recipe.servings = data.servings;
+      this.uploadImage.name = data.coverImage.name;
+      this.uploadImage.file = data.coverImage.file;
     });
   } 
-  
+  getImageUrl(base64: string) {
+    return 'data:image/jpeg;base64,' + base64;
+  }
   getPageTitle(){
     if (this.routeRecipeId != ''){
       this.pageTitle = "Editar Receita"
@@ -79,7 +85,8 @@ export class AddUpdRecipeComponent implements OnInit {
       difficulty: Number(this.recipe.difficulty),
       preparationTime: this.recipe.preparationTime,
       servings: this.recipe.servings,
-      ingredients: this.recipe.ingredients
+      ingredients: this.recipe.ingredients,
+      image: this.uploadImage
     };
     var recipeJson = JSON.stringify(recipe);
     if(this.recipeId != ''){
@@ -99,5 +106,29 @@ export class AddUpdRecipeComponent implements OnInit {
     this.categoryService.getPublicCategories().subscribe(data => {
       this.categories = data;
     })
+  }
+  upload(event: any) {
+    const file = event.target.files[0];
+    const name = event.target.files[0].name;
+    const reader = new FileReader();
+
+    reader.onload = () => {
+        if (typeof reader.result === 'string') {
+            let base64Image = reader.result as string;
+            
+            if (base64Image.startsWith('data:image/jpeg;base64,')) {
+                base64Image = base64Image.replace('data:image/jpeg;base64,', '');
+            }
+            
+            this.uploadImage.file = base64Image;
+            this.uploadImage.name = name;
+        } else {
+            console.error('Não foi possível ler o arquivo como uma string.');
+        }
+    };
+
+    if (file) {
+        reader.readAsDataURL(file);
+    }
   }
 }

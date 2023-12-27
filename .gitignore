@@ -478,3 +478,5 @@ $RECYCLE.BIN/
 
 # AppSettings
 appsettings.json
+/src/Services/Blog/1-Api/Api/Configuration/Firebase/*.json
+/src/Services/Blog/1-Api/Api/wwwroot/assets/images

@@ -1,0 +1,13 @@
+.img-cover {
+    max-width: 1080px;
+    min-width: 1080px;
+    max-height: 650px;
+    min-height: auto;
+    border-radius: 10px;
+    margin-bottom: 40px;
+}
+.site-container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 20px;
+}

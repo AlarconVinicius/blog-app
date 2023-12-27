@@ -40,13 +40,19 @@ export class RecipeComponent implements OnInit {
   } 
   deleteRecipe(recipeId: string){
     this.recipeService.deleteRecipe(recipeId).subscribe(_ => {
-      this.recipeService.getRecipes(this.userId);
       this.clearRecipeFields();
-      this.router.navigate([`admin/receitas`]);
+      this.recipeService.getRecipes(this.userId);
+      this.router.navigateByUrl('/',{skipLocationChange:true}).then(()=>{
+        this.router.navigate(['admin/receitas']).then(()=>{
+        })
+      })
     });
   }
 
   clearRecipeFields(){
     this.recipe = {} as RecipeResponse;
+  }
+  getImageUrl(base64: string) {
+    return 'data:image/jpeg;base64,' + base64;
   }
 }
