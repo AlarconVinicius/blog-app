@@ -1,20 +1,12 @@
 <div id="site-body">
   <app-site-header></app-site-header>
   <section id="site-recipe-details" class="site-container site-section">
-    <div class="row">
-      <div class="col-12">
-        <div class="site-recipe-photo">
-          <img src="{{getImageUrl(recipeData.coverImage.file)}}" alt="" />
-        </div>
-      </div>
-    </div>
-
     <!-- Receipe Content Area -->
     <div class="site-recipe-content-area">
       <div class="container">
         <div class="row">
           <div class="col-12 col-md-8">
-            <div class="site-recipe-headline my-5">
+            <div class="site-recipe-headline mt-2 mb-5">
               <span><!-- April 05, 2018 --> {{ createdAt }}</span>
               <h2>{{ recipeData.title }}</h2>
               <div class="fav-icon" (click)="onFavorite()"><i [ngClass]="isFavorite ? 'bi bi-heart-fill' : 'bi bi-heart'"></i> {{isFavorite ? "Desfavoritar" : "Favoritar"}} Receita</div>
@@ -23,6 +15,14 @@
                 <h6 id="difficulty">Dificuldade: {{ difficultyMapped }}</h6>
                 <h6 id="serving">Porções: {{ recipeData.servings }}</h6>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <div class="site-recipe-photo">
+              <img src="{{getImageUrl(recipeData.coverImage.file)}}" alt="" class="img-cover"/>
             </div>
           </div>
         </div>
