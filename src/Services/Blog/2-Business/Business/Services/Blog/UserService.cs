@@ -1,3 +1,4 @@
+using Business.Helpers;
 using Business.Helpers.Auth;
 using Business.Interfaces.Repositories.Blog;
 using Business.Interfaces.Services.Blog;
@@ -45,7 +46,18 @@ public class UserService : MainService, IUserService
             AddProcessingError("Falha ao buscar usuário: Usuário não encontrado.");
             return;
         }
-        
+        user.ProfileImage.Name = userDb.Id + "_" + user.ProfileImage.Name + "_" + DateTime.UtcNow.ToString("yyyy-MM-dd HH-mm-ss");
+        if (!string.IsNullOrEmpty(user.ProfileImage?.Name) && userDb.ProfileImage != user.ProfileImage.Name)
+        {
+            var profileImageExists = string.IsNullOrEmpty(userDb.ProfileImage) ? "profile-img.jpg" : userDb.ProfileImage;
+            if (!ImageHelper.UpdateImage(user.ProfileImage, profileImageExists))
+            {
+                AddProcessingError("Falha na imagem");
+                return;
+            }
+
+            userDb.ProfileImage = user.ProfileImage.Name;
+        }
         userDb.Name = user.Name;
         userDb.LastName = user.LastName;
         userDb.JoinName();
