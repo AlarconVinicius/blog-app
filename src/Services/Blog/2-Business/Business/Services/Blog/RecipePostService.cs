@@ -202,7 +202,7 @@ public class RecipePostService : MainService, IRecipePostService
             }
             var recipeMapped = recipe.ToDomain();
 
-            recipe.Image.Name = recipeMapped.Id + "_" + recipe.Image.Name;
+            recipe.Image.Name = recipeMapped.Id + "_" + recipe.Image.Name + "_" + DateTime.UtcNow.ToString("yyyy-MM-dd HH-mm-ss");
             recipeMapped.CoverImage = recipe.Image.Name;
             recipeMapped.BlogId = blogId;
             recipeMapped.UserId = AuthHelper.GetUserId(_httpAccessor).ToString();
@@ -239,6 +239,11 @@ public class RecipePostService : MainService, IRecipePostService
                 return;
             };
             await _repository.DeleteAsync(id);
+            if (!ImageHelper.DeleteImage(recipeDb.CoverImage))
+            {
+                AddProcessingError("Falha ao deletar imagem");
+                return;
+            }
             return;
 
         }
@@ -277,6 +282,17 @@ public class RecipePostService : MainService, IRecipePostService
                     AddProcessingError("Erro ao atualizar receita: Título já existe");
                     return;
                 }
+            }
+            if (recipe.Image.Name != "" && !recipeDb.CoverImage.Equals(recipe.Image.Name))
+            {
+                recipe.Image.Name = recipeDb.Id + "_" + recipe.Image.Name + "_" + DateTime.UtcNow.ToString("yyyy-MM-dd HH-mm-ss");
+                if (!ImageHelper.UpdateImage(recipe.Image, recipeDb.CoverImage))
+                {
+                    AddProcessingError("Falha na imagem");
+                    return;
+                }
+                recipeDb.CoverImage = recipe.Image.Name;
+
             }
             recipeDb.Title = recipe.Title;
             recipeDb.PreparationSteps = recipe.PreparationSteps;
