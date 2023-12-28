@@ -16,7 +16,7 @@ public abstract class Image
 
     public string GenerateImagePath()
     {
-        var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\assets\\images");
+        var imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets/images");
 
 
         if (!Directory.Exists(imagePath))
