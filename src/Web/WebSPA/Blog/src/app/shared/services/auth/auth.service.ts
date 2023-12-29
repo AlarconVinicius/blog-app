@@ -9,8 +9,7 @@ import { BaseService } from '../base/base.service';
 })
 export class AuthService extends BaseService {
 
-  
-  private authUrl = `${this.PublicUrl}`+ '/auth';
+  private authUrl = `${this.BlogApi}`+ '/auth';
   constructor(private httpClient: HttpClient) { super ();}
 
   login(login: LoginRequest) : Observable<LoginResponse>{

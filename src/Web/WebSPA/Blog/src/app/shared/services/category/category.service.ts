@@ -9,29 +9,28 @@ import { Observable, map } from 'rxjs';
 })
 export class CategoryService extends BaseService {
 
-  private publicUrl = `${this.PublicUrl}`+ '/categories';
-  private adminUrl = `${this.AdminUrl}`+ '/categories';
+  private categoryUrl = `${this.BlogApi}`+ '/categories';
   constructor(private httpClient: HttpClient) { super(); }
 
   getPublicCategories(): Observable<CategoryResponse[]> {
-    return this.httpClient.get<{ data: CategoryResponse[] }>(this.publicUrl, this.getHeaderJson())
+    return this.httpClient.get<{ data: CategoryResponse[] }>(this.categoryUrl, this.getHeaderJson())
       .pipe(
         map((response: { data: CategoryResponse[] }) => response.data)
       );
   }
   getPublicCategoriesById(id: string): Observable<CategoryResponse> {
-    return this.httpClient.get<{ data: CategoryResponse }>(this.publicUrl + '/' + id, this.getHeaderJson())
+    return this.httpClient.get<{ data: CategoryResponse }>(this.categoryUrl + '/' + id, this.getHeaderJson())
       .pipe(
         map((response: { data: CategoryResponse }) => response.data)
       );
   }
   postAuthCategory(category: CategoryRequest){
-    return this.httpClient.post<void>(this.adminUrl, category, this.getAuthHeaderJson());
+    return this.httpClient.post<void>(this.categoryUrl, category, this.getAuthHeaderJson());
   }
   putAuthCategory(id: string, category: CategoryRequest){
-    return this.httpClient.put<void>(this.adminUrl + '/' + id, category, this.getAuthHeaderJson());
+    return this.httpClient.put<void>(this.categoryUrl + '/' + id, category, this.getAuthHeaderJson());
   }
   deleteAuthCategory(id: string){
-    return this.httpClient.delete<void>(this.adminUrl + '/' + id, this.getAuthHeaderJson());
+    return this.httpClient.delete<void>(this.categoryUrl + '/' + id, this.getAuthHeaderJson());
   }
 }
