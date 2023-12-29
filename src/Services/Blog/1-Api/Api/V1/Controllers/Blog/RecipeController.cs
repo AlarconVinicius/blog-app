@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.V1.Controllers.Blog;
 
+[Authorize]
 [ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/recipes")]
 public class RecipeController : MainController
@@ -19,6 +20,7 @@ public class RecipeController : MainController
     }
 
     #region Public Methods
+    [AllowAnonymous]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetRecipeById(Guid id, [FromQuery] Guid? userId)
     {
@@ -26,6 +28,7 @@ public class RecipeController : MainController
         return _service.IsOperationValid() ? CustomResponse(result) : CustomResponse(_service.GetErrors());
     }
 
+    [AllowAnonymous]
     [HttpGet("url/{url}")]
     public async Task<IActionResult> GetRecipeByUrl(string url, [FromQuery] Guid? userId)
     {
@@ -33,6 +36,7 @@ public class RecipeController : MainController
         return _service.IsOperationValid() ? CustomResponse(result) : CustomResponse(_service.GetErrors());
     }
 
+    [AllowAnonymous]
     [HttpGet("search/{search}")]
     public async Task<IActionResult> GetRecipesBySearch([FromRoute] string search, [FromQuery] Guid? userId)
     {
@@ -40,6 +44,7 @@ public class RecipeController : MainController
         return _service.IsOperationValid() ? CustomResponse(result) : CustomResponse(_service.GetErrors());
     }
 
+    [AllowAnonymous]
     [HttpGet("category/{category}")]
     public async Task<IActionResult> GetRecipesByCategory([FromRoute] string category, [FromQuery] Guid? userId)
     {
@@ -48,6 +53,7 @@ public class RecipeController : MainController
         return _service.IsOperationValid() ? CustomResponse(result) : CustomResponse(_service.GetErrors());
     }
 
+    [AllowAnonymous]
     [HttpGet()]
     public async Task<IActionResult> GetRecipes([FromQuery] Guid? userId)
     {
@@ -57,27 +63,24 @@ public class RecipeController : MainController
     #endregion
 
     #region Authenticated Methods
-    [Authorize]
     [ClaimsAuthorize("Permission", "Writer")]
-    [HttpPost("/api/admin/recipes")]
+    [HttpPost()]
     public async Task<IActionResult> PostRecipe(RecipePostAddDto recipe)
     {
         await _service.AddRecipe(recipe);
         return _service.IsOperationValid() ? CustomResponse() : CustomResponse(_service.GetErrors());
     }
 
-    [Authorize]
     [ClaimsAuthorize("Permission", "Writer")]
-    [HttpPut("/api/admin/recipes/{id}")]
+    [HttpPut("{id}")]
     public async Task<IActionResult> PutRecipe(Guid id, RecipePostAddDto recipe)
     {
         await _service.UpdateRecipe(id, recipe);
         return _service.IsOperationValid() ? CustomResponse() : CustomResponse(_service.GetErrors());
     }
 
-    [Authorize]
     [ClaimsAuthorize("Permission", "Writer")]
-    [HttpDelete("/api/admin/recipes/{id}")]
+    [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteRecipe(Guid id)
     {
         await _service.DeleteRecipe(id);
