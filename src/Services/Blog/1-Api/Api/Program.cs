@@ -1,3 +1,4 @@
+using Api.Configuration;
 using Api.IoC;
 using Business.Models.Auth;
 using Data.Auth.Seed;
@@ -7,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.ConfigureDbContextJwtServices(builder.Configuration);
+builder.Services.AddIdentityConfig(builder.Configuration);
 builder.Services.ConfigureCustomServices();
 builder.Services.ConfigureCustomAuthServices();
 builder.Services.ConfigureCustomBlogServices();
