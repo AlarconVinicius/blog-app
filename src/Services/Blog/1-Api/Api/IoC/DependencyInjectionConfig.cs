@@ -1,4 +1,5 @@
-﻿using Business.Interfaces.Repositories;
+﻿using Api.Configuration.Swagger;
+using Business.Interfaces.Repositories;
 using Business.Interfaces.Repositories.Blog;
 using Business.Interfaces.Services.Auth;
 using Business.Interfaces.Services.Blog;
@@ -10,6 +11,8 @@ using Data.Blog.Repositories;
 using Data.Repositories;
 using Data.Repositories.Blog;
 using FluentValidation;
+using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Api.IoC;
 
@@ -27,7 +30,7 @@ public static class DependencyInjectionConfig
         services.AddScoped<IAuthService, AuthService>();
     }
 
-    public static void ConfigureCustomBlogServices(this IServiceCollection services)
+    public static IServiceCollection ConfigureCustomBlogServices(this IServiceCollection services)
     {
         services.AddScoped<IBlogRepository, BlogRepository>();
         services.AddScoped<IBlogService, BlogService>();
@@ -42,5 +45,9 @@ public static class DependencyInjectionConfig
         services.AddScoped<IUserRepository, UserRepository>();
 
         services.AddScoped<IValidator<RecipePostAddDto>, RecipePostAddValidator>();
+
+        services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+
+        return services;
     }
 }

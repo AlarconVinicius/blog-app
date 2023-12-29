@@ -1,11 +1,13 @@
 ﻿using Api.Controllers.Configuration.Response;
+using Asp.Versioning;
 using Business.Interfaces.Services.Auth;
 using Business.Models.Auth.Dto;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Controllers.Auth;
+namespace Api.V1.Controllers.Auth;
 
-[Route("api/auth")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/auth")]
 public class AuthController : MainController
 {
     private readonly IAuthService _authService;

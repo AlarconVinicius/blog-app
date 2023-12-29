@@ -1,12 +1,14 @@
 using Api.Controllers.Configuration.Response;
+using Asp.Versioning;
 using Business.Interfaces.Services.Blog;
 using Business.Models.Blog.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Controllers.Blog;
+namespace Api.V1.Controllers.Blog;
 
-[Route("api/admin/users")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/users")]
 public class UserController : MainController
 {
     private readonly IUserService _service;

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Configuration;
 
@@ -7,6 +8,19 @@ public static class ApiConfig
     public static IServiceCollection AddApiConfig(this IServiceCollection services)
     {
         services.AddControllers();
+
+        services.AddApiVersioning(options =>
+        {
+            options.AssumeDefaultVersionWhenUnspecified = true;
+            options.DefaultApiVersion = new ApiVersion(1, 0);
+            options.ReportApiVersions = true;
+
+        })
+        .AddApiExplorer(option =>
+        {
+            option.GroupNameFormat = "'v'VVV";
+            option.SubstituteApiVersionInUrl = true;
+        });
 
         services.Configure<ApiBehaviorOptions>(options =>
         {

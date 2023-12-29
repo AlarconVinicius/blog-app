@@ -1,11 +1,13 @@
 ﻿using Api.Controllers.Configuration.Response;
+using Asp.Versioning;
 using Business.Interfaces.Services.Blog;
 using Business.Models.Blog;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Controllers.Blog;
+namespace Api.V1.Controllers.Blog;
 
-[Route("api/categories")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/categories")]
 public class CategoryController : MainController
 {
     private readonly ICategoryService _service;
