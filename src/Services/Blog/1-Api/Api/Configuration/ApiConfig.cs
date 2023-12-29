@@ -1,5 +1,10 @@
 ﻿using Asp.Versioning;
+using Business.Models.Auth;
+using Data.Auth.Seed;
+using Data.Configuration;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Configuration;
 
@@ -65,6 +70,20 @@ public static class ApiConfig
             endpoints.MapControllers();
         });
         return app;
+    }
+
+    public static void CheckAndApplyDatabaseMigrations(this IApplicationBuilder app, IServiceProvider services)
+    {
+        using var scope = services.CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        if (dbContext.Database.GetPendingMigrations().Any())
+        {
+            dbContext.Database.Migrate();
+        }
+        var userManager = scope.ServiceProvider.GetService<UserManager<ApplicationUser>>();
+
+        new ConfigureInitialAuthSeed(dbContext, userManager!).StartConfig();
+        new ConfigureInitialBlogSeed(dbContext).StartConfig();
     }
 
 }
