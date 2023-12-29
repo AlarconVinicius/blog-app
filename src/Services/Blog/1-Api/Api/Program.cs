@@ -1,6 +1,5 @@
 using Api.Configuration;
 using Api.Configuration.Swagger;
-using Api.IoC;
 using Asp.Versioning.ApiExplorer;
 using Business.Models.Auth;
 using Data.Auth.Seed;
@@ -13,16 +12,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddIdentityConfig(builder.Configuration);
 builder.Services.AddApiConfig();
 builder.Services.AddSwaggerConfig();
-builder.Services.ConfigureCustomServices();
-builder.Services.ConfigureCustomAuthServices();
-builder.Services.ConfigureCustomBlogServices();
-
+builder.Services.ResolveDependencies();
 
 var app = builder.Build();
 var apiVersionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 
 app.UseApiConfig(app.Environment);
-
 app.UseSwaggerConfig(apiVersionDescriptionProvider);
 
 using var scope = app.Services.CreateScope();

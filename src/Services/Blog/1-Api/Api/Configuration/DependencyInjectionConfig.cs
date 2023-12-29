@@ -14,27 +14,43 @@ using FluentValidation;
 using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Api.IoC;
+namespace Api.Configuration;
 
 public static class DependencyInjectionConfig
 {
-    public static void ConfigureCustomServices(this IServiceCollection services)
+    public static IServiceCollection ResolveDependencies(this IServiceCollection services)
+    {
+        services.ResolveApiDependencies();
+        services.ResolveAuthDependencies();
+        services.ResolveBlogDependencies();
+
+        return services;
+    }
+
+
+    public static IServiceCollection ResolveApiDependencies(this IServiceCollection services)
     {
         services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+        services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+
+        return services;
     }
 
-    public static void ConfigureCustomAuthServices(this IServiceCollection services)
+    public static IServiceCollection ResolveAuthDependencies(this IServiceCollection services)
     {
         services.AddScoped<IAuthService, AuthService>();
+
+        return services;
     }
 
-    public static IServiceCollection ConfigureCustomBlogServices(this IServiceCollection services)
+    public static IServiceCollection ResolveBlogDependencies(this IServiceCollection services)
     {
         services.AddScoped<IBlogRepository, BlogRepository>();
         services.AddScoped<IBlogService, BlogService>();
-        
+
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<ICategoryService, CategoryService>();
 
@@ -45,8 +61,6 @@ public static class DependencyInjectionConfig
         services.AddScoped<IUserRepository, UserRepository>();
 
         services.AddScoped<IValidator<RecipePostAddDto>, RecipePostAddValidator>();
-
-        services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
         return services;
     }
