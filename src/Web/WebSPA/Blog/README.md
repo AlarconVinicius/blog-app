@@ -1,27 +1,79 @@
-# Admindashboard
+<hr>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.3.
+# Projeto SPA Blog de Receitas - Documentação
 
-## Development server
+O projeto Blog de Receitas é uma aplicação full stack para um blog de receitas.<br>
+Esta documentação apresenta detalhadamente as rotas disponíveis na SPA (Single Page Application) e inclui imagens da aplicação para uma melhor compreensão.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Rotas da Aplicação
+A SPA Blog de Receitas oferece as seguintes rotas:
 
-## Code scaffolding
+* **/** - Página Inicial
+  * Campo de busca para pesquisar por título ou ingrediente.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+<p align="center">
+	<img src="link_para_a_imagem_pagina_XYZ">
+</p>
 
-## Build
+* **/receitas** - Últimas Receitas Adicionadas
+  * Retorna as últimas receitas adicionadas.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+<p align="center">
+	<img src="link_para_a_imagem_pagina_XYZ">
+</p>
 
-## Running unit tests
+* **/receitas/{id}** - Detalhes de uma Receita
+  * Retorna os detalhes de uma receita específica.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+<p align="center">
+	<img src="link_para_a_imagem_pagina_XYZ">
+</p>
 
-## Running end-to-end tests
+* **/receitas/busca/{busca}** - Resultados de Busca
+  * Retorna as receitas correspondentes à busca realizada.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+<p align="center">
+	<img src="link_para_a_imagem_pagina_XYZ">
+</p>
 
-## Further help
+* **/receitas/favoritas** - Receitas Favoritas
+  * Retorna as receitas favoritas do usuário logado.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+<p align="center">
+	<img src="link_para_a_imagem_pagina_XYZ">
+</p>
+
+* **/categorias** - Categorias Disponíveis
+  * Selecionando uma categoria, retorna as receitas dessa categoria.
+
+<p align="center">
+	<img src="link_para_a_imagem_pagina_XYZ">
+</p>
+
+* **/receitas/categoria/{categoria}** - Receitas por Categoria
+  * Retorna as receitas favoritas do usuário logado.
+
+<p align="center">
+	<img src="link_para_a_imagem_pagina_XYZ">
+</p>
+
+* **/auth/login** - Autenticação de Usuário
+  * Autentica um usuário.
+
+<p align="center">
+	<img src="link_para_a_imagem_pagina_XYZ">
+</p>
+
+> ***Esta documentação fornece detalhes sobre as diferentes rotas disponíveis na aplicação SPA do Projeto Blog de Receitas, além de imagens ilustrativas de cada página para melhor compreensão e visualização do funcionamento da aplicação.***
+
+## Links para Documentação
+
+* **Documentação Completa:** [GitHub - Blog APP](https://github.com/AlarconVinicius/blog-app)
+* **Documentação da API:** [GitHub - Blog API](https://github.com/AlarconVinicius/blog-app/tree/main/src/Services/Blog)
+
+## Informações de Contato
+
+- **Portfólio**: [Link para o seu Portfólio](https://github.com/AlarconVinicius/)
+- **LinkedIn**: [Link para o seu LinkedIn](https://www.linkedin.com/in/vin%C3%ADcius-alarcon-52a8a820a/)
+
+<hr>
