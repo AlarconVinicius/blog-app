@@ -10,32 +10,31 @@ import { RecipeResponse } from 'src/app/core/models/recipe/recipe.model';
 })
 export class UserService extends BaseService{
 
-  private publicUrl = `${this.PublicUrl}`+ '/users';
-  private adminUrl = `${this.AdminUrl}`+ '/users';
+  private blogApi = `${this.BlogApi}`+ '/users';
 
   constructor(private httpClient: HttpClient) { super(); }
 
   getAuthUser(): Observable<AuthorResponse> {
-    return this.httpClient.get<{ data: AuthorResponse }>(this.adminUrl, this.getAuthHeaderJson())
+    return this.httpClient.get<{ data: AuthorResponse }>(this.blogApi, this.getAuthHeaderJson())
       .pipe(
         map((response: { data: AuthorResponse }) => response.data)
       );
   }
 
   putAuthUser(user: AuthorRequest) {
-    return this.httpClient.put<void>(this.adminUrl, user, this.getAuthHeaderJson());
+    return this.httpClient.put<void>(this.blogApi, user, this.getAuthHeaderJson());
   }
 
   putChangeUserPassword(userPassword: UserPasswordRequest) {
-    return this.httpClient.put<void>(`${this.adminUrl}/change-password`, userPassword, this.getAuthHeaderJson());
+    return this.httpClient.put<void>(`${this.blogApi}/change-password`, userPassword, this.getAuthHeaderJson());
   }
 
   postFavoriteRecipe(recipeId: string) {
-    return this.httpClient.post<void>(`${this.adminUrl}/favorite-recipes/${recipeId}`, {}, this.getAuthHeaderJson());
+    return this.httpClient.post<void>(`${this.blogApi}/favorite-recipes/${recipeId}`, {}, this.getAuthHeaderJson());
   }
 
   getFavoriteRecipes(): Observable<RecipeResponse[]> {
-    return this.httpClient.get<{ data: RecipeResponse[] }>(`${this.adminUrl}/favorite-recipes`, this.getAuthHeaderJson())
+    return this.httpClient.get<{ data: RecipeResponse[] }>(`${this.blogApi}/favorite-recipes`, this.getAuthHeaderJson())
       .pipe(
         map((response: { data: RecipeResponse[] }) => response.data)
       );

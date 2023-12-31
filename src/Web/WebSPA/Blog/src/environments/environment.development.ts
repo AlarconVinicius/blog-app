@@ -1,6 +1,5 @@
 export const environment = {
   production: false,
-  publicApi: 'https://localhost:7251/api',
-  adminApi: 'https://localhost:7251/api/admin',
+  blogApi: 'https://localhost:7251/api/v1',
   tinyMceApi: '966bvxgnw876uam359k6x0hl1748mknvtjo83mkosgndlwts'
 };

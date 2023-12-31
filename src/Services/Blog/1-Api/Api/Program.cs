@@ -1,51 +1,20 @@
-using Api.IoC;
-using Business.Models.Auth;
-using Data.Auth.Seed;
-using Data.Configuration;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+using Api.Configuration;
+using Api.Configuration.Swagger;
+using Asp.Versioning.ApiExplorer;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.ConfigureDbContextJwtServices(builder.Configuration);
-builder.Services.ConfigureCustomServices();
-builder.Services.ConfigureCustomAuthServices();
-builder.Services.ConfigureCustomBlogServices();
+builder.Services.AddIdentityConfig(builder.Configuration);
+builder.Services.AddApiConfig();
+builder.Services.AddSwaggerConfig();
+builder.Services.ResolveDependencies();
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
-{
-    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
-}));
 var app = builder.Build();
+var apiVersionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseApiConfig(app.Environment);
+app.UseSwaggerConfig(apiVersionDescriptionProvider);
 
-app.UseHttpsRedirection();
-
-app.UseCors("corsapp");
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllers();
-
-using var scope = app.Services.CreateScope();
-var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-if (dbContext.Database.GetPendingMigrations().Any())
-{
-    dbContext.Database.Migrate();
-}
-var userManager = scope.ServiceProvider.GetService<UserManager<ApplicationUser>>();
-
-new ConfigureInitialAuthSeed(dbContext, userManager!).StartConfig();
-new ConfigureInitialBlogSeed(dbContext).StartConfig();
+app.CheckAndApplyDatabaseMigrations(app.Services);
 
 app.Run();

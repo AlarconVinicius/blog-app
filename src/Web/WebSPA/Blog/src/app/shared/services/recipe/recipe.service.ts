@@ -8,14 +8,13 @@ import { BaseService } from '../base/base.service';
 })
 export class RecipeService extends BaseService {
 
-  private publicUrl = `${this.PublicUrl}`+ '/recipes';
-  private adminUrl = `${this.AdminUrl}`+ '/recipes';
+  private blogApi = `${this.BlogApi}`+ '/recipes';
   constructor(private httpClient: HttpClient) { super(); }
 
   getRecipeById(id: string, userId?: string): Observable<RecipeResponse> {
     const url = userId 
-                ? `${this.publicUrl}/${id}?userId=${userId}` 
-                : `${this.publicUrl}/${id}`;
+                ? `${this.blogApi}/${id}?userId=${userId}` 
+                : `${this.blogApi}/${id}`;
     return this.httpClient.get<{ data: RecipeResponse }>(url, this.getAuthHeaderJson())
       .pipe(
         map((response: { data: RecipeResponse }) => response.data)
@@ -23,8 +22,8 @@ export class RecipeService extends BaseService {
   }
   getRecipeByUrl(postUrl: string, userId?: string): Observable<RecipeResponse> {
     const url = userId 
-                ? `${this.publicUrl}/url/${postUrl}?userId=${userId}` 
-                : `${this.publicUrl}/url/${postUrl}`;
+                ? `${this.blogApi}/url/${postUrl}?userId=${userId}` 
+                : `${this.blogApi}/url/${postUrl}`;
     return this.httpClient.get<{ data: RecipeResponse }>(url, this.getAuthHeaderJson())
       .pipe(
         map((response: { data: RecipeResponse }) => response.data)
@@ -32,8 +31,8 @@ export class RecipeService extends BaseService {
   }
   getRecipes(userId?: string): Observable<RecipeResponse[]> {
     const url = userId 
-                ? `${this.publicUrl}?userId=${userId}` 
-                : this.publicUrl;
+                ? `${this.blogApi}?userId=${userId}` 
+                : this.blogApi;
     return this.httpClient.get<{ data: RecipeResponse[] }>(url, this.getAuthHeaderJson())
       .pipe(
         map((response: { data: RecipeResponse[] }) => response.data)
@@ -41,8 +40,8 @@ export class RecipeService extends BaseService {
   }
   getRecipesBySearch(search: string, userId?: string): Observable<RecipeResponse[]> {
     const url = userId 
-                ? `${this.publicUrl}/search/${search}?userId=${userId}` 
-                : `${this.publicUrl}/search/${search}`;
+                ? `${this.blogApi}/search/${search}?userId=${userId}` 
+                : `${this.blogApi}/search/${search}`;
     return this.httpClient.get<{ data: RecipeResponse[] }>(url, this.getAuthHeaderJson())
       .pipe(
         map((response: { data: RecipeResponse[] }) => response.data)
@@ -50,20 +49,20 @@ export class RecipeService extends BaseService {
   }
   getRecipesByCategory(category: string, userId?: string): Observable<RecipeResponse[]> {
     const url = userId 
-    ? `${this.publicUrl}/category/${category}?userId=${userId}` 
-    : `${this.publicUrl}/category/${category}`;
+    ? `${this.blogApi}/category/${category}?userId=${userId}` 
+    : `${this.blogApi}/category/${category}`;
     return this.httpClient.get<{ data: RecipeResponse[] }>(url, this.getAuthHeaderJson())
       .pipe(
         map((response: { data: RecipeResponse[] }) => response.data)
       );
   }
   postRecipe(recipe: RecipeRequest){
-    return this.httpClient.post<void>(this.adminUrl, recipe, this.getAuthHeaderJson());
+    return this.httpClient.post<void>(this.blogApi, recipe, this.getAuthHeaderJson());
   }
   putRecipe(recipeId: string, recipe: RecipeRequest){
-    return this.httpClient.put<void>(this.adminUrl+'/'+recipeId, recipe, this.getAuthHeaderJson());
+    return this.httpClient.put<void>(this.blogApi+'/'+recipeId, recipe, this.getAuthHeaderJson());
   }
   deleteRecipe(recipeId: string){
-    return this.httpClient.delete<void>(this.adminUrl+'/'+recipeId, this.getAuthHeaderJson());
+    return this.httpClient.delete<void>(this.blogApi+'/'+recipeId, this.getAuthHeaderJson());
   }
 }

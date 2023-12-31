@@ -34,7 +34,7 @@ public class ImageHelper
 
         if (!File.Exists(filePath))
         {
-            var defaultPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\assets\\default");
+            var defaultPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets/default");
             filePath = Path.Combine(defaultPath, "07a91ade-f956-4c03-879c-4e2b21a593e0_Default.jpg");
             //throw new FileNotFoundException("A imagem não foi encontrada!");
         }

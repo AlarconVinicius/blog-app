@@ -1,29 +1,17 @@
-﻿using Business;
-using Business.Interfaces.Repositories;
-using Business.Interfaces.Repositories.Blog;
-using Business.Interfaces.Services.Auth;
-using Business.Interfaces.Services.Blog;
-using Business.Models.Auth;
-using Business.Models.Blog.Dtos;
-using Business.Services.Auth;
-using Business.Services.Blog;
-using Business.Validators;
-using Data.Blog.Repositories;
+﻿using Business.Models.Auth;
+using Business;
 using Data.Configuration;
-using Data.Repositories;
-using Data.Repositories.Blog;
-using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace Api.IoC;
+namespace Api.Configuration;
 
-public static class DependencyInjectionConfig
+public static class IdentityConfig
 {
-    public static void ConfigureDbContextJwtServices(this IServiceCollection services, IConfiguration configuration)
+    public static void AddIdentityConfig(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
@@ -68,34 +56,5 @@ public static class DependencyInjectionConfig
                 ValidAudience = appSettings.Audience
             };
         });
-    }
-
-    public static void ConfigureCustomServices(this IServiceCollection services)
-    {
-        services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-
-        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-    }
-
-    public static void ConfigureCustomAuthServices(this IServiceCollection services)
-    {
-        services.AddScoped<IAuthService, AuthService>();
-    }
-
-    public static void ConfigureCustomBlogServices(this IServiceCollection services)
-    {
-        services.AddScoped<IBlogRepository, BlogRepository>();
-        services.AddScoped<IBlogService, BlogService>();
-        
-        services.AddScoped<ICategoryRepository, CategoryRepository>();
-        services.AddScoped<ICategoryService, CategoryService>();
-
-        services.AddScoped<IRecipePostRepository, RecipePostRepository>();
-        services.AddScoped<IRecipePostService, RecipePostService>();
-
-        services.AddScoped<IUserService, UserService>();
-        services.AddScoped<IUserRepository, UserRepository>();
-
-        services.AddScoped<IValidator<RecipePostAddDto>, RecipePostAddValidator>();
     }
 }

@@ -1,11 +1,15 @@
 ﻿using Api.Controllers.Configuration.Response;
+using Asp.Versioning;
 using Business.Interfaces.Services.Blog;
 using Business.Models.Blog;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Controllers.Blog;
+namespace Api.V1.Controllers.Blog;
 
-[Route("api/categories")]
+[Authorize]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/categories")]
 public class CategoryController : MainController
 {
     private readonly ICategoryService _service;
@@ -14,6 +18,7 @@ public class CategoryController : MainController
         _service = service;
     }
 
+    [AllowAnonymous]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetCategoryById(Guid id)
     {
@@ -21,6 +26,7 @@ public class CategoryController : MainController
         return _service.IsOperationValid() ? CustomResponse(result) : CustomResponse(_service.GetErrors());
     }
 
+    [AllowAnonymous]
     [HttpGet()]
     public async Task<IActionResult> GetAllCategoryCategories()
     {
@@ -28,21 +34,21 @@ public class CategoryController : MainController
         return _service.IsOperationValid() ? CustomResponse(result) : CustomResponse(_service.GetErrors());
     }
 
-    [HttpPost("/api/admin/categories")]
+    [HttpPost("categories")]
     public async Task<IActionResult> PostCategory(Category category)
     {
         await _service.AddCategory(category);
         return _service.IsOperationValid() ? CustomResponse() : CustomResponse(_service.GetErrors());
     }
 
-    [HttpPut("/api/admin/categories/{id}")]
+    [HttpPut("{id}")]
     public async Task<IActionResult> PutCategory(Guid id, Category category)
     {
         await _service.UpdateCategory(id, category);
         return _service.IsOperationValid() ? CustomResponse() : CustomResponse(_service.GetErrors());
     }
 
-    [HttpDelete("/api/admin/categories/{id}")]
+    [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteCategory(Guid id)
     {
         await _service.DeleteCategory(id);
