@@ -1,11 +1,13 @@
 ﻿using Api.Configuration.Swagger;
 using Business.Interfaces.Repositories;
 using Business.Interfaces.Repositories.Blog;
+using Business.Interfaces.Services;
 using Business.Interfaces.Services.Auth;
 using Business.Interfaces.Services.Blog;
 using Business.Models.Blog.Dtos;
 using Business.Services.Auth;
 using Business.Services.Blog;
+using Business.Services.Notifications;
 using Business.Validators;
 using Data.Blog.Repositories;
 using Data.Repositories;
@@ -35,6 +37,8 @@ public static class DependencyInjectionConfig
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
         services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+
+        services.AddScoped<INotifier, Notifier>();
 
         return services;
     }
