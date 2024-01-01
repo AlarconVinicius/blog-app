@@ -1,4 +1,5 @@
-﻿using FluentValidation.Results;
+﻿using Business.Interfaces.Services;
+using Business.Services.Notifications;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
@@ -7,8 +8,20 @@ namespace Api.Controllers.Configuration.Response;
 [ApiController]
 public abstract class MainController : ControllerBase
 {
+    private readonly INotifier _notifier;
+
     protected ICollection<string> Erros = new List<string>();
 
+    protected MainController(INotifier notifier)
+    {
+        _notifier = notifier;
+    }
+
+    protected ActionResult CustomResponse(ModelStateDictionary modelState)
+    {
+        if (!modelState.IsValid) NotifyInvalidModelError(modelState);
+        return CustomResponse();
+    }
     protected ActionResult CustomResponse(object result = null!)
     {
         if (IsOperationValid())
@@ -24,54 +37,28 @@ public abstract class MainController : ControllerBase
         var errorResponse = new ApiErrorResponse
         {
             Success = false,
-            Errors = new Dictionary<string, string[]>
-        {
-            { "Mensagens", Erros.ToArray() }
-        }
+            Errors = _notifier.GetNotifications().Select(n => n.Message)
         };
 
         return BadRequest(errorResponse);
     }
-
-    protected ActionResult CustomResponse(ModelStateDictionary modelState)
+    protected void NotifyInvalidModelError(ModelStateDictionary modelState)
     {
         var erros = modelState.Values.SelectMany(e => e.Errors);
         foreach (var erro in erros)
         {
-            AddProcessingError(erro.ErrorMessage);
+            var errorMsg = erro.Exception == null ? erro.ErrorMessage : erro.Exception.Message;
+            NotifyError(errorMsg);
         }
-
-        return CustomResponse();
     }
 
-    protected ActionResult CustomResponse(ValidationResult validation)
+    protected void NotifyError(string message)
     {
-        var erros = validation.Errors;
-        foreach (var erro in erros)
-        {
-            AddProcessingError(erro.ErrorMessage);
-        }
-
-        return CustomResponse();
+        _notifier.Handle(new Notification(message));
     }
-
-    protected ActionResult CustomResponse(ICollection<string> mensagens)
-    {
-        foreach (var erro in mensagens)
-        {
-            AddProcessingError(erro);
-        }
-
-        return CustomResponse();
-    }
-
+    
     protected bool IsOperationValid()
     {
-        return !Erros.Any();
-    }
-
-    protected void AddProcessingError(string erro)
-    {
-        Erros.Add(erro);
+        return !_notifier.HasNotification();
     }
 }

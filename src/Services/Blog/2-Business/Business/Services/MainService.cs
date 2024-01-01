@@ -1,40 +1,42 @@
 ﻿using Business.Interfaces.Services;
+using Business.Models.Blog;
+using Business.Services.Notifications;
+using FluentValidation;
 using FluentValidation.Results;
 
 namespace Business.Services;
 
-public class MainService : IMainService
+public class MainService
 {
-    protected ICollection<string> Errors = new List<string>();
+    private readonly INotifier _notifier;
 
-    public ICollection<string> GetErrors()
+    protected MainService(INotifier notifier)
     {
-        return Errors;
+        _notifier = notifier;
     }
 
-    public void AddProcessingError(string error)
+    protected void Notify(ValidationResult validationResult)
     {
-        Errors.Add(error);
-    }
-
-    public void AddProcessingError(ValidationResult validation)
-    {
-        var errors = validation.Errors;
-        foreach (var error in errors)
+        foreach (var error in validationResult.Errors)
         {
-            Errors.Add(error.ErrorMessage);
-        }
-    }
-    public void AddProcessingError(List<string> errors)
-    {
-        foreach (var error in errors)
-        {
-            Errors.Add(error);
+            Notify(error.ErrorMessage);
         }
     }
 
-    public bool IsOperationValid()
+    protected void Notify(string message)
     {
-        return !Errors.Any();
+        _notifier.Handle(new Notification(message));
     }
+
+    protected bool ExecuteValidation<TV, TE>(TV validation, TE entity) where TV : AbstractValidator<TE>
+    {
+        var validator = validation.Validate(entity);
+
+        if (validator.IsValid) return true;
+
+        Notify(validator);
+
+        return false;
+    }
+
 }

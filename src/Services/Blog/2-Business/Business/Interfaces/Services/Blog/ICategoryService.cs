@@ -2,7 +2,7 @@
 
 namespace Business.Interfaces.Services.Blog;
 
-public interface ICategoryService : IMainService
+public interface ICategoryService
 {
     public Task AddCategory(Category category);
 

@@ -2,7 +2,7 @@
 
 namespace Business.Interfaces.Services.Blog;
 
-public interface IBlogService : IMainService
+public interface IBlogService
 {
     public Task AddBlog(BlogEntity blog);
 

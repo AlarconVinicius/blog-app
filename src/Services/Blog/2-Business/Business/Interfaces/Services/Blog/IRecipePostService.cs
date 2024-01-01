@@ -2,7 +2,7 @@
 
 namespace Business.Interfaces.Services.Blog;
 
-public interface IRecipePostService : IMainService
+public interface IRecipePostService
 {
     public Task AddRecipe(RecipePostAddDto recipe);
 

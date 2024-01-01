@@ -1,4 +1,5 @@
-﻿using Business.Interfaces.Services.Auth;
+﻿using Business.Interfaces.Services;
+using Business.Interfaces.Services.Auth;
 using Business.Models.Auth;
 using Business.Models.Auth.Dto;
 using Microsoft.AspNetCore.Identity;
@@ -16,7 +17,11 @@ public class AuthService : MainService, IAuthService
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly AppSettings _appSettings;
 
-    public AuthService(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IOptions<AppSettings> appSettings)
+    public AuthService(
+                       SignInManager<ApplicationUser> signInManager,
+                       UserManager<ApplicationUser> userManager, 
+                       IOptions<AppSettings> appSettings,
+                       INotifier notifier) : base(notifier)
     {
         _signInManager = signInManager;
         _userManager = userManager;
@@ -41,7 +46,7 @@ public class AuthService : MainService, IAuthService
         {
             foreach (var errors in result.Errors)
             {
-                AddProcessingError(errors.Description);
+                Notify(errors.Description);
             }
             return null!;
         }
@@ -61,7 +66,7 @@ public class AuthService : MainService, IAuthService
         if (result.Succeeded)
             return await GenerateJwt(loginUser.Email);
 
-        AddProcessingError("Usuário ou senha inválidos.");
+        Notify("Usuário ou senha inválidos.");
         return null!;
     }
 

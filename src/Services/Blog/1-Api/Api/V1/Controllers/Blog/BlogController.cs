@@ -1,5 +1,6 @@
 ﻿using Api.Controllers.Configuration.Response;
 using Asp.Versioning;
+using Business.Interfaces.Services;
 using Business.Interfaces.Services.Blog;
 using Business.Models.Blog;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +12,7 @@ namespace Api.V1.Controllers.Blog;
 public class BlogController : MainController
 {
     private readonly IBlogService _service;
-    public BlogController(IBlogService service)
+    public BlogController(IBlogService service, INotifier notifier) : base(notifier)
     {
         _service = service;
     }
@@ -20,34 +21,34 @@ public class BlogController : MainController
     public async Task<IActionResult> GetBlogById(Guid id)
     {
         var result = await _service.GetBlogById(id);
-        return _service.IsOperationValid() ? CustomResponse(result) : CustomResponse(_service.GetErrors());
+        return CustomResponse(result);
     }
 
     [HttpGet()]
     public async Task<IActionResult> GetAllBlogs()
     {
         var result = await _service.GetAllBlogs();
-        return _service.IsOperationValid() ? CustomResponse(result) : CustomResponse(_service.GetErrors());
+        return CustomResponse(result);
     }
 
     [HttpPost("/api/admin/blogs")]
     public async Task<IActionResult> PostBlog(BlogEntity blog)
     {
         await _service.AddBlog(blog);
-        return _service.IsOperationValid() ? CustomResponse() : CustomResponse(_service.GetErrors());
+        return CustomResponse();
     }
 
     [HttpPut("/api/admin/blogs/{id}")]
     public async Task<IActionResult> PutBlog(Guid id, BlogEntity blog)
     {
         await _service.UpdateBlog(id, blog);
-        return _service.IsOperationValid() ? CustomResponse() : CustomResponse(_service.GetErrors());
+        return CustomResponse();
     }
 
     [HttpDelete("/api/admin/blogs/{id}")]
     public async Task<IActionResult> DeleteBlog(Guid id)
     {
         await _service.DeleteBlog(id);
-        return _service.IsOperationValid() ? CustomResponse() : CustomResponse(_service.GetErrors());
+        return CustomResponse();
     }
 }

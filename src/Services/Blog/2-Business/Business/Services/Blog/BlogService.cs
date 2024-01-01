@@ -1,4 +1,5 @@
 ﻿using Business.Interfaces.Repositories.Blog;
+using Business.Interfaces.Services;
 using Business.Interfaces.Services.Blog;
 using Business.Models.Blog;
 
@@ -7,7 +8,9 @@ namespace Business.Services.Blog;
 public class BlogService : MainService, IBlogService
 {
     private readonly IBlogRepository _repository;
-    public BlogService(IBlogRepository repository)
+    public BlogService(
+                       IBlogRepository repository,
+                       INotifier notifier) : base(notifier)
     {
         _repository = repository;
     }
@@ -18,7 +21,7 @@ public class BlogService : MainService, IBlogService
         {
             if ((await _repository.GetBlogByName(blog.Name)) != null)
             {
-                AddProcessingError("Erro ao adicionar blog: Nome já existe.");
+                Notify("Erro ao adicionar blog: Nome já existe.");
                 return;
             };
             blog.NormalizeName();
@@ -27,7 +30,7 @@ public class BlogService : MainService, IBlogService
         }
         catch (Exception ex)
         {
-            AddProcessingError($"Erro ao adicionar blog: {ex.Message}");
+            Notify($"Erro ao adicionar blog: {ex.Message}");
             return;
         }
     }
@@ -39,7 +42,7 @@ public class BlogService : MainService, IBlogService
             var blogDb = await _repository.GetByIdAsync(id);
             if (blogDb == null)
             {
-                AddProcessingError("Falha ao deletar blog: Blog não encontrado.");
+                Notify("Falha ao deletar blog: Blog não encontrado.");
                 return;
             };
             await _repository.DeleteAsync(id);
@@ -48,7 +51,7 @@ public class BlogService : MainService, IBlogService
         }
         catch (Exception ex)
         {
-            AddProcessingError($"Falha ao deletar blog: {ex.Message}");
+            Notify($"Falha ao deletar blog: {ex.Message}");
             return;
         }
     }
@@ -60,14 +63,14 @@ public class BlogService : MainService, IBlogService
             var blogDb = await _repository.GetByIdAsync(id);
             if (blogDb == null)
             {
-                AddProcessingError("Falha ao buscar blog: Blog não encontrado.");
+                Notify("Falha ao buscar blog: Blog não encontrado.");
                 return null!;
             };
             return blogDb;
         }
         catch (Exception ex)
         {
-            AddProcessingError($"Falha ao buscar blog: {ex.Message}");
+            Notify($"Falha ao buscar blog: {ex.Message}");
             return null!;
         }
     }
@@ -80,7 +83,7 @@ public class BlogService : MainService, IBlogService
         }
         catch (Exception ex)
         {
-            AddProcessingError($"Falha ao buscar blog: {ex.Message}");
+            Notify($"Falha ao buscar blog: {ex.Message}");
             return null!;
         }
     }
@@ -92,7 +95,7 @@ public class BlogService : MainService, IBlogService
             var blogDb = await _repository.GetByIdAsync(id);
             if (blogDb == null)
             {
-                AddProcessingError("Falha ao atualizar blog: Blog não encontrado.");
+                Notify("Falha ao atualizar blog: Blog não encontrado.");
                 return;
             };
             blogDb.Name = blog.Name;
@@ -103,7 +106,7 @@ public class BlogService : MainService, IBlogService
         }
         catch (Exception ex)
         {
-            AddProcessingError($"Falha ao atualizar blog: {ex.Message}");
+            Notify($"Falha ao atualizar blog: {ex.Message}");
             return;
         }
     }

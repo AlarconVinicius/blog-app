@@ -8,7 +8,7 @@ public abstract class MainPost : Entity
     public string CoverImage { get; set; } = string.Empty;
     public Guid BlogId { get; set; }
     public virtual BlogEntity? Blog { get; set; }
-    public string UserId { get; set; }
+    public string UserId { get; set; } = string.Empty;
     public virtual ApplicationUser? User { get; set; }
     public Guid CategoryId { get; set; }
     public virtual Category? Category { get; set; }

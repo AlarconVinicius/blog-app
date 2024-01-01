@@ -1,6 +1,7 @@
 using Business.Helpers;
 using Business.Helpers.Auth;
 using Business.Interfaces.Repositories.Blog;
+using Business.Interfaces.Services;
 using Business.Interfaces.Services.Blog;
 using Business.Mappings.Blog;
 using Business.Models.Auth;
@@ -18,7 +19,11 @@ public class UserService : MainService, IUserService
     private readonly IHttpContextAccessor _httpAccessor;
     private readonly IUserRepository _userRepository;
 
-    public UserService(UserManager<ApplicationUser> userManager, IHttpContextAccessor httpAccessor, IUserRepository userRepository)
+    public UserService(
+                       UserManager<ApplicationUser> userManager, 
+                       IHttpContextAccessor httpAccessor, 
+                       IUserRepository userRepository,
+                       INotifier notifier) : base(notifier)
     {
         _userManager = userManager;
         _httpAccessor = httpAccessor;
@@ -30,7 +35,7 @@ public class UserService : MainService, IUserService
         var userId = AuthHelper.GetUserId(_httpAccessor).ToString();
         var userDb = await _userManager.FindByIdAsync(userId);
         if(userDb is null){
-            AddProcessingError("Falha ao buscar usuário: Usuário não encontrado.");
+            Notify("Falha ao buscar usuário: Usuário não encontrado.");
             return null!;
         }
         var response = userDb.ToDto();
@@ -43,7 +48,7 @@ public class UserService : MainService, IUserService
         var userDb = await _userManager.FindByIdAsync(userId);
 
         if(userDb is null){
-            AddProcessingError("Falha ao buscar usuário: Usuário não encontrado.");
+            Notify("Falha ao buscar usuário: Usuário não encontrado.");
             return;
         }
         user.ProfileImage.Name = userDb.Id + "_" + user.ProfileImage.Name + "_" + DateTime.UtcNow.ToString("yyyy-MM-dd HH-mm-ss");
@@ -52,7 +57,7 @@ public class UserService : MainService, IUserService
             var profileImageExists = string.IsNullOrEmpty(userDb.ProfileImage) ? "profile-img.jpg" : userDb.ProfileImage;
             if (!ImageHelper.UpdateImage(user.ProfileImage, profileImageExists))
             {
-                AddProcessingError("Falha na imagem");
+                Notify("Falha na imagem");
                 return;
             }
 
@@ -73,14 +78,14 @@ public class UserService : MainService, IUserService
 
     public async Task UpdatePassword(UserPasswordDto userPassword) {
         if(userPassword.NewPassword != userPassword.ConfirmNewPassword){
-            AddProcessingError("Falha ao atualizar a senha: As senhas não coincidem.");
+            Notify("Falha ao atualizar a senha: As senhas não coincidem.");
             return;
         }
         var userId = AuthHelper.GetUserId(_httpAccessor).ToString();
         var userDb = await _userManager.FindByIdAsync(userId);
 
         if(userDb is null){
-            AddProcessingError("Falha ao atualizar a senha: Usuário não encontrado.");
+            Notify("Falha ao atualizar a senha: Usuário não encontrado.");
             return;
         }
 

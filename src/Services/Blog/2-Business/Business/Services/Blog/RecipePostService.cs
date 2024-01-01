@@ -1,9 +1,11 @@
 ﻿using Business.Helpers;
 using Business.Helpers.Auth;
 using Business.Interfaces.Repositories.Blog;
+using Business.Interfaces.Services;
 using Business.Interfaces.Services.Blog;
 using Business.Mappings.Blog;
 using Business.Models.Blog.Dtos;
+using Business.Validators;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
 
@@ -15,13 +17,15 @@ public class RecipePostService : MainService, IRecipePostService
     private readonly IRecipePostRepository _repository;
     private readonly ICategoryRepository _categoryRepository;
     private readonly IHttpContextAccessor _httpAccessor;
-    private readonly IValidator<RecipePostAddDto> _addValidator;
-    public RecipePostService(IRecipePostRepository repository, ICategoryRepository categoryRepository, IHttpContextAccessor httpAccessor, IValidator<RecipePostAddDto> addValidator)
+    public RecipePostService(
+                             IRecipePostRepository repository, 
+                             ICategoryRepository categoryRepository, 
+                             IHttpContextAccessor httpAccessor, 
+                             INotifier notifier) : base(notifier)
     {
         _repository = repository;
         _categoryRepository = categoryRepository;
         _httpAccessor = httpAccessor;
-        _addValidator = addValidator;
     }
 
     #region Public Methods
@@ -34,14 +38,14 @@ public class RecipePostService : MainService, IRecipePostService
                 var userAuthenticated = AuthHelper.GetUserId(_httpAccessor).ToString();
                 if (Guid.Parse(userAuthenticated) != userId)
                 {
-                    AddProcessingError("Falha ao buscar receita: Usuário não autenticado.");
-                    AddProcessingError("Falha ao buscar receita: Receita não encontrada.");
+                    Notify("Falha ao buscar receita: Usuário não autenticado.");
+                    Notify("Falha ao buscar receita: Receita não encontrada.");
                     return null!;
                 }
                 var recipeUserDb = await _repository.GetRecipeById(id, userId);
                 if (recipeUserDb == null)
                 {
-                    AddProcessingError("Falha ao buscar receita: Receita não encontrada.");
+                    Notify("Falha ao buscar receita: Receita não encontrada.");
                     return null!;
                 }
                 return recipeUserDb.ToDto();
@@ -50,14 +54,14 @@ public class RecipePostService : MainService, IRecipePostService
 
             if (recipeDb == null)
             {
-                AddProcessingError("Falha ao buscar receita: Receita não encontrada.");
+                Notify("Falha ao buscar receita: Receita não encontrada.");
                 return null!;
             }
             return recipeDb.ToDto();
         }
         catch (Exception ex)
         {
-            AddProcessingError($"Falha ao buscar receita: {ex.Message}");
+            Notify($"Falha ao buscar receita: {ex.Message}");
             return null!;
         }
     }
@@ -71,14 +75,14 @@ public class RecipePostService : MainService, IRecipePostService
                 var userAuthenticated = AuthHelper.GetUserId(_httpAccessor).ToString();
                 if (Guid.Parse(userAuthenticated) != userId)
                 {
-                    AddProcessingError("Falha ao buscar receita: Usuário não autenticado.");
-                    AddProcessingError("Falha ao buscar receita: Receita não encontrada.");
+                    Notify("Falha ao buscar receita: Usuário não autenticado.");
+                    Notify("Falha ao buscar receita: Receita não encontrada.");
                     return null!;
                 }
                 var recipeUserDb = await _repository.GetRecipeByUrl(url, userId);
                 if (recipeUserDb == null)
                 {
-                    AddProcessingError("Falha ao buscar receita: Receita não encontrada.");
+                    Notify("Falha ao buscar receita: Receita não encontrada.");
                     return null!;
                 }
                 return recipeUserDb.ToDto();
@@ -87,14 +91,14 @@ public class RecipePostService : MainService, IRecipePostService
 
             if (recipeDb == null)
             {
-                AddProcessingError("Falha ao buscar receita: Receita não encontrada.");
+                Notify("Falha ao buscar receita: Receita não encontrada.");
                 return null!;
             }
             return recipeDb.ToDto();
         }
         catch (Exception ex)
         {
-            AddProcessingError($"Falha ao buscar receita: {ex.Message}");
+            Notify($"Falha ao buscar receita: {ex.Message}");
             return null!;
         }
     }
@@ -109,8 +113,8 @@ public class RecipePostService : MainService, IRecipePostService
                 var userAuthenticated = AuthHelper.GetUserId(_httpAccessor).ToString();
                 if(Guid.Parse(userAuthenticated) != userId)
                 {
-                    AddProcessingError("Falha ao buscar receita: Usuário não autenticado.");
-                    AddProcessingError("Falha ao buscar receitas: Nenhuma receita encontrada.");
+                    Notify("Falha ao buscar receita: Usuário não autenticado.");
+                    Notify("Falha ao buscar receitas: Nenhuma receita encontrada.");
                     return null!;
                 }
                 return (await _repository.GetAllRecipes(userId)).Select(x => x.ToDto());
@@ -119,7 +123,7 @@ public class RecipePostService : MainService, IRecipePostService
         }
         catch (Exception ex)
         {
-            AddProcessingError($"Falha ao buscar receita: {ex.Message}");
+            Notify($"Falha ao buscar receita: {ex.Message}");
             return null!;
         }
     }
@@ -133,8 +137,8 @@ public class RecipePostService : MainService, IRecipePostService
                 var userAuthenticated = AuthHelper.GetUserId(_httpAccessor).ToString();
                 if (Guid.Parse(userAuthenticated) != userId)
                 {
-                    AddProcessingError("Falha ao buscar receita: Usuário não autenticado.");
-                    AddProcessingError("Falha ao buscar receitas: Nenhuma receita encontrada.");
+                    Notify("Falha ao buscar receita: Usuário não autenticado.");
+                    Notify("Falha ao buscar receitas: Nenhuma receita encontrada.");
                     return null!;
                 }
                 return (await _repository.GetRecipesBySearch(searchQuery, userId)).Select(x => x.ToDto());
@@ -143,7 +147,7 @@ public class RecipePostService : MainService, IRecipePostService
         }
         catch (Exception ex)
         {
-            AddProcessingError($"Falha ao buscar receita: {ex.Message}");
+            Notify($"Falha ao buscar receita: {ex.Message}");
             return null!;
         }
     }
@@ -157,8 +161,8 @@ public class RecipePostService : MainService, IRecipePostService
                 var userAuthenticated = AuthHelper.GetUserId(_httpAccessor).ToString();
                 if (Guid.Parse(userAuthenticated) != userId)
                 {
-                    AddProcessingError("Falha ao buscar receita: Usuário não autenticado.");
-                    AddProcessingError("Falha ao buscar receitas: Nenhuma receita encontrada.");
+                    Notify("Falha ao buscar receita: Usuário não autenticado.");
+                    Notify("Falha ao buscar receitas: Nenhuma receita encontrada.");
                     return null!;
                 }
                 return (await _repository.GetRecipesByCategory(category, userId)).Select(x => x.ToDto());
@@ -167,7 +171,7 @@ public class RecipePostService : MainService, IRecipePostService
         }
         catch (Exception ex)
         {
-            AddProcessingError($"Falha ao buscar receita: {ex.Message}");
+            Notify($"Falha ao buscar receita: {ex.Message}");
             return null!;
         }
     }
@@ -181,23 +185,24 @@ public class RecipePostService : MainService, IRecipePostService
         {
             if (!IsWriter())
             {
-                AddProcessingError("Erro ao adicionar receita: Usuário não possui permissão de escritor.");
+                Notify("Erro ao adicionar receita: Usuário não possui permissão de escritor.");
                 return;
             }
-            var validationResult = await _addValidator.ValidateAsync(recipe);
-            if (!validationResult.IsValid)
-            {
-                AddProcessingError(validationResult);
-                return;
-            }
+            if (!ExecuteValidation(new RecipePostAddValidator(), recipe)) return;
+            //var validationResult = await _addValidator.ValidateAsync(recipe);
+            //if (!validationResult.IsValid)
+            //{
+            //    Notify(validationResult);
+            //    return;
+            //}
             if (!await CategoryExists(recipe.CategoryId))
             {
-                AddProcessingError("Erro ao adicionar receita: Categoria não encontrada.");
+                Notify("Erro ao adicionar receita: Categoria não encontrada.");
                 return;
             }
             if (await TitleExists(recipe.Title))
             {
-                AddProcessingError("Erro ao adicionar receita: Título já existe");
+                Notify("Erro ao adicionar receita: Título já existe");
                 return;
             }
             var recipeMapped = recipe.ToDomain();
@@ -209,7 +214,7 @@ public class RecipePostService : MainService, IRecipePostService
             recipeMapped.GenerateURL();
             if (!ImageHelper.UploadImage(recipe.Image))
             {
-                AddProcessingError("Falha na imagem");
+                Notify("Falha na imagem");
                 return;
             }
             await _repository.AddAsync(recipeMapped);
@@ -217,7 +222,7 @@ public class RecipePostService : MainService, IRecipePostService
         }
         catch (Exception ex)
         {
-            AddProcessingError($"Erro ao adicionar receita: {ex.Message}");
+            Notify($"Erro ao adicionar receita: {ex.Message}");
             return;
         }
     }
@@ -228,20 +233,20 @@ public class RecipePostService : MainService, IRecipePostService
         {
             if (!IsWriter())
             {
-                AddProcessingError("Erro ao deletar receita: Usuário não possui permissão de escritor.");
+                Notify("Erro ao deletar receita: Usuário não possui permissão de escritor.");
                 return;
             }
             var userAuthenticated = AuthHelper.GetUserId(_httpAccessor).ToString();
             var recipeDb = await _repository.GetRecipeById(id);
             if (recipeDb == null || recipeDb.UserId != userAuthenticated)
             {
-                AddProcessingError("Falha ao deletar receita: Receita não encontrada.");
+                Notify("Falha ao deletar receita: Receita não encontrada.");
                 return;
             };
             await _repository.DeleteAsync(id);
             if (!ImageHelper.DeleteImage(recipeDb.CoverImage))
             {
-                AddProcessingError("Falha ao deletar imagem");
+                Notify("Falha ao deletar imagem");
                 return;
             }
             return;
@@ -249,7 +254,7 @@ public class RecipePostService : MainService, IRecipePostService
         }
         catch (Exception ex)
         {
-            AddProcessingError($"Falha ao deletar receita: {ex.Message}");
+            Notify($"Falha ao deletar receita: {ex.Message}");
             return;
         }
     }
@@ -262,24 +267,24 @@ public class RecipePostService : MainService, IRecipePostService
             var recipeDb = await _repository.GetRecipeById(recipeId);
             if (recipeDb == null || recipeDb.UserId != userAuthenticated || !await RecipeExists(recipeId))
             {
-                AddProcessingError("Falha ao atualizar receita: Receita não encontrada.");
+                Notify("Falha ao atualizar receita: Receita não encontrada.");
                 return;
             };
             if (!IsWriter())
             {
-                AddProcessingError("Erro ao atualizar receita: Usuário não possui permissão de escritor.");
+                Notify("Erro ao atualizar receita: Usuário não possui permissão de escritor.");
                 return;
             }
             if (!await CategoryExists(recipe.CategoryId))
             {
-                AddProcessingError("Erro ao atualizar receita: Categoria não encontrada.");
+                Notify("Erro ao atualizar receita: Categoria não encontrada.");
                 return;
             }
             if (!recipeDb.Title.Equals(recipe.Title))
             {
                 if (await TitleExists(recipe.Title))
                 {
-                    AddProcessingError("Erro ao atualizar receita: Título já existe");
+                    Notify("Erro ao atualizar receita: Título já existe");
                     return;
                 }
             }
@@ -288,7 +293,7 @@ public class RecipePostService : MainService, IRecipePostService
                 recipe.Image.Name = recipeDb.Id + "_" + recipe.Image.Name + "_" + DateTime.UtcNow.ToString("yyyy-MM-dd HH-mm-ss");
                 if (!ImageHelper.UpdateImage(recipe.Image, recipeDb.CoverImage))
                 {
-                    AddProcessingError("Falha na imagem");
+                    Notify("Falha na imagem");
                     return;
                 }
                 recipeDb.CoverImage = recipe.Image.Name;
@@ -308,7 +313,7 @@ public class RecipePostService : MainService, IRecipePostService
         }
         catch (Exception ex)
         {
-            AddProcessingError($"Falha ao atualizar receita: {ex.Message}");
+            Notify($"Falha ao atualizar receita: {ex.Message}");
             return;
         }
     }

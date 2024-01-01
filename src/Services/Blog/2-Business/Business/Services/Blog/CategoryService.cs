@@ -1,4 +1,5 @@
 ﻿using Business.Interfaces.Repositories.Blog;
+using Business.Interfaces.Services;
 using Business.Interfaces.Services.Blog;
 using Business.Models.Blog;
 
@@ -8,7 +9,9 @@ public class CategoryService : MainService, ICategoryService
 {
     private readonly Guid blogId = Guid.Parse("2a2ff613-6f3b-4dd8-9fd6-a2f824b67b62");
     private readonly ICategoryRepository _repository;
-    public CategoryService(ICategoryRepository repository)
+    public CategoryService(
+                           ICategoryRepository repository,
+                           INotifier notifier) : base(notifier)
     {
         _repository = repository;
     }
@@ -19,7 +22,7 @@ public class CategoryService : MainService, ICategoryService
         {
             if ((await _repository.GetCategoryByNameAndBlogId(category.Name, category.BlogId)) != null)
             {
-                AddProcessingError("Erro ao adicionar categoria: Nome já existe.");
+                Notify("Erro ao adicionar categoria: Nome já existe.");
                 return;
             };
             category.BlogId =  blogId;
@@ -28,7 +31,7 @@ public class CategoryService : MainService, ICategoryService
         }
         catch (Exception ex)
         {
-            AddProcessingError($"Erro ao adicionar categoria: {ex.Message}");
+            Notify($"Erro ao adicionar categoria: {ex.Message}");
             return;
         }
     }
@@ -40,7 +43,7 @@ public class CategoryService : MainService, ICategoryService
             var categoryDb = await _repository.GetByIdAsync(id);
             if (categoryDb == null)
             {
-                AddProcessingError("Falha ao deletar categoria: Categoria não encontrada.");
+                Notify("Falha ao deletar categoria: Categoria não encontrada.");
                 return;
             };
             await _repository.DeleteAsync(id);
@@ -49,7 +52,7 @@ public class CategoryService : MainService, ICategoryService
         }
         catch (Exception ex)
         {
-            AddProcessingError($"Falha ao deletar categoria: {ex.Message}");
+            Notify($"Falha ao deletar categoria: {ex.Message}");
             return;
         }
     }
@@ -61,14 +64,14 @@ public class CategoryService : MainService, ICategoryService
             var categoryDb = await _repository.GetByIdAsync(id);
             if (categoryDb == null)
             {
-                AddProcessingError("Falha ao buscar categoria: Categoria não encontrada.");
+                Notify("Falha ao buscar categoria: Categoria não encontrada.");
                 return null!;
             };
             return categoryDb;
         }
         catch (Exception ex)
         {
-            AddProcessingError($"Falha ao buscar categoria: {ex.Message}");
+            Notify($"Falha ao buscar categoria: {ex.Message}");
             return null!;
         }
     }
@@ -81,7 +84,7 @@ public class CategoryService : MainService, ICategoryService
         }
         catch (Exception ex)
         {
-            AddProcessingError($"Falha ao buscar categoria: {ex.Message}");
+            Notify($"Falha ao buscar categoria: {ex.Message}");
             return null!;
         }
     }
@@ -93,7 +96,7 @@ public class CategoryService : MainService, ICategoryService
             var categoryDb = await _repository.GetByIdAsync(id);
             if (categoryDb == null)
             {
-                AddProcessingError("Falha ao atualizar categoria: Categoria não encontrada.");
+                Notify("Falha ao atualizar categoria: Categoria não encontrada.");
                 return;
             };
             categoryDb.Name = category.Name;
@@ -103,7 +106,7 @@ public class CategoryService : MainService, ICategoryService
         }
         catch (Exception ex)
         {
-            AddProcessingError($"Falha ao atualizar categoria: {ex.Message}");
+            Notify($"Falha ao atualizar categoria: {ex.Message}");
             return;
         }
     }

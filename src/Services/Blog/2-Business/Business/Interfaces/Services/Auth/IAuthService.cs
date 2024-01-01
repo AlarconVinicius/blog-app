@@ -3,7 +3,7 @@
 namespace Business.Interfaces.Services.Auth;
 
 
-public interface IAuthService : IMainService
+public interface IAuthService
 {
     Task<LoginUserResponse> RegisterUserAsync(RegisterUserRequest registerUser);
     Task<LoginUserResponse> LoginAsync(LoginUserRequest loginUser);

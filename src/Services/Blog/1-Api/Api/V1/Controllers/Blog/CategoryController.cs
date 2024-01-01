@@ -1,5 +1,6 @@
 ﻿using Api.Controllers.Configuration.Response;
 using Asp.Versioning;
+using Business.Interfaces.Services;
 using Business.Interfaces.Services.Blog;
 using Business.Models.Blog;
 using Microsoft.AspNetCore.Authorization;
@@ -13,7 +14,7 @@ namespace Api.V1.Controllers.Blog;
 public class CategoryController : MainController
 {
     private readonly ICategoryService _service;
-    public CategoryController(ICategoryService service)
+    public CategoryController(ICategoryService service, INotifier notifier) : base(notifier)
     {
         _service = service;
     }
@@ -23,7 +24,7 @@ public class CategoryController : MainController
     public async Task<IActionResult> GetCategoryById(Guid id)
     {
         var result = await _service.GetCategoryById(id);
-        return _service.IsOperationValid() ? CustomResponse(result) : CustomResponse(_service.GetErrors());
+        return CustomResponse(result);
     }
 
     [AllowAnonymous]
@@ -31,27 +32,27 @@ public class CategoryController : MainController
     public async Task<IActionResult> GetAllCategoryCategories()
     {
         var result = await _service.GetAllCategories();
-        return _service.IsOperationValid() ? CustomResponse(result) : CustomResponse(_service.GetErrors());
+        return CustomResponse(result);
     }
 
     [HttpPost("categories")]
     public async Task<IActionResult> PostCategory(Category category)
     {
         await _service.AddCategory(category);
-        return _service.IsOperationValid() ? CustomResponse() : CustomResponse(_service.GetErrors());
+        return CustomResponse();
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> PutCategory(Guid id, Category category)
     {
         await _service.UpdateCategory(id, category);
-        return _service.IsOperationValid() ? CustomResponse() : CustomResponse(_service.GetErrors());
+        return CustomResponse();
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteCategory(Guid id)
     {
         await _service.DeleteCategory(id);
-        return _service.IsOperationValid() ? CustomResponse() : CustomResponse(_service.GetErrors());
+        return CustomResponse();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Api.Controllers.Configuration.Response;
 using Asp.Versioning;
+using Business.Interfaces.Services;
 using Business.Interfaces.Services.Auth;
 using Business.Models.Auth.Dto;
 using Microsoft.AspNetCore.Mvc;
@@ -12,7 +13,7 @@ public class AuthController : MainController
 {
     private readonly IAuthService _authService;
 
-    public AuthController(IAuthService authService)
+    public AuthController(IAuthService authService, INotifier notifier) : base(notifier)
     {
         _authService = authService;
     }
@@ -20,18 +21,18 @@ public class AuthController : MainController
     [HttpPost("create")]
     public async Task<ActionResult> Register(RegisterUserRequest registerUser)
     {
-        if (!ModelState.IsValid) return BadRequest(ModelState.Values.SelectMany(e => e.Errors));
+        if (!ModelState.IsValid) return CustomResponse(ModelState);
 
         var result = await _authService.RegisterUserAsync(registerUser);
-        return _authService.IsOperationValid() ? CustomResponse(result) : CustomResponse(_authService.GetErrors());
+        return CustomResponse(result);
     }
 
     [HttpPost("login")]
     public async Task<ActionResult> Login(LoginUserRequest loginUser)
     {
-        if (!ModelState.IsValid) return BadRequest(ModelState.Values.SelectMany(e => e.Errors));
+        if (!ModelState.IsValid) return CustomResponse(ModelState);
 
         var result = await _authService.LoginAsync(loginUser);
-        return _authService.IsOperationValid() ? CustomResponse(result) : CustomResponse(_authService.GetErrors());
+        return CustomResponse(result);
     }
 }
