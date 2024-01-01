@@ -39,13 +39,25 @@ cd blog-app/src/
 
 ```bash 
 cd Services/Blog/1-Api/Api/
-cp appsettings.Development.json appsettings.json
+
+cp appsettingsTemplate.json appsettings.json
+
 cd ../../../../
+
 cd Web/WebSPA/Blog/src/environments/
+
 cp environment.development environment.prod
+
 cd ../../../../../../
 ```
 > ***Antes de prosseguir, é recomendável verificar e ajustar as configurações dos arquivos recém-criados (appsettings.json e environment.prod) para garantir que as chaves e configurações estejam corretas para o ambiente de produção. É crucial assegurar que todas as variáveis e configurações necessárias estejam presentes e funcionem conforme esperado. Certifique-se de revisar e modificar esses arquivos, se necessário, para refletir as configurações adequadas ao ambiente de produção.***
+
+Também é possível criar arquivos de configuração para o ambiente de desenvolvimento executando o comando:
+
+```bash 
+cp appsettingsTemplate.json appsettings.Development.json
+```
+Esse comando cria um arquivo de configuração de desenvolvimento a partir de um modelo de configuração inicial (appsettingsTemplate.json), facilitando a configuração inicial para ambientes de desenvolvimento.
 
 3. **Execute os Contêineres Docker:**
    Utilize o Docker Compose para subir os contêineres:
@@ -60,7 +72,7 @@ Após executar os contêineres, você pode acessar as diferentes partes da aplic
 
 * **Banco de Dados:** Está na porta 8080 e pode ser acessado usando as seguintes credenciais:
 
-  * **Server Name:** localhost\8080
+  * **Server Name:** localhost, 8080
   * **Login:** SA
   * **Senha:** Senha@123
 
