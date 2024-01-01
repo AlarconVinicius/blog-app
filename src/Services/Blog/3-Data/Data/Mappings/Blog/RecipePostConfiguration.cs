@@ -27,10 +27,6 @@ public class RecipePostConfiguration : IEntityTypeConfiguration<RecipePost>
             .HasColumnType("text")
             .IsRequired();
 
-        builder.Property(rb => rb.BlogId)
-            .HasColumnName("blog_id")
-            .IsRequired();
-
         builder.Property(rb => rb.UserId)
             .HasColumnName("user_id")
             .IsRequired();

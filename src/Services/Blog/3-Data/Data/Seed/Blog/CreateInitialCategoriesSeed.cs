@@ -13,7 +13,6 @@ public class CreateInitialCategoriesSeed
     }
     public void Create()
     {
-        var blogId = Guid.Parse("2a2ff613-6f3b-4dd8-9fd6-a2f824b67b62");
         List<string> categories = new List<string>
         {
             "Café da Manhã",
@@ -32,8 +31,6 @@ public class CreateInitialCategoriesSeed
             "Sem Lactose",
             "Sem Glúten",
             "Rápido e Fácil",
-            "Feriado",
-            "Crianças",
             "Outros"
         };
 
@@ -43,7 +40,7 @@ public class CreateInitialCategoriesSeed
 
             if (existingCategory == null)
             {
-                var newCategory = new Category(category, blogId);
+                var newCategory = new Category(category);
                 _context.Categories.Add(newCategory);
             }
         }

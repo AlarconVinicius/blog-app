@@ -6,8 +6,6 @@ public abstract class MainPost : Entity
 {
     public string Title { get; set; } = string.Empty;
     public string CoverImage { get; set; } = string.Empty;
-    public Guid BlogId { get; set; }
-    public virtual BlogEntity? Blog { get; set; }
     public string UserId { get; set; } = string.Empty;
     public virtual ApplicationUser? User { get; set; }
     public Guid CategoryId { get; set; }
@@ -19,11 +17,10 @@ public abstract class MainPost : Entity
 
     }
 
-    protected MainPost(string title, string coverImage, Guid blogId, Guid userId, Guid categoryId)
+    protected MainPost(string title, string coverImage, Guid userId, Guid categoryId)
     {
         Title = title;
         CoverImage = coverImage;
-        BlogId = blogId;
         UserId = userId.ToString();
         CategoryId = categoryId;
         GenerateURL();

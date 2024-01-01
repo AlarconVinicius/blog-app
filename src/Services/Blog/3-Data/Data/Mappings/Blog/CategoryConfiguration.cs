@@ -17,15 +17,6 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
             .IsRequired()
             .HasMaxLength(50);
 
-        builder.Property(rb => rb.BlogId)
-            .HasColumnName("blog_id")
-            .IsRequired();
-
-        builder.HasOne(c => c.Blog)
-               .WithMany(rb => rb.Categories)
-               .HasForeignKey(rb => rb.BlogId)
-               .OnDelete(DeleteBehavior.Cascade);
-
         builder.HasMany(c => c.RecipePosts)
                .WithOne(rb => rb.Category)
                .HasForeignKey(rb => rb.CategoryId)

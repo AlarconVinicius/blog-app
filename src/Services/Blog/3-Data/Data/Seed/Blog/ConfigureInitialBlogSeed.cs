@@ -15,7 +15,6 @@ public class ConfigureInitialBlogSeed
 
     public void StartConfig()
     {
-        new CreateInitialBlogsSeed(_contextIdentity).Create();
         new CreateInitialCategoriesSeed(_contextIdentity).Create();
     }
 }

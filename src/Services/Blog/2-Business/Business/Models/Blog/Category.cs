@@ -5,8 +5,6 @@ namespace Business.Models.Blog;
 public class Category : Entity
 {
     public string Name { get; set; } = string.Empty;
-    public Guid BlogId { get; set; }
-    public virtual BlogEntity? Blog { get; set; }
     public ICollection<RecipePost>? RecipePosts { get; set; }
 
     public Category()
@@ -14,9 +12,8 @@ public class Category : Entity
 
     }
 
-    public Category(string name, Guid blogId)
+    public Category(string name)
     {
         Name = name;
-        BlogId = blogId;
     }
 }

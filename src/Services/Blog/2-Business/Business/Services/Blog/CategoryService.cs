@@ -20,12 +20,11 @@ public class CategoryService : MainService, ICategoryService
     {
         try
         {
-            if ((await _repository.GetCategoryByNameAndBlogId(category.Name, category.BlogId)) != null)
+            if ((await _repository.GetCategoryByName(category.Name)) != null)
             {
                 Notify("Erro ao adicionar categoria: Nome já existe.");
                 return;
             };
-            category.BlogId =  blogId;
             await _repository.AddAsync(category);
             return;
         }

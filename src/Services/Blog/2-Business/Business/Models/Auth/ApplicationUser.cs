@@ -1,5 +1,4 @@
-﻿using Business.Models.Blog;
-using Business.Models.Blog.Recipe;
+﻿using Business.Models.Blog.Recipe;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,8 +20,6 @@ public class ApplicationUser : IdentityUser
     public string FullName { get; private set; } = string.Empty;
 
     public string? ProfileImage { get; set; } = string.Empty;
-
-    public ICollection<UserBlog>? Blogs { get; set; }
 
     public ICollection<RecipePost>? RecipePosts { get; set; }
     public ICollection<UserFavoriteRecipe>? FavoriteRecipes { get; set; }

@@ -4,5 +4,5 @@ namespace Business.Interfaces.Repositories.Blog;
 
 public interface ICategoryRepository : IBaseRepository<Category>
 {
-    Task<Category> GetCategoryByNameAndBlogId(string name, Guid blogId);
+    Task<Category> GetCategoryByName(string name);
 }

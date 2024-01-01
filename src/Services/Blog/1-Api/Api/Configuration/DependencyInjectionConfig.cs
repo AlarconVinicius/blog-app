@@ -52,9 +52,6 @@ public static class DependencyInjectionConfig
 
     public static IServiceCollection ResolveBlogDependencies(this IServiceCollection services)
     {
-        services.AddScoped<IBlogRepository, BlogRepository>();
-        services.AddScoped<IBlogService, BlogService>();
-
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<ICategoryService, CategoryService>();
 

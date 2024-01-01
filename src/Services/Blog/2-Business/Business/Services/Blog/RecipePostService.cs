@@ -13,7 +13,6 @@ namespace Business.Services.Blog;
 
 public class RecipePostService : MainService, IRecipePostService
 {
-    private readonly Guid blogId = Guid.Parse("2a2ff613-6f3b-4dd8-9fd6-a2f824b67b62");
     private readonly IRecipePostRepository _repository;
     private readonly ICategoryRepository _categoryRepository;
     private readonly IHttpContextAccessor _httpAccessor;
@@ -209,7 +208,6 @@ public class RecipePostService : MainService, IRecipePostService
 
             recipe.Image.Name = recipeMapped.Id + "_" + recipe.Image.Name + "_" + DateTime.UtcNow.ToString("yyyy-MM-dd HH-mm-ss");
             recipeMapped.CoverImage = recipe.Image.Name;
-            recipeMapped.BlogId = blogId;
             recipeMapped.UserId = AuthHelper.GetUserId(_httpAccessor).ToString();
             recipeMapped.GenerateURL();
             if (!ImageHelper.UploadImage(recipe.Image))

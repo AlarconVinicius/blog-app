@@ -13,9 +13,9 @@ public class CategoryRepository : BaseRepository<Category>, ICategoryRepository
     {
     }
 
-    public async Task<Category> GetCategoryByNameAndBlogId(string name, Guid blogId)
+    public async Task<Category> GetCategoryByName(string name)
     {
-        var categoryDb = await _context.Categories.FirstOrDefaultAsync(b => b.Name == name && b.BlogId == blogId);
+        var categoryDb = await _context.Categories.FirstOrDefaultAsync(b => b.Name == name);
         if (categoryDb == null) return null!;
         return categoryDb;
     }
