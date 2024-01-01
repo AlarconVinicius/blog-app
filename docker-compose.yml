@@ -30,8 +30,8 @@ services:
     depends_on:
       - sql
     environment:
-      - DB_HOST=sql_server2022
-      - DB_NAME=controlefinanceiro
+      - DB_HOST=blog_sql
+      - DB_NAME=BlogApp
       - DB_SA_PASSWORD=Senha@123
     networks:
       - blogbackend
